@@ -2,34 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.Netcode;
+using Unity.Services.Lobbies.Models;
 using UnityEngine;
 
 public class GameEngineManager : NetworkBehaviour
 {
-	List<NetworkObject> playerObjects = new();
-	List<Rigidbody> playerRigidbodies = new();
-
-	[SerializeField] Rigidbody testRB;
-
-	public void HandlePlayerInput(ulong senderNetworkID,
+	public void HandlePlayerInput(Rigidbody2D rigidbody,
 								float moveInput,
-								bool isJumping)
+								float jumpForce,
+								InputManager.JumpDirection jumpDirection)
 	{
-		MovePlayer(moveInput, isJumping,  testRB);
-		Debug.Log(senderNetworkID);
+		MovePlayer(moveInput, jumpForce, jumpDirection, rigidbody); // for testing
+
 		if (!IsHost) return;
-		for (int i = 0; i < playerObjects.Count; i++)
-		{
-			if (playerObjects[i].OwnerClientId == senderNetworkID)
-			{
-				MovePlayer(moveInput, isJumping, playerRigidbodies[i]);
-			}
-		}
+		MovePlayer(moveInput, jumpForce, jumpDirection, rigidbody);
 	}
 
-	void MovePlayer(float moveInput, bool isJumping, Rigidbody rigidbody)
+	void MovePlayer(float moveInput, float jumpForce, InputManager.JumpDirection jumpDirection, Rigidbody2D rigidbody)
 	{
-		Debug.Log(moveInput);
-		Debug.Log(isJumping);
+		if (moveInput != 0)
+		{
+			rigidbody.AddForce(new Vector2(moveInput, 0), ForceMode2D.Force);
+		}
+		if (jumpForce > 0)
+		{
+			switch (jumpDirection)
+			{
+				case InputManager.JumpDirection.NONE:
+					rigidbody.AddForce(new Vector2(0, 1) * jumpForce, ForceMode2D.Impulse);
+					break;
+				case InputManager.JumpDirection.LEFT:
+					rigidbody.AddForce(new Vector2(-1, 2) * jumpForce, ForceMode2D.Impulse);
+					break;
+				case InputManager.JumpDirection.RIGHT:
+					rigidbody.AddForce(new Vector2(1, 2) * jumpForce, ForceMode2D.Impulse);
+					break;
+				default:
+					break;
+			}
+		}
 	}
 }
