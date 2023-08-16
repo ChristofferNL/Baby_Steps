@@ -107,10 +107,10 @@ namespace LobbyRelaySample.ngo
         [ServerRpc(RequireOwnership = false)]
         void GetPlayerData_ServerRpc(ulong id, ulong callerId)
         {
-            if (m_playerData.ContainsKey(id))
-                GetPlayerData_ClientRpc(callerId, m_playerData[id]);
-            else
-                GetPlayerData_ClientRpc(callerId, new PlayerData(null, 0));
+            //if (m_playerData.ContainsKey(id))
+            //    GetPlayerData_ClientRpc(callerId, m_playerData[id]);
+            //else
+            //    GetPlayerData_ClientRpc(callerId, new PlayerData(null, 0));
         }
 
         [ClientRpc]

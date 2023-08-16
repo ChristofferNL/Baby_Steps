@@ -1,3 +1,5 @@
+using LobbyRelaySample.ngo;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
@@ -31,6 +33,14 @@ public class InputManager : NetworkBehaviour
 	private bool chargingJump;
 	public bool IsGrounded;
 
+	[SerializeField]
+	TMPro.TMP_Text m_nameOutput = default;
+	Camera m_mainCamera;
+	ulong m_localId;
+
+	// If the local player cursor spawns before this cursor's owner, the owner's data won't be available yet. This is used to retrieve the data later.
+	Action<ulong, Action<PlayerData>> m_retrieveName;
+
 	private void Awake()
 	{
 		inputActions = new();
@@ -52,6 +62,27 @@ public class InputManager : NetworkBehaviour
 		if (!GameIsRunning) return;
 		GroundCheck();
 		GetInputs();
+	}
+	public override void OnNetworkSpawn()
+	{
+		m_retrieveName = NetworkedDataStore.Instance.GetPlayerData;
+		m_mainCamera = GameObject.Find("InGameCamera").GetComponent<Camera>();
+		InGameRunner.Instance.onGameBeginning += OnGameBegan;
+
+		m_localId = NetworkManager.Singleton.LocalClientId;
+
+	}
+	public void OnGameBegan()
+	{
+		m_retrieveName.Invoke(OwnerClientId, SetName_ClientRpc);
+		InGameRunner.Instance.onGameBeginning -= OnGameBegan;
+	}
+
+	[ClientRpc]
+	private void SetName_ClientRpc(PlayerData data)
+	{
+		if (!IsOwner)
+			m_nameOutput.text = data.name;
 	}
 
 	private void GroundCheck()
@@ -107,14 +138,14 @@ public class InputManager : NetworkBehaviour
 
 			if (IsGrounded)
 			{
-				manager.HandlePlayerInput(playerRb, actions.Move.ReadValue<float>() * moveForce, jumpForce, jumpDirection);
+				manager.HandlePlayerInput_ClientRpc(NetworkManager.Singleton.LocalClientId, actions.Move.ReadValue<float>() * moveForce, jumpForce, jumpDirection);
 				yield break;
 			}
 		}
 
 		if (!chargingJump)
 		{
-			manager.HandlePlayerInput(playerRb, actions.Move.ReadValue<float>() * moveForce, 0, jumpDirection);
+			manager.HandlePlayerInput_ClientRpc(NetworkManager.Singleton.LocalClientId, actions.Move.ReadValue<float>() * moveForce, 0, jumpDirection);
 		}
 	}
 }

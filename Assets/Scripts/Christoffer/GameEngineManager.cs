@@ -7,15 +7,27 @@ using UnityEngine;
 
 public class GameEngineManager : NetworkBehaviour
 {
-	public void HandlePlayerInput(Rigidbody2D rigidbody,
+	[SerializeField] Rigidbody2D testRB;
+	[SerializeField] Rigidbody2D testRBTwo;
+
+	[ClientRpc]
+	public void HandlePlayerInput_ClientRpc(ulong clientID,
 								float moveInput,
 								float jumpForce,
 								InputManager.JumpDirection jumpDirection)
 	{
-		MovePlayer(moveInput, jumpForce, jumpDirection, rigidbody); // for testing
+		/*MovePlayer(moveInput, jumpForce, jumpDirection, rigidbody);*/ // for testing
 
-		if (!IsHost) return;
-		MovePlayer(moveInput, jumpForce, jumpDirection, rigidbody);
+		if (!IsOwner) return;
+		if (clientID == 0)
+		{
+			MovePlayer(moveInput, jumpForce, jumpDirection, testRB);
+		}
+		else
+		{
+			MovePlayer(moveInput, jumpForce, jumpDirection, testRBTwo);
+		}
+
 	}
 
 	void MovePlayer(float moveInput, float jumpForce, InputManager.JumpDirection jumpDirection, Rigidbody2D rigidbody)
