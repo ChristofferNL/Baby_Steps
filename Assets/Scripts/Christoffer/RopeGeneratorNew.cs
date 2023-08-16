@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-
-public class RopeGenerator : NetworkBehaviour
+public class RopeGeneratorNew : MonoBehaviour
 {
     [SerializeField] GameObject ropeJointPrefab;
     [SerializeField] int numberOfJoints = 10;
@@ -15,18 +14,13 @@ public class RopeGenerator : NetworkBehaviour
     private Rigidbody2D previousRb;
     [SerializeField] float timeBetweenRopeLoad = 0.04f;
 
-    [SerializeField] Rigidbody2D rbOne;
-    [SerializeField] Rigidbody2D rbTwo;
-
-    public override void OnNetworkSpawn()
+    private void Start()
     {
-        StartCoroutine(GenerateRope());
+        //StartCoroutine(GenerateRope());
     }
 
-    IEnumerator GenerateRope()
+    public IEnumerator GenerateRope()
     {
-        if (!IsServer) yield break;
-        yield return new WaitForSeconds(4f);
         Vector3 vectorBetweenPlayers = player2.position - player1.position;
         float distanceBetweenPlayers = vectorBetweenPlayers.magnitude;
 
@@ -60,7 +54,5 @@ public class RopeGenerator : NetworkBehaviour
 
         player2.GetComponent<DistanceJoint2D>().connectedBody = previousRb;
         player2.GetComponent<DistanceJoint2D>().distance = distanceBetwenJoints;
-        rbOne.gravityScale = 1.0f;
-        rbTwo.gravityScale = 1.0f;
     }
 }

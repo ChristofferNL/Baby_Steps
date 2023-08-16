@@ -27,7 +27,7 @@ public class InputManager : NetworkBehaviour
 	PlayerInputs inputActions;
 	PlayerInputs.PlayerActionMapActions actions;
 
-	public bool GameIsRunning;
+	private bool GameIsRunning = false;
 	private bool chargingJump;
 	public bool IsGrounded;
 	public bool doGroundCheck = true;
@@ -40,7 +40,12 @@ public class InputManager : NetworkBehaviour
 		actions = inputActions.PlayerActionMap;
 	}
 
-	private void OnEnable()
+    private void Start()
+    {
+		StartCoroutine(StartGameCountdown());
+    }
+
+    private void OnEnable()
 	{
 		actions.Enable();
 	}
@@ -55,6 +60,12 @@ public class InputManager : NetworkBehaviour
 		if (!GameIsRunning) return;
 		GroundCheck();
 		GetInputs();
+	}
+
+	IEnumerator StartGameCountdown()
+	{
+		yield return new WaitForSeconds(6f);
+		GameIsRunning = true;
 	}
 
 	private void GroundCheck()
@@ -111,7 +122,7 @@ public class InputManager : NetworkBehaviour
 
 			if (IsGrounded)
 			{
-				manager.HandlePlayerInput(playerRb, actions.Move.ReadValue<float>() * moveForce, jumpForce, jumpDirection);
+				manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId, actions.Move.ReadValue<float>() * moveForce, jumpForce, jumpDirection);
 				StartCoroutine(PauseGroundCheck(groundCheckPauseTime));
 				yield break;
 			}
@@ -119,7 +130,7 @@ public class InputManager : NetworkBehaviour
 
 		if (!chargingJump)
 		{
-			manager.HandlePlayerInput(playerRb, actions.Move.ReadValue<float>() * moveForce, 0, jumpDirection);
+			manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId, actions.Move.ReadValue<float>() * moveForce, 0, jumpDirection);
 		}
 	}
 
