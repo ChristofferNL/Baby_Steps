@@ -1,5 +1,3 @@
-using LobbyRelaySample.ngo;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
@@ -32,14 +30,9 @@ public class InputManager : NetworkBehaviour
 	public bool GameIsRunning;
 	private bool chargingJump;
 	public bool IsGrounded;
+	public bool doGroundCheck = true;
 
-	[SerializeField]
-	TMPro.TMP_Text m_nameOutput = default;
-	Camera m_mainCamera;
-	ulong m_localId;
-
-	// If the local player cursor spawns before this cursor's owner, the owner's data won't be available yet. This is used to retrieve the data later.
-	Action<ulong, Action<PlayerData>> m_retrieveName;
+	[SerializeField] float groundCheckPauseTime = 0.5f;
 
 	private void Awake()
 	{
@@ -63,29 +56,10 @@ public class InputManager : NetworkBehaviour
 		GroundCheck();
 		GetInputs();
 	}
-	public override void OnNetworkSpawn()
-	{
-		m_retrieveName = NetworkedDataStore.Instance.GetPlayerData;
-		m_mainCamera = GameObject.Find("InGameCamera").GetComponent<Camera>();
-		InGameRunner.Instance.onGameBeginning += OnGameBegan;
-
-		m_localId = NetworkManager.Singleton.LocalClientId;
-	}
-	public void OnGameBegan()
-	{
-		m_retrieveName.Invoke(OwnerClientId, SetName_ClientRpc);
-		InGameRunner.Instance.onGameBeginning -= OnGameBegan;
-	}
-
-	[ClientRpc]
-	private void SetName_ClientRpc(PlayerData data)
-	{
-		if (!IsOwner)
-			m_nameOutput.text = data.name;
-	}
 
 	private void GroundCheck()
 	{
+		if (!doGroundCheck) return;
 		if (Physics2D.Raycast(playerRb.transform.position, Vector2.down, groundCheckDistance, groundCheckLayerMask))
 		{
 			IsGrounded = true;
@@ -137,14 +111,23 @@ public class InputManager : NetworkBehaviour
 
 			if (IsGrounded)
 			{
-				manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId, actions.Move.ReadValue<float>() * moveForce, jumpForce, jumpDirection);
+				manager.HandlePlayerInput(playerRb, actions.Move.ReadValue<float>() * moveForce, jumpForce, jumpDirection);
+				StartCoroutine(PauseGroundCheck(groundCheckPauseTime));
 				yield break;
 			}
 		}
 
 		if (!chargingJump)
 		{
-			manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId, actions.Move.ReadValue<float>() * moveForce, 0, jumpDirection);
+			manager.HandlePlayerInput(playerRb, actions.Move.ReadValue<float>() * moveForce, 0, jumpDirection);
 		}
+	}
+
+	IEnumerator PauseGroundCheck(float pauseTime)
+	{
+		IsGrounded = false;
+		doGroundCheck = false;
+		yield return new WaitForSeconds(pauseTime);
+		doGroundCheck = true;
 	}
 }
