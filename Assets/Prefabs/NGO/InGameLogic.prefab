@@ -6037,7 +6037,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1324490520259870624, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
       propertyPath: timeBetweenRopeLoad
-      value: 0.1
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 3027908634088211095, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
       propertyPath: GlobalObjectIdHash
