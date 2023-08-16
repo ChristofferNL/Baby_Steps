@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
+
 
 public class RopeGenerator : MonoBehaviour
 {
@@ -18,8 +20,9 @@ public class RopeGenerator : MonoBehaviour
         StartCoroutine(GenerateRope());
     }
 
-    IEnumerator GenerateRope()
+    public IEnumerator GenerateRope()
     {
+        yield return new WaitForSeconds(5);
         Vector3 vectorBetweenPlayers = player2.position - player1.position;
         float distanceBetweenPlayers = vectorBetweenPlayers.magnitude;
 
@@ -29,7 +32,6 @@ public class RopeGenerator : MonoBehaviour
         {
             Vector3 spawnPos;
             float lerpValue = i / numberOfJoints;
-            Debug.Log(lerpValue);
             spawnPos = Vector3.Lerp(player1.position + vectorBetweenPlayers.normalized * distanceBetweenPlayers / numberOfJoints, player2.position - vectorBetweenPlayers.normalized * distanceBetweenPlayers / numberOfJoints, lerpValue);
             //spawnPos = Vector3.Lerp(player2.position, player1.position , lerpValue);
             //Vector3 spawnPos = player1.transform.position + vectorBetweenPlayers.normalized * distanceBetweenPlayers * ((i + 1) / numberOfJoints);

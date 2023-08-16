@@ -147,6 +147,7 @@ namespace LobbyRelaySample.ngo
                 LogHandlerSettings.Instance.SpawnErrorPopup("Failed to join the game.");
                 OnGameEnd();
             }
+            
         }
 
         /// <summary>
