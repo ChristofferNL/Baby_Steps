@@ -29,7 +29,7 @@ public class GameEngineManager : NetworkBehaviour
 			switch (jumpDirection)
 			{
 				case InputManager.JumpDirection.NONE:
-					rigidbody.AddForce(new Vector2(0, 1) * jumpForce, ForceMode2D.Impulse);
+					rigidbody.AddForce(new Vector2(0, 2.5f) * jumpForce, ForceMode2D.Impulse);
 					break;
 				case InputManager.JumpDirection.LEFT:
 					rigidbody.AddForce(new Vector2(-1, 2) * jumpForce, ForceMode2D.Impulse);

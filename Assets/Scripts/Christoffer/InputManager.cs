@@ -30,6 +30,9 @@ public class InputManager : NetworkBehaviour
 	public bool GameIsRunning;
 	private bool chargingJump;
 	public bool IsGrounded;
+	public bool doGroundCheck = true;
+
+	[SerializeField] float groundCheckPauseTime = 0.5f;
 
 	private void Awake()
 	{
@@ -56,6 +59,7 @@ public class InputManager : NetworkBehaviour
 
 	private void GroundCheck()
 	{
+		if (!doGroundCheck) return;
 		if (Physics2D.Raycast(playerRb.transform.position, Vector2.down, groundCheckDistance, groundCheckLayerMask))
 		{
 			IsGrounded = true;
@@ -108,6 +112,7 @@ public class InputManager : NetworkBehaviour
 			if (IsGrounded)
 			{
 				manager.HandlePlayerInput(playerRb, actions.Move.ReadValue<float>() * moveForce, jumpForce, jumpDirection);
+				StartCoroutine(PauseGroundCheck(groundCheckPauseTime));
 				yield break;
 			}
 		}
@@ -116,5 +121,13 @@ public class InputManager : NetworkBehaviour
 		{
 			manager.HandlePlayerInput(playerRb, actions.Move.ReadValue<float>() * moveForce, 0, jumpDirection);
 		}
+	}
+
+	IEnumerator PauseGroundCheck(float pauseTime)
+	{
+		IsGrounded = false;
+		doGroundCheck = false;
+		yield return new WaitForSeconds(pauseTime);
+		doGroundCheck = true;
 	}
 }
