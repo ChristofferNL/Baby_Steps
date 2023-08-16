@@ -20,15 +20,13 @@ public class GameEngineManager : NetworkBehaviour
 
 	void MovePlayer(float moveInput, float jumpForce, InputManager.JumpDirection jumpDirection, Rigidbody2D rigidbody)
 	{
-
 		if (moveInput != 0)
 		{
 			rigidbody.AddForce(new Vector2(moveInput, 0), ForceMode2D.Force);
 		}
 		if (jumpForce > 0)
 		{
-            Debug.Log(jumpForce);
-            switch (jumpDirection)
+			switch (jumpDirection)
 			{
 				case InputManager.JumpDirection.NONE:
 					rigidbody.AddForce(new Vector2(0, 1) * jumpForce, ForceMode2D.Impulse);
