@@ -70,7 +70,6 @@ public class InputManager : NetworkBehaviour
 		InGameRunner.Instance.onGameBeginning += OnGameBegan;
 
 		m_localId = NetworkManager.Singleton.LocalClientId;
-
 	}
 	public void OnGameBegan()
 	{
@@ -138,14 +137,14 @@ public class InputManager : NetworkBehaviour
 
 			if (IsGrounded)
 			{
-				manager.HandlePlayerInput_ClientRpc(NetworkManager.Singleton.LocalClientId, actions.Move.ReadValue<float>() * moveForce, jumpForce, jumpDirection);
+				manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId, actions.Move.ReadValue<float>() * moveForce, jumpForce, jumpDirection);
 				yield break;
 			}
 		}
 
 		if (!chargingJump)
 		{
-			manager.HandlePlayerInput_ClientRpc(NetworkManager.Singleton.LocalClientId, actions.Move.ReadValue<float>() * moveForce, 0, jumpDirection);
+			manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId, actions.Move.ReadValue<float>() * moveForce, 0, jumpDirection);
 		}
 	}
 }

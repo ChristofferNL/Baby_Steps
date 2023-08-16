@@ -10,23 +10,24 @@ public class GameEngineManager : NetworkBehaviour
 	[SerializeField] Rigidbody2D testRB;
 	[SerializeField] Rigidbody2D testRBTwo;
 
-	[ClientRpc]
-	public void HandlePlayerInput_ClientRpc(ulong clientID,
+	[ServerRpc (RequireOwnership = false)]
+	public void HandlePlayerInput_ServerRpc(ulong clientID,
 								float moveInput,
 								float jumpForce,
 								InputManager.JumpDirection jumpDirection)
 	{
 		/*MovePlayer(moveInput, jumpForce, jumpDirection, rigidbody);*/ // for testing
 
-		if (!IsOwner) return;
+		//if (!IsOwner) return;
 		if (clientID == 0)
 		{
-			MovePlayer(moveInput, jumpForce, jumpDirection, testRB);
+            MovePlayer(moveInput, jumpForce, jumpDirection, testRB);
 		}
 		else
 		{
-			MovePlayer(moveInput, jumpForce, jumpDirection, testRBTwo);
-		}
+            MovePlayer(moveInput, jumpForce, jumpDirection, testRBTwo);
+        }
+
 
 	}
 
@@ -36,6 +37,7 @@ public class GameEngineManager : NetworkBehaviour
 		{
 			rigidbody.AddForce(new Vector2(moveInput, 0), ForceMode2D.Force);
 		}
+
 		if (jumpForce > 0)
 		{
 			switch (jumpDirection)
