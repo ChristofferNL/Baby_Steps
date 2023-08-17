@@ -16,6 +16,7 @@ public class InputManager : NetworkBehaviour
 
 	[SerializeField] GameEngineManager manager;
 	[SerializeField] Rigidbody2D playerRb;
+	[SerializeField] Rigidbody2D playerRbTwo;
 	[SerializeField] float moveForce;
 	[SerializeField] float jumpForceToAdd;
 	[SerializeField] float jumpForceBase;
@@ -24,6 +25,8 @@ public class InputManager : NetworkBehaviour
 	[SerializeField] float groundCheckDistance;
 	[SerializeField] float groundCheckRadius = 0.6f;
 	[SerializeField] LayerMask groundCheckLayerMask;
+
+	Rigidbody2D assignedPlayerRb;
 
 	PlayerInputs inputActions;
 	PlayerInputs.PlayerActionMapActions actions;
@@ -46,7 +49,19 @@ public class InputManager : NetworkBehaviour
 		StartCoroutine(StartGameCountdown());
     }
 
-    private void OnEnable()
+	public override void OnNetworkSpawn()
+	{
+		if (NetworkManager.Singleton.LocalClientId == 0)
+		{
+			assignedPlayerRb = playerRb;
+		}
+		else
+		{
+			assignedPlayerRb = playerRbTwo;
+		}
+	}
+
+	private void OnEnable()
 	{
 		actions.Enable();
 	}
@@ -72,7 +87,7 @@ public class InputManager : NetworkBehaviour
 	private void GroundCheck()
 	{
 		if (!doGroundCheck) return;		
-		if (Physics2D.CircleCast(playerRb.transform.position, groundCheckRadius, Vector3.down, 0.8f, groundCheckLayerMask))
+		if (Physics2D.CircleCast(assignedPlayerRb.transform.position, groundCheckRadius, Vector3.down, 0.8f, groundCheckLayerMask))
 		{
 			IsGrounded = true;
 		}
