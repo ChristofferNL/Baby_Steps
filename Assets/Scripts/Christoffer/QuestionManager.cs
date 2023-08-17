@@ -25,7 +25,7 @@ public class QuestionManager : NetworkBehaviour
     int questionsAnswered;
     int nextQuestionHeightTarget;
 
-    List<QuestionAnswerData> answersData;
+    List<QuestionAnswerData> answersData = new();
 
     public override void OnNetworkSpawn()
     {
@@ -67,26 +67,24 @@ public class QuestionManager : NetworkBehaviour
         answersData.Add(answerData);
     }
 
-    [ClientRpc]
-    public void ShowQuestionAnswers_ClientRpc()
+    [ServerRpc]
+    public void ShowQuestionAnswers_ServerRpc()
     {
-        if(!IsOwner) return;
+        //if(!IsOwner) return;
         foreach (var item in answersData)
         {
             Debug.Log($"player: {item.playerID} question: {item.questionIndex} answer: {item.questionAnswerIndex}");
         }
     }
 
-    List<Question_SO> GenerateGameQuestions()
+    void GenerateGameQuestions()
     {
         selectedQuestions.Clear();
-        List<Question_SO> questions = new();
         while (selectedQuestions.Count < questionsPerRun && selectedQuestions.Count < allQuestions.Count)
         {
             int value = Random.Range(0, allQuestions.Count);
             selectedQuestions.Add(allQuestions[value]);
             allQuestions.RemoveAt(value);
         }
-        return questions;
     }
 }

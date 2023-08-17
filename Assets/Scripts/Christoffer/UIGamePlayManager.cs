@@ -24,5 +24,6 @@ public class UIGamePlayManager : NetworkBehaviour
     public void RegisterAnswer(int choosenAnswer)
     {
         questionManager.SendQuestionAnswer_ServerRpc(NetworkManager.Singleton.LocalClientId, choosenAnswer);
+        questionUIObject.SetActive(false);
     }
 }
