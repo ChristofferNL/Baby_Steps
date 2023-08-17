@@ -72,7 +72,7 @@ public class InputManager : NetworkBehaviour
 	private void GroundCheck()
 	{
 		if (!doGroundCheck) return;		
-		if (Physics2D.CircleCast(playerRb.transform.position - Vector3.down * groundCheckDistance, groundCheckRadius, Vector3.forward, 100, groundCheckLayerMask))
+		if (Physics2D.CircleCast(playerRb.transform.position, groundCheckRadius, Vector3.down, 0.8f, groundCheckLayerMask))
 		{
 			IsGrounded = true;
 		}
