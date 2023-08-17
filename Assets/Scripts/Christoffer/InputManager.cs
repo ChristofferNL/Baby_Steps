@@ -140,7 +140,7 @@ public class InputManager : NetworkBehaviour
 			if (IsGrounded || canChargeWhilePulled)
 			{
 				manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId, actions.Move.ReadValue<float>() * moveForce, jumpForce, jumpDirection);
-				StartCoroutine(PauseGroundCheck(groundCheckPauseTime));
+				StartCoroutine(PauseGroundCheck(groundCheckPauseTime, canChargeWhilePulled));
 				yield break;
 			}
 		}
@@ -151,11 +151,14 @@ public class InputManager : NetworkBehaviour
 		}
 	}
 
-	IEnumerator PauseGroundCheck(float pauseTime)
+	IEnumerator PauseGroundCheck(float pauseTime, bool chargeWhilePulled)
 	{
 		IsGrounded = false;
 		doGroundCheck = false;
-		yield return new WaitForSeconds(pauseTime);
+		canChargeWhilePulled = false;
+        yield return new WaitForSeconds(pauseTime);
 		doGroundCheck = true;
-	}
+        canChargeWhilePulled = chargeWhilePulled;
+
+    }
 }
