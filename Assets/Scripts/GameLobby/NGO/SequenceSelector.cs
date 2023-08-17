@@ -100,13 +100,13 @@ namespace LobbyRelaySample.ngo
         public void Update()
         {
             // A client can't guarantee timing with the host's selection of the target sequence, so retrieve it once it's available.
-            if (!m_HasReceivedTargetSequence && m_targetSequence.Count > 0)
-            {
-                for (int n = 0; n < m_targetSequence.Count; n++)
-                    m_TargetSequenceOutput[n].sprite = m_SymbolData.GetSymbolForIndex(m_targetSequence[n]);
-                m_HasReceivedTargetSequence = true;
-                ScaleTargetUi(m_LocalId, 0);
-            }
+            //if (!m_HasReceivedTargetSequence && m_targetSequence.Count > 0)
+            //{
+            //    for (int n = 0; n < m_targetSequence.Count; n++)
+            //        m_TargetSequenceOutput[n].sprite = m_SymbolData.GetSymbolForIndex(m_targetSequence[n]);
+            //    m_HasReceivedTargetSequence = true;
+            //    ScaleTargetUi(m_LocalId, 0);
+            //}
         }
 
         /// <summary>
