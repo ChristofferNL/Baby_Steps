@@ -118,7 +118,7 @@ public class InputManager : NetworkBehaviour
 			chargingJump = true;
 			StartCoroutine(ChargeJump());
 		}
-		else if (actions.Jump.WasReleasedThisFrame() && IsGrounded || actions.Jump.WasPerformedThisFrame() && canChargeWhilePulled)
+		else if (actions.Jump.WasReleasedThisFrame() && IsGrounded || actions.Jump.WasReleasedThisFrame() && canChargeWhilePulled)
 		{
 			chargingJump = false;
 		}
