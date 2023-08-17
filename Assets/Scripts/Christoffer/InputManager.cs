@@ -16,6 +16,7 @@ public class InputManager : NetworkBehaviour
 
 	[SerializeField] GameEngineManager manager;
 	[SerializeField] Rigidbody2D playerRb;
+	[SerializeField] Rigidbody2D playerRbTwo;
 	[SerializeField] float moveForce;
 	[SerializeField] float jumpForceToAdd;
 	[SerializeField] float jumpForceBase;
@@ -25,6 +26,8 @@ public class InputManager : NetworkBehaviour
 	[SerializeField] float groundCheckRadius = 0.6f;
 	[SerializeField] LayerMask groundCheckLayerMask;
 
+	Rigidbody2D assignedPlayerRb;
+
 	PlayerInputs inputActions;
 	PlayerInputs.PlayerActionMapActions actions;
 
@@ -32,6 +35,7 @@ public class InputManager : NetworkBehaviour
 	private bool chargingJump;
 	public bool IsGrounded;
 	public bool doGroundCheck = true;
+	public bool canChargeWhilePulled = false;
 
 	[SerializeField] float groundCheckPauseTime = 0.5f;
 
@@ -46,7 +50,19 @@ public class InputManager : NetworkBehaviour
 		StartCoroutine(StartGameCountdown());
     }
 
-    private void OnEnable()
+	public override void OnNetworkSpawn()
+	{
+		if (NetworkManager.Singleton.LocalClientId == 0)
+		{
+			assignedPlayerRb = playerRb;
+		}
+		else
+		{
+			assignedPlayerRb = playerRbTwo;
+		}
+	}
+
+	private void OnEnable()
 	{
 		actions.Enable();
 	}
@@ -72,7 +88,7 @@ public class InputManager : NetworkBehaviour
 	private void GroundCheck()
 	{
 		if (!doGroundCheck) return;		
-		if (Physics2D.CircleCast(playerRb.transform.position - Vector3.down * groundCheckDistance, groundCheckRadius, Vector3.forward, 100, groundCheckLayerMask))
+		if (Physics2D.CircleCast(assignedPlayerRb.transform.position, groundCheckRadius, Vector3.down, 0.8f, groundCheckLayerMask))
 		{
 			IsGrounded = true;
 		}
@@ -102,7 +118,7 @@ public class InputManager : NetworkBehaviour
 			chargingJump = true;
 			StartCoroutine(ChargeJump());
 		}
-		else if (actions.Jump.WasReleasedThisFrame() && IsGrounded)
+		else if (actions.Jump.WasReleasedThisFrame() && IsGrounded || actions.Jump.WasReleasedThisFrame() && canChargeWhilePulled)
 		{
 			chargingJump = false;
 		}
@@ -111,7 +127,7 @@ public class InputManager : NetworkBehaviour
 		{
 			float jumpForce = jumpForceBase;
 			int counter = 0;
-			while (chargingJump && IsGrounded)
+			while (chargingJump && IsGrounded || chargingJump && canChargeWhilePulled)
 			{
 				if (counter <= jumpForceTimesToAdd)
 				{
@@ -121,10 +137,10 @@ public class InputManager : NetworkBehaviour
 				yield return new WaitForSeconds(timeBetweenAdd);
 			}
 
-			if (IsGrounded)
+			if (IsGrounded || canChargeWhilePulled)
 			{
 				manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId, actions.Move.ReadValue<float>() * moveForce, jumpForce, jumpDirection);
-				StartCoroutine(PauseGroundCheck(groundCheckPauseTime));
+				StartCoroutine(PauseGroundCheck(groundCheckPauseTime, canChargeWhilePulled));
 				yield break;
 			}
 		}
@@ -135,11 +151,14 @@ public class InputManager : NetworkBehaviour
 		}
 	}
 
-	IEnumerator PauseGroundCheck(float pauseTime)
+	IEnumerator PauseGroundCheck(float pauseTime, bool chargeWhilePulled)
 	{
 		IsGrounded = false;
 		doGroundCheck = false;
-		yield return new WaitForSeconds(pauseTime);
+		canChargeWhilePulled = false;
+        yield return new WaitForSeconds(pauseTime);
 		doGroundCheck = true;
-	}
+        canChargeWhilePulled = chargeWhilePulled;
+
+    }
 }
