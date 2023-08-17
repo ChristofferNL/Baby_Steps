@@ -22,6 +22,7 @@ public class InputManager : NetworkBehaviour
 	[SerializeField] float timeBetweenAdd;
 	[SerializeField] float jumpForceTimesToAdd;
 	[SerializeField] float groundCheckDistance;
+	[SerializeField] float groundCheckRadius = 0.6f;
 	[SerializeField] LayerMask groundCheckLayerMask;
 
 	PlayerInputs inputActions;
@@ -70,8 +71,8 @@ public class InputManager : NetworkBehaviour
 
 	private void GroundCheck()
 	{
-		if (!doGroundCheck) return;
-		if (Physics2D.Raycast(playerRb.transform.position, Vector2.down, groundCheckDistance, groundCheckLayerMask))
+		if (!doGroundCheck) return;		
+		if (Physics2D.CircleCast(playerRb.transform.position - Vector3.down * groundCheckDistance, groundCheckRadius, Vector3.forward, 100, groundCheckLayerMask))
 		{
 			IsGrounded = true;
 		}
