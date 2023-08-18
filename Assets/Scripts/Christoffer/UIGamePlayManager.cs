@@ -14,21 +14,15 @@ public class UIGamePlayManager : NetworkBehaviour
 
     int activeQuestionIndex = 0;
 
-    QuestionManager.QuestionAnswerData answerData;
-
-	public override void OnNetworkSpawn()
-	{
-        answerData = new();
-	}
-
-	public void NewQuestionShow(Question_SO question_SO)
+    [ClientRpc]
+	public void NewQuestionShow_ClientRpc(QuestionManager.QuestionData questionData)
     {
         questionUIObject.SetActive(true);
-        questionText.text = question_SO.QuestionText;
-        for (int i = 0; i < question_SO.QuestionAnswers.Length; i++)
-        {
-            answerTexts[i].text = question_SO.QuestionAnswers[i];
-        }
+        questionText.text = questionData.Question;
+        answerTexts[0].text = questionData.answerOne;
+        answerTexts[1].text = questionData.answerTwo;
+        answerTexts[2].text = questionData.answerThree;
+        answerTexts[3].text = questionData.answerFour;
         activeQuestionIndex++;
     }
 

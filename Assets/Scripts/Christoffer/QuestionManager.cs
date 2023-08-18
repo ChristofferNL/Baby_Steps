@@ -21,9 +21,31 @@ public class QuestionManager : NetworkBehaviour
 		}
 	}
 
+    public struct QuestionData : INetworkSerializable
+    {
+        public string Question;
+        public string answerOne;
+        public string answerTwo;
+        public string answerThree;
+        public string answerFour;
+
+        public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+        {
+            serializer.SerializeValue(ref Question);
+            serializer.SerializeValue(ref answerOne);
+            serializer.SerializeValue(ref answerTwo);
+            serializer.SerializeValue(ref answerThree);
+            serializer.SerializeValue(ref answerFour);
+        }
+    }
+
     public NetworkVariable<QuestionAnswerData> questionAnswer = new NetworkVariable<QuestionAnswerData>(new QuestionAnswerData { PlayerID = 10, QuestionIndex = 70, AnswerIndex = 10}, 
                                                                                                 NetworkVariableReadPermission.Everyone, 
                                                                                                 NetworkVariableWritePermission.Server);
+
+    public NetworkVariable<QuestionData> activeQuestion = new NetworkVariable<QuestionData>(new QuestionData() { Question = "", answerOne = "", answerTwo = "", answerThree = "", answerFour = ""}, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+
+
 
     [SerializeField] List<Question_SO> allQuestions = new();
     [SerializeField] float questionTimerSeconds = 15f;
@@ -64,11 +86,21 @@ public class QuestionManager : NetworkBehaviour
         nextQuestionHeightTarget = (int)playerTransform.position.y + distanceToSpawnQuestion;
     }
 
-    public void OpenNextQuestion()
+    [ServerRpc(RequireOwnership = false)]
+    public void OpenNextQuestion_ServerRpc()
     {
         if (questionsAnswered >= questionsPerRun) return;
 
-        uiGamePlayManager.NewQuestionShow(selectedQuestions[questionsAnswered]);
+        activeQuestion.Value = new QuestionData 
+        {
+            Question = selectedQuestions[questionsAnswered].QuestionText,
+            answerOne = selectedQuestions[questionsAnswered].QuestionAnswers[0],
+            answerTwo = selectedQuestions[questionsAnswered].QuestionAnswers[1],
+            answerThree = selectedQuestions[questionsAnswered].QuestionAnswers[2],
+            answerFour = selectedQuestions[questionsAnswered].QuestionAnswers[3],
+        };
+
+        uiGamePlayManager.NewQuestionShow_ClientRpc(activeQuestion.Value);
         questionsAnswered++;
         SetNewTargetHeight();
         SpawnQuestion = false;
@@ -77,7 +109,7 @@ public class QuestionManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void RecieveQuestionAnswer_ServerRpc(ulong playerID, int questionIndex, int answerIndex)
     {
-        if (!IsHost) return;
+        //if (!IsHost) return;
         questionAnswer.Value = new QuestionAnswerData
         {
             PlayerID = playerID,

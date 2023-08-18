@@ -3984,7 +3984,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5066646139675404838}
         m_TargetAssemblyTypeName: QuestionManager, Assembly-CSharp
-        m_MethodName: OpenNextQuestion
+        m_MethodName: OpenNextQuestion_ServerRpc
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
