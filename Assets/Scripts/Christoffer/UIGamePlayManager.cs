@@ -34,7 +34,7 @@ public class UIGamePlayManager : NetworkBehaviour
 
     public void RegisterAnswer(int choosenAnswer)
     {
-        questionManager.SendQuestionAnswer(NetworkManager.Singleton.LocalClientId, activeQuestionIndex - 1, choosenAnswer);
+        questionManager.RecieveQuestionAnswer_ServerRpc(NetworkManager.Singleton.LocalClientId, activeQuestionIndex - 1, choosenAnswer);
         questionUIObject.SetActive(false);
     }
 }

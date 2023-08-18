@@ -38,15 +38,17 @@ public class QuestionManager : NetworkBehaviour
 
     int questionsAnswered;
     int nextQuestionHeightTarget;
-    
+
+    [SerializeField] List<(ulong, int, int)> savedAnswers = new();
+
     public override void OnNetworkSpawn()
     {
         GenerateGameQuestions();
         SetNewTargetHeight();
-        questionAnswer.OnValueChanged += (QuestionAnswerData previousValue, QuestionAnswerData newValue) =>
-        {
-            RecordAnswer(newValue);
-        };
+        //questionAnswer.OnValueChanged += (QuestionAnswerData previousValue, QuestionAnswerData newValue) =>
+        //{
+        //    RecordAnswer(newValue);
+        //};
     }
 
     private void FixedUpdate()
@@ -72,19 +74,34 @@ public class QuestionManager : NetworkBehaviour
         SpawnQuestion = false;
     }
 
-    public void SendQuestionAnswer(ulong playerID, int questionIndex, int answerIndex)
+    [ServerRpc(RequireOwnership = false)]
+    public void RecieveQuestionAnswer_ServerRpc(ulong playerID, int questionIndex, int answerIndex)
     {
+        if (!IsHost) return;
         questionAnswer.Value = new QuestionAnswerData
         {
             PlayerID = playerID,
             QuestionIndex = questionIndex,
             AnswerIndex = answerIndex
         };
+        RecordAnswer(questionAnswer.Value);
     }
 
     public void RecordAnswer(QuestionAnswerData newValue)
     {
-        debugText.text = $"{newValue.PlayerID} {newValue.QuestionIndex} {newValue.AnswerIndex}";
+        (ulong, int, int) answer = new();
+        answer.Item1 = newValue.PlayerID;
+        answer.Item2 = newValue.QuestionIndex;
+        answer.Item3 = newValue.AnswerIndex;
+        savedAnswers.Add(answer);
+        //debugText.text = savedAnswers.Count.ToString();
+        ShowAnswer_ClientRpc(savedAnswers.Count);
+    }
+
+    [ClientRpc]
+    public void ShowAnswer_ClientRpc(int questionsAnswered)
+    {
+        debugText.text = questionsAnswered.ToString();
     }
 
     public void ShowQuestionAnswers()
