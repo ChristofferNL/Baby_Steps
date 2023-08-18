@@ -11,7 +11,9 @@ public class UIGamePlayManager : NetworkBehaviour
     [SerializeField] TextMeshProUGUI[] answerTexts = new TextMeshProUGUI[4];
     [SerializeField] GameObject questionUIObject;
     [SerializeField] QuestionManager questionManager;
-    [SerializeField] TextMeshProUGUI finalAnswersText;
+    [SerializeField] GameObject answerScrollRectObject;
+    [SerializeField] FinalAnswerWidget finalAnswerObject;
+    [SerializeField] GameObject finalAnswersParent;
 
     int activeQuestionIndex = 0;
 
@@ -30,9 +32,12 @@ public class UIGamePlayManager : NetworkBehaviour
     [ClientRpc]  
     public void FinalAnswersShow_ClientRpc(QuestionManager.FinalAnswerData finalAnswers)
     {
-        finalAnswersText.gameObject.SetActive(true);
+        answerScrollRectObject.SetActive(true);
 
-        finalAnswersText.text += $"{finalAnswers.Question} {finalAnswers.answerPlayerOne} {finalAnswers.answerPlayerTwo}";
+        GameObject newAnswer = Instantiate(finalAnswerObject.gameObject, finalAnswersParent.transform, false);
+        newAnswer.GetComponent<FinalAnswerWidget>().SetupAnswerWidget(finalAnswers.Question, finalAnswers.answerPlayerOne, finalAnswers.answerPlayerTwo);
+
+        //finalAnswersText.text += $"{finalAnswers.Question} {finalAnswers.answerPlayerOne} {finalAnswers.answerPlayerTwo}";
     }
 
     public void RegisterAnswer(int choosenAnswer)
