@@ -1,16 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
 public class QuestionManager : NetworkBehaviour
 {
-    public struct QuestionAnswerData
+    public struct QuestionAnswerData : INetworkSerializable
     {
-        public int playerID;
-        public int questionIndex;
-        public int questionAnswerIndex;
-    }
+        public ulong PlayerID;
+        public int QuestionIndex;
+        public int AnswerIndex;
+
+		public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+		{
+            serializer.SerializeValue(ref PlayerID);
+            serializer.SerializeValue(ref QuestionIndex);
+            serializer.SerializeValue(ref AnswerIndex);
+		}
+	}
+
+    public NetworkVariable<QuestionAnswerData> questionAnswer = new NetworkVariable<QuestionAnswerData>(new QuestionAnswerData { PlayerID = 10, QuestionIndex = 70, AnswerIndex = 10}, 
+                                                                                                NetworkVariableReadPermission.Everyone, 
+                                                                                                NetworkVariableWritePermission.Server);
 
     [SerializeField] List<Question_SO> allQuestions = new();
     [SerializeField] float questionTimerSeconds = 15f;
@@ -19,18 +32,21 @@ public class QuestionManager : NetworkBehaviour
     [SerializeField] int distanceToSpawnQuestion;
     [SerializeField] UIGamePlayManager uiGamePlayManager;
     [SerializeField] Transform playerTransform;
+    [SerializeField] TextMeshProUGUI debugText;
 
     public bool SpawnQuestion;
 
     int questionsAnswered;
     int nextQuestionHeightTarget;
-
-    List<QuestionAnswerData> answersData = new();
-
+    
     public override void OnNetworkSpawn()
     {
         GenerateGameQuestions();
         SetNewTargetHeight();
+        questionAnswer.OnValueChanged += (QuestionAnswerData previousValue, QuestionAnswerData newValue) =>
+        {
+            RecordAnswer(newValue);
+        };
     }
 
     private void FixedUpdate()
@@ -48,33 +64,35 @@ public class QuestionManager : NetworkBehaviour
 
     public void OpenNextQuestion()
     {
+        if (questionsAnswered >= questionsPerRun) return;
+
         uiGamePlayManager.NewQuestionShow(selectedQuestions[questionsAnswered]);
         questionsAnswered++;
         SetNewTargetHeight();
         SpawnQuestion = false;
     }
 
-    [ServerRpc (RequireOwnership = false)]
-    public void SendQuestionAnswer_ServerRpc(ulong userID, int questionAnswer)
+    public void SendQuestionAnswer(ulong playerID, int questionIndex, int answerIndex)
     {
-        if (!IsOwner) return;
-        QuestionAnswerData answerData = new QuestionAnswerData()
+        questionAnswer.Value = new QuestionAnswerData
         {
-            playerID = (int)userID,
-            questionIndex = questionsAnswered - 1,
-            questionAnswerIndex = questionAnswer
+            PlayerID = playerID,
+            QuestionIndex = questionIndex,
+            AnswerIndex = answerIndex
         };
-        answersData.Add(answerData);
     }
 
-    [ServerRpc]
-    public void ShowQuestionAnswers_ServerRpc()
+    public void RecordAnswer(QuestionAnswerData newValue)
     {
-        //if(!IsOwner) return;
-        foreach (var item in answersData)
-        {
-            Debug.Log($"player: {item.playerID} question: {item.questionIndex} answer: {item.questionAnswerIndex}");
-        }
+        debugText.text = $"{newValue.PlayerID} {newValue.QuestionIndex} {newValue.AnswerIndex}";
+    }
+
+    public void ShowQuestionAnswers()
+    {
+        //foreach (var item in answersTest)
+        //{
+        //    Debug.Log($"player: {item.Item1} question: {item.Item2} answer: {item.Item3}");
+        //}
     }
 
     void GenerateGameQuestions()

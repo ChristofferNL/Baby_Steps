@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -11,7 +12,16 @@ public class UIGamePlayManager : NetworkBehaviour
     [SerializeField] GameObject questionUIObject;
     [SerializeField] QuestionManager questionManager;
 
-    public void NewQuestionShow(Question_SO question_SO)
+    int activeQuestionIndex = 0;
+
+    QuestionManager.QuestionAnswerData answerData;
+
+	public override void OnNetworkSpawn()
+	{
+        answerData = new();
+	}
+
+	public void NewQuestionShow(Question_SO question_SO)
     {
         questionUIObject.SetActive(true);
         questionText.text = question_SO.QuestionText;
@@ -19,11 +29,12 @@ public class UIGamePlayManager : NetworkBehaviour
         {
             answerTexts[i].text = question_SO.QuestionAnswers[i];
         }
+        activeQuestionIndex++;
     }
 
     public void RegisterAnswer(int choosenAnswer)
     {
-        questionManager.SendQuestionAnswer_ServerRpc(NetworkManager.Singleton.LocalClientId, choosenAnswer);
+        questionManager.SendQuestionAnswer(NetworkManager.Singleton.LocalClientId, activeQuestionIndex - 1, choosenAnswer);
         questionUIObject.SetActive(false);
     }
 }
