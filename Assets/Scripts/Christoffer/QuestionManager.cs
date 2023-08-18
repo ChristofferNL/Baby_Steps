@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.Collections;
 using Unity.Netcode;
@@ -39,13 +40,31 @@ public class QuestionManager : NetworkBehaviour
         }
     }
 
+    public struct FinalAnswerData : INetworkSerializable
+    {
+        public string Question;
+        public string answerPlayerOne;
+        public string answerPlayerTwo;
+
+        public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+        {
+            serializer.SerializeValue(ref Question);
+            serializer.SerializeValue(ref answerPlayerOne);
+            serializer.SerializeValue(ref answerPlayerTwo);
+        }
+    }
+
     public NetworkVariable<QuestionAnswerData> questionAnswer = new NetworkVariable<QuestionAnswerData>(new QuestionAnswerData { PlayerID = 10, QuestionIndex = 70, AnswerIndex = 10}, 
                                                                                                 NetworkVariableReadPermission.Everyone, 
                                                                                                 NetworkVariableWritePermission.Server);
 
-    public NetworkVariable<QuestionData> activeQuestion = new NetworkVariable<QuestionData>(new QuestionData() { Question = "", answerOne = "", answerTwo = "", answerThree = "", answerFour = ""}, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    public NetworkVariable<QuestionData> activeQuestion = new NetworkVariable<QuestionData>(new QuestionData() { Question = "", answerOne = "", answerTwo = "", answerThree = "", answerFour = ""}, 
+                                                                                                NetworkVariableReadPermission.Everyone, 
+                                                                                                NetworkVariableWritePermission.Server);
 
-
+    public NetworkVariable<FinalAnswerData> finalAnswer = new NetworkVariable<FinalAnswerData>(new FinalAnswerData() { Question = "", answerPlayerOne = "", answerPlayerTwo = "" }, 
+                                                                                                NetworkVariableReadPermission.Everyone, 
+                                                                                                NetworkVariableWritePermission.Owner);
 
     [SerializeField] List<Question_SO> allQuestions = new();
     [SerializeField] float questionTimerSeconds = 15f;
@@ -54,7 +73,6 @@ public class QuestionManager : NetworkBehaviour
     [SerializeField] int distanceToSpawnQuestion;
     [SerializeField] UIGamePlayManager uiGamePlayManager;
     [SerializeField] Transform playerTransform;
-    [SerializeField] TextMeshProUGUI debugText;
 
     public bool SpawnQuestion;
 
@@ -67,10 +85,6 @@ public class QuestionManager : NetworkBehaviour
     {
         GenerateGameQuestions();
         SetNewTargetHeight();
-        //questionAnswer.OnValueChanged += (QuestionAnswerData previousValue, QuestionAnswerData newValue) =>
-        //{
-        //    RecordAnswer(newValue);
-        //};
     }
 
     private void FixedUpdate()
@@ -104,12 +118,12 @@ public class QuestionManager : NetworkBehaviour
         questionsAnswered++;
         SetNewTargetHeight();
         SpawnQuestion = false;
+        SetTimeScale_ClientRpc(0);
     }
 
     [ServerRpc(RequireOwnership = false)]
     public void RecieveQuestionAnswer_ServerRpc(ulong playerID, int questionIndex, int answerIndex)
     {
-        //if (!IsHost) return;
         questionAnswer.Value = new QuestionAnswerData
         {
             PlayerID = playerID,
@@ -126,22 +140,52 @@ public class QuestionManager : NetworkBehaviour
         answer.Item2 = newValue.QuestionIndex;
         answer.Item3 = newValue.AnswerIndex;
         savedAnswers.Add(answer);
-        //debugText.text = savedAnswers.Count.ToString();
-        ShowAnswer_ClientRpc(savedAnswers.Count);
+        if (savedAnswers.Count == questionsAnswered * 2)
+        {
+            SetTimeScale_ClientRpc(1);
+        }
+        if (savedAnswers.Count / 2 == questionsPerRun)
+        {
+            ShowAnswer(); // end game
+            SetTimeScale_ClientRpc(0);
+        }
     }
 
     [ClientRpc]
-    public void ShowAnswer_ClientRpc(int questionsAnswered)
+    void SetTimeScale_ClientRpc(float newTimeScale)
     {
-        debugText.text = questionsAnswered.ToString();
+        Time.timeScale = newTimeScale;
     }
 
-    public void ShowQuestionAnswers()
+    public void ShowAnswer()
     {
-        //foreach (var item in answersTest)
-        //{
-        //    Debug.Log($"player: {item.Item1} question: {item.Item2} answer: {item.Item3}");
-        //}
+        string questionTemp = "";
+        string answerOneTemp = "";
+        string answerTwoTemp = "";
+
+        for (int i = 0; i < selectedQuestions.Count; i++)
+        {
+            questionTemp = $"Question: { selectedQuestions[i].QuestionText}\n";
+            var answers = (from ans in savedAnswers where ans.Item2 == i select ans).ToList();
+            foreach (var item in answers)
+            {
+                if (item.Item1 == 0)
+                {
+                    answerOneTemp = $"Player {item.Item1}  Answer: {selectedQuestions[i].QuestionAnswers[item.Item3]}";
+                }
+                else
+                {
+                    answerTwoTemp = $"Player {item.Item1}  Answer: {selectedQuestions[i].QuestionAnswers[item.Item3]}";
+                }
+            }
+            finalAnswer.Value = new FinalAnswerData
+            {
+                Question = questionTemp,
+                answerPlayerOne = answerOneTemp,
+                answerPlayerTwo = answerTwoTemp
+            };
+            uiGamePlayManager.FinalAnswersShow_ClientRpc(finalAnswer.Value);
+        }
     }
 
     void GenerateGameQuestions()

@@ -530,6 +530,7 @@ MonoBehaviour:
   - {fileID: 5334328465494771115}
   questionUIObject: {fileID: 500065456368227367}
   questionManager: {fileID: 5066646139675404838}
+  finalAnswersText: {fileID: 5638396791657346577}
 --- !u!114 &6321910700597418604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1815,7 +1816,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3568033195315316683
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4637,22 +4638,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allQuestions:
   - {fileID: 11400000, guid: 6a6413728d6462341a28f21ee88d61d2, type: 2}
-  - {fileID: 11400000, guid: 6a6413728d6462341a28f21ee88d61d2, type: 2}
-  - {fileID: 11400000, guid: 6a6413728d6462341a28f21ee88d61d2, type: 2}
-  - {fileID: 11400000, guid: 6a6413728d6462341a28f21ee88d61d2, type: 2}
-  - {fileID: 11400000, guid: 6a6413728d6462341a28f21ee88d61d2, type: 2}
-  - {fileID: 11400000, guid: 6a6413728d6462341a28f21ee88d61d2, type: 2}
-  - {fileID: 11400000, guid: 6a6413728d6462341a28f21ee88d61d2, type: 2}
-  - {fileID: 11400000, guid: 6a6413728d6462341a28f21ee88d61d2, type: 2}
-  - {fileID: 11400000, guid: 6a6413728d6462341a28f21ee88d61d2, type: 2}
-  - {fileID: 11400000, guid: 6a6413728d6462341a28f21ee88d61d2, type: 2}
+  - {fileID: 11400000, guid: 6c2c735e107e7a54ea3c205450d98f31, type: 2}
+  - {fileID: 11400000, guid: 579662cd5a7dd3943b7d27ca292c6961, type: 2}
+  - {fileID: 11400000, guid: e17a7f2466a3dbf4ebca9f55ca0c2ec1, type: 2}
+  - {fileID: 11400000, guid: db94ed086c1d8f74d83e425f82cea9cc, type: 2}
+  - {fileID: 11400000, guid: 00c988fed4263114c90a98a712cc53b2, type: 2}
+  - {fileID: 11400000, guid: 5e38984fffc01ee498009d84d9818a4a, type: 2}
+  - {fileID: 11400000, guid: 9923be38417434b4889eb4336ef4beaa, type: 2}
+  - {fileID: 11400000, guid: 2c41ea9cc2e964649b844f8860505da8, type: 2}
+  - {fileID: 11400000, guid: 65cccd59beb4f104985b4f5712da14d3, type: 2}
   questionTimerSeconds: 15
   questionsPerRun: 3
   selectedQuestions: []
   distanceToSpawnQuestion: 20
   uiGamePlayManager: {fileID: 1629010205359928930}
   playerTransform: {fileID: 7808640529976839405}
-  debugText: {fileID: 5638396791657346577}
   SpawnQuestion: 0
 --- !u!4 &4471109240872982613 stripped
 Transform:
