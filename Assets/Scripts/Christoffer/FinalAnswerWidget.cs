@@ -9,25 +9,28 @@ public class FinalAnswerWidget : MonoBehaviour
     [SerializeField] TextMeshProUGUI yourAnswerText;
     [SerializeField] TextMeshProUGUI theirAnswerText;
     [SerializeField] TextMeshProUGUI sameAnswerText;
+    [SerializeField] GameObject yourTextObject;
+    [SerializeField] GameObject theirTextObject;
+    [SerializeField] GameObject sameTextObject;
 
-    public void SetupAnswerWidget(string question, string yourAnswer, string theirAnswer)
+    public void SetupAnswerWidget(string question, string yourAnswer, string theirAnswer, bool sameAnswer)
     {
         questionText.text = question;
         yourAnswerText.text = yourAnswer;
         theirAnswerText.text = theirAnswer;
         sameAnswerText.text = theirAnswer;
 
-        if (yourAnswer == theirAnswer)
+        if (sameAnswer)
         {
-            yourAnswerText.gameObject.SetActive(false);
-            theirAnswerText.gameObject.SetActive(false);
-            sameAnswerText.gameObject.SetActive(true);
+            yourTextObject.SetActive(false);
+            theirTextObject.SetActive(false);
+            sameTextObject.SetActive(true);
         }
         else
         {
-            yourAnswerText.gameObject.SetActive(true);
-            theirAnswerText.gameObject.SetActive(true);
-            sameAnswerText.gameObject.SetActive(false);
+            yourTextObject.SetActive(true);
+            theirTextObject.SetActive(true);
+            sameTextObject.SetActive(false);
         }
     }
 }

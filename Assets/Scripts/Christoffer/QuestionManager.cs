@@ -45,12 +45,14 @@ public class QuestionManager : NetworkBehaviour
         public string Question;
         public string answerPlayerOne;
         public string answerPlayerTwo;
+        public bool isSameAnswer;
 
         public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
         {
             serializer.SerializeValue(ref Question);
             serializer.SerializeValue(ref answerPlayerOne);
             serializer.SerializeValue(ref answerPlayerTwo);
+            serializer.SerializeValue(ref isSameAnswer);
         }
     }
 
@@ -62,7 +64,7 @@ public class QuestionManager : NetworkBehaviour
                                                                                                 NetworkVariableReadPermission.Everyone, 
                                                                                                 NetworkVariableWritePermission.Server);
 
-    public NetworkVariable<FinalAnswerData> finalAnswer = new NetworkVariable<FinalAnswerData>(new FinalAnswerData() { Question = "", answerPlayerOne = "", answerPlayerTwo = "" }, 
+    public NetworkVariable<FinalAnswerData> finalAnswer = new NetworkVariable<FinalAnswerData>(new FinalAnswerData() { Question = "", answerPlayerOne = "", answerPlayerTwo = "", isSameAnswer = false }, 
                                                                                                 NetworkVariableReadPermission.Everyone, 
                                                                                                 NetworkVariableWritePermission.Owner);
 
@@ -162,6 +164,7 @@ public class QuestionManager : NetworkBehaviour
         string questionTemp = "";
         string answerOneTemp = "";
         string answerTwoTemp = "";
+        bool sameAnswerTemp = false;
 
         for (int i = 0; i < selectedQuestions.Count; i++)
         {
@@ -178,11 +181,20 @@ public class QuestionManager : NetworkBehaviour
                     answerTwoTemp = $"Player {item.Item1}  Answer: {selectedQuestions[i].QuestionAnswers[item.Item3]}";
                 }
             }
+            if (answers[0].Item3 == answers[1].Item3)
+            {
+                sameAnswerTemp = true;
+            }
+            else
+            {
+                sameAnswerTemp = false;
+            }
             finalAnswer.Value = new FinalAnswerData
             {
                 Question = questionTemp,
                 answerPlayerOne = answerOneTemp,
-                answerPlayerTwo = answerTwoTemp
+                answerPlayerTwo = answerTwoTemp,
+                isSameAnswer = sameAnswerTemp
             };
             uiGamePlayManager.FinalAnswersShow_ClientRpc(finalAnswer.Value);
         }
