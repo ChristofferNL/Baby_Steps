@@ -5084,7 +5084,7 @@ MonoBehaviour:
   questionTimerSeconds: 15
   questionsPerRun: 3
   selectedQuestions: []
-  distanceToSpawnQuestion: 20
+  distanceToSpawnQuestion: 1
   uiGamePlayManager: {fileID: 1629010205359928930}
   playerTransform: {fileID: 7808640529976839405}
   SpawnQuestion: 0

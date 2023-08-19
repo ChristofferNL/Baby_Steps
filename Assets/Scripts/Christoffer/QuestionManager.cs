@@ -142,11 +142,11 @@ public class QuestionManager : NetworkBehaviour
         answer.Item2 = newValue.QuestionIndex;
         answer.Item3 = newValue.AnswerIndex;
         savedAnswers.Add(answer);
-        if (savedAnswers.Count == questionsAnswered * 2)
+        if (savedAnswers.Count == questionsAnswered * NetworkManager.Singleton.ConnectedClientsIds.Count)
         {
             SetTimeScale_ClientRpc(1);
         }
-        if (savedAnswers.Count / 2 == questionsPerRun)
+        if (savedAnswers.Count / NetworkManager.Singleton.ConnectedClientsIds.Count == questionsPerRun)
         {
             ShowAnswer(); // end game
             SetTimeScale_ClientRpc(0);
@@ -181,13 +181,16 @@ public class QuestionManager : NetworkBehaviour
                     answerTwoTemp = $"Player {item.Item1}  Answer: {selectedQuestions[i].QuestionAnswers[item.Item3]}";
                 }
             }
-            if (answers[0].Item3 == answers[1].Item3)
+            if (savedAnswers.Count != questionsPerRun)
             {
-                sameAnswerTemp = true;
-            }
-            else
-            {
-                sameAnswerTemp = false;
+                if (answers[0].Item3 == answers[1].Item3)
+                {
+                    sameAnswerTemp = true;
+                }
+                else
+                {
+                    sameAnswerTemp = false;
+                }
             }
             finalAnswer.Value = new FinalAnswerData
             {
