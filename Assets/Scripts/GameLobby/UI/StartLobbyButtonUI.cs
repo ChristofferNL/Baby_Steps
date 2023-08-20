@@ -1,4 +1,6 @@
 using LobbyRelaySample.UI;
+using System;
+using UnityEngine;
 
 namespace LobbyRelaySample
 {
@@ -7,8 +9,11 @@ namespace LobbyRelaySample
     /// </summary>
     public class StartLobbyButtonUI : UIPanelBase
     {
+        [SerializeField] Animator ellipseAnimator;
         public void ToJoinMenu()
         {
+            ellipseAnimator.enabled = true;
+            ellipseAnimator.Play("EllipseMove");
             Manager.UIChangeMenuState(GameState.JoinMenu);
         }
     }
