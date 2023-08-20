@@ -1,5 +1,6 @@
 using LobbyRelaySample.UI;
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace LobbyRelaySample
@@ -14,7 +15,13 @@ namespace LobbyRelaySample
         {
             ellipseAnimator.enabled = true;
             ellipseAnimator.Play("EllipseMove");
-            Manager.UIChangeMenuState(GameState.JoinMenu);
+            StartCoroutine(WaitBeforeStateChange());
         }
+
+        IEnumerator WaitBeforeStateChange()
+        {
+            yield return new WaitForSeconds(0.3f);
+			Manager.UIChangeMenuState(GameState.JoinMenu);
+		}
     }
 }
