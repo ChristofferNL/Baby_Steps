@@ -22,7 +22,8 @@ public class GenerateLevelChunkDataEditor : Editor
 
 public class GenerateLevelChunkData : MonoBehaviour
 {
-
+    [SerializeField] Transform bottomLeft;
+    [SerializeField] Transform topOfLevel;
     private void Start()
     {
         GetLevelData();
@@ -58,8 +59,9 @@ public class GenerateLevelChunkData : MonoBehaviour
             }
         }
 
-        levelData.bottomLeft = transform.position;
+        levelData.bottomLeft = bottomLeft.position;
         levelData.numberOfPlatforms = numOfPlatforms;
+        levelData.height = topOfLevel.localPosition.y;
         levelData.position = new Vector3[numOfPlatforms];
         levelData.scale = new Vector3[numOfPlatforms];
         levelData.rotation = new Quaternion[numOfPlatforms];
@@ -80,11 +82,6 @@ public class GenerateLevelChunkData : MonoBehaviour
                 levelData.position[i - 1] = transform.GetChild(i).transform.localPosition;
                 levelData.scale[i - 1] = transform.GetChild(i).transform.localScale;
                 levelData.rotation[i - 1] = transform.GetChild(i).transform.rotation;
-            }
-
-            if(transform.GetChild(i).name == "TopOfLevel")
-            {
-                levelData.height = transform.GetChild(i).transform.localPosition.y;
             }
         }
 
