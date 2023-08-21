@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d543e6ee5070f2546a666b144cdcd2b9, type: 3}
-  m_Name: SillyWillyOne 4
+  m_Name: Q_31
   m_EditorClassIdentifier: 
-  QuestionText: what is a si
+  QuestionText: What would you kill for?
   QuestionAnswers:
-  - hghgh
-  - gheeee
-  - rttyuu
-  - kfgsdgd
+  - Money
+  - Fame
+  - Power
+  - Fun
