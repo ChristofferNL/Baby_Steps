@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 778c7a64a3576824dbace2fc6fef0d69, type: 3}
+  m_Name: TestLevel1Asset
+  m_EditorClassIdentifier: 
+  numberOfPlatforms: 5
+  isPassThrough: 0000000101
+  position:
+  - {x: 4.54, y: 1.69, z: 0}
+  - {x: 15.77, y: 2.2600002, z: 0}
+  - {x: 10.41, y: 5.24, z: 0}
+  - {x: 15.950001, y: 9.83, z: 0}
+  - {x: 8.91, y: 11.940001, z: 0}
+  bottomLeft: {x: -14.75, y: 0.53, z: 0}
+  height: 12.8
+  scale:
+  - {x: 7.681441, y: 2.5474675, z: 1}
+  - {x: 7.057644, y: 2.1137, z: 2.1137}
+  - {x: 5.413989, y: 0.9404908, z: 2.1137}
+  - {x: 5.3835163, y: 0.77547455, z: 2.356564}
+  - {x: 5.3835163, y: 0.77547455, z: 2.356564}
