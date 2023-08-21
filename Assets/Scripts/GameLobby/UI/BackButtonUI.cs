@@ -7,8 +7,6 @@ namespace LobbyRelaySample.UI
     /// </summary>
     public class BackButtonUI : UIPanelBase
     {
-        [SerializeField] Animator ellipseAnimator;
-        [SerializeField] GameObject startMenuButtons;
 
         public void ToJoinMenu()
         {
@@ -18,8 +16,6 @@ namespace LobbyRelaySample.UI
         public void ToMenu()
         {
             Manager.UIChangeMenuState(GameState.Menu);
-            ellipseAnimator.Play("EllipseMoveBack");
-            startMenuButtons.SetActive(true);
         }
     }
 }

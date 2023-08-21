@@ -21,8 +21,6 @@ namespace LobbyRelaySample.UI
         [SerializeField] //Serialized for Visisbility in Editor
         JoinCreateTabs m_CurrentTab = JoinCreateTabs.Join;
 
-        [SerializeField] GameObject StartMenuButtonsObject;
-
         public JoinCreateTabs CurrentTab
         {
             get => m_CurrentTab;
@@ -31,11 +29,6 @@ namespace LobbyRelaySample.UI
                 m_CurrentTab = value;
                 m_OnTabChanged?.Invoke(m_CurrentTab);
             }
-        }
-
-        public void HideStartMenuButtons()
-        {
-            StartMenuButtonsObject.SetActive(false);
         }
 
         public void SetJoinTab()

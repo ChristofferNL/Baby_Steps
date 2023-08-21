@@ -82,7 +82,7 @@ public class InputManager : NetworkBehaviour
 
 	IEnumerator StartGameCountdown()
 	{
-		yield return new WaitForSeconds(3f); // TODO: this should be turned to true once both players are connected
+		yield return new WaitForSeconds(6f);
 		GameIsRunning = true;
 	}
 

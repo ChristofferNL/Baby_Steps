@@ -37,6 +37,7 @@ public class RopeGenerator : NetworkBehaviour
         {
             Vector3 spawnPos;
             float lerpValue = i / numberOfJoints;
+            Debug.Log(lerpValue);
             spawnPos = Vector3.Lerp(player1.position + vectorBetweenPlayers.normalized * distanceBetweenPlayers / numberOfJoints, player2.position - vectorBetweenPlayers.normalized * distanceBetweenPlayers / numberOfJoints, lerpValue);
             //spawnPos = Vector3.Lerp(player2.position, player1.position , lerpValue);
             //Vector3 spawnPos = player1.transform.position + vectorBetweenPlayers.normalized * distanceBetweenPlayers * ((i + 1) / numberOfJoints);
