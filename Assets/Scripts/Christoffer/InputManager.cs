@@ -36,6 +36,7 @@ public class InputManager : NetworkBehaviour
 	public bool IsGrounded;
 	public bool doGroundCheck = true;
 	public bool canChargeWhilePulled = false;
+	public bool canWalk = false;
 
 	[SerializeField] float groundCheckPauseTime = 0.5f;
 
@@ -113,7 +114,7 @@ public class InputManager : NetworkBehaviour
 				break;
 		}
 
-		if (actions.Jump.IsPressed() && IsGrounded)
+		if (actions.Jump.IsPressed() && IsGrounded && !chargingJump)
 		{
 			chargingJump = true;
 			StartCoroutine(ChargeJump());
@@ -129,12 +130,13 @@ public class InputManager : NetworkBehaviour
 			int counter = 0;
 			while (chargingJump && IsGrounded || chargingJump && canChargeWhilePulled)
 			{
-				if (counter <= jumpForceTimesToAdd)
+                if (counter <= jumpForceTimesToAdd)
 				{
 					counter++;
 					jumpForce += jumpForceToAdd;
-				}
-				yield return new WaitForSeconds(timeBetweenAdd);
+                }
+
+                yield return new WaitForSeconds(timeBetweenAdd);
 			}
 
 			if (IsGrounded || canChargeWhilePulled)
@@ -145,7 +147,7 @@ public class InputManager : NetworkBehaviour
 			}
 		}
 
-		if (!chargingJump)
+		if (!chargingJump && canWalk)
 		{
 			manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId, actions.Move.ReadValue<float>() * moveForce, 0, jumpDirection);
 		}
