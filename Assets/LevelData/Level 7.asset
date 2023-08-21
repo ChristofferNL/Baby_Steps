@@ -16,6 +16,6 @@ MonoBehaviour:
   isPassThrough: 
   position: []
   rotation: []
-  bottomLeft: {x: 100.55594, y: -10.376352, z: 5}
+  bottomLeft: {x: 99.035255, y: -10.219434, z: 5}
   height: 6837
   scale: []
