@@ -17,6 +17,7 @@ public class UIGamePlayManager : NetworkBehaviour
     [SerializeField] GameObject finalAnswersParent;
     [SerializeField] Transform cameraFollowPoint;
     [SerializeField] Transform playerOneTransform;
+    [SerializeField] ChatMessageWidget chatMessageObject;
 
     int activeQuestionIndex = 0;
 
@@ -39,8 +40,13 @@ public class UIGamePlayManager : NetworkBehaviour
 
         GameObject newAnswer = Instantiate(finalAnswerObject.gameObject, finalAnswersParent.transform, false);
         newAnswer.GetComponent<FinalAnswerWidget>().SetupAnswerWidget(finalAnswers.Question, finalAnswers.answerPlayerOne, finalAnswers.answerPlayerTwo, finalAnswers.isSameAnswer);
+    }
 
-        //finalAnswersText.text += $"{finalAnswers.Question} {finalAnswers.answerPlayerOne} {finalAnswers.answerPlayerTwo}";
+    [ClientRpc]
+    public void ChatMessageShow_ClientRpc(FixedString512Bytes message)
+    {
+        GameObject newMessage = Instantiate(chatMessageObject.gameObject, finalAnswersParent.transform, false);
+        newMessage.GetComponent<ChatMessageWidget>().SetupChatObject(message.ToString(), "player");
     }
 
     public void RegisterAnswer(int choosenAnswer)
