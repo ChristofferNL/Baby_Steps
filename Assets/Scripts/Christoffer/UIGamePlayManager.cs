@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,6 +15,8 @@ public class UIGamePlayManager : NetworkBehaviour
     [SerializeField] GameObject answerScrollRectObject;
     [SerializeField] FinalAnswerWidget finalAnswerObject;
     [SerializeField] GameObject finalAnswersParent;
+    [SerializeField] Transform cameraFollowPoint;
+    [SerializeField] Transform playerOneTransform;
 
     int activeQuestionIndex = 0;
 
@@ -42,6 +45,7 @@ public class UIGamePlayManager : NetworkBehaviour
 
     public void RegisterAnswer(int choosenAnswer)
     {
+        cameraFollowPoint.position = new Vector2(cameraFollowPoint.position.x, playerOneTransform.position.y + 14);
         questionManager.RecieveQuestionAnswer_ServerRpc(NetworkManager.Singleton.LocalClientId, activeQuestionIndex - 1, choosenAnswer);
         questionUIObject.SetActive(false);
     }
