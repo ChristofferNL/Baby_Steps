@@ -16,8 +16,6 @@ GameObject:
   - component: {fileID: 1756988838506829899}
   - component: {fileID: 886853654619172641}
   - component: {fileID: 525375246640422116}
-  - component: {fileID: 775360522202052187}
-  - component: {fileID: 8542014205454926450}
   m_Layer: 7
   m_Name: Player 2
   m_TagString: Untagged
@@ -108,7 +106,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -170,7 +168,7 @@ MonoBehaviour:
   PositionThreshold: 0.001
   RotAngleThreshold: 0.01
   ScaleThreshold: 0.01
-  InLocalSpace: 0
+  InLocalSpace: 1
   Interpolate: 1
 --- !u!114 &886853654619172641
 MonoBehaviour:
@@ -200,47 +198,9 @@ DistanceJoint2D:
   m_AutoConfigureConnectedAnchor: 0
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
-  m_AutoConfigureDistance: 1
-  m_Distance: 1.9122791
+  m_AutoConfigureDistance: 0
+  m_Distance: 0.6
   m_MaxDistanceOnly: 1
---- !u!114 &775360522202052187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 109336676726759083}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80d7c879794dfda4687da0e400131852, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8542014205454926450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 109336676726759083}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SyncPositionX: 1
-  SyncPositionY: 1
-  SyncPositionZ: 1
-  SyncRotAngleX: 1
-  SyncRotAngleY: 1
-  SyncRotAngleZ: 1
-  SyncScaleX: 1
-  SyncScaleY: 1
-  SyncScaleZ: 1
-  PositionThreshold: 0.0001
-  RotAngleThreshold: 0.01
-  ScaleThreshold: 0.01
-  InLocalSpace: 1
-  Interpolate: 1
 --- !u!1 &1178474350582760420
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,8 +279,6 @@ GameObject:
   - component: {fileID: 704135452938341588}
   - component: {fileID: 6008990072893084675}
   - component: {fileID: 7624495364531928757}
-  - component: {fileID: 1866187998017639167}
-  - component: {fileID: 4044428563946325105}
   m_Layer: 7
   m_Name: Player 1
   m_TagString: Untagged
@@ -411,7 +369,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -473,47 +431,9 @@ MonoBehaviour:
   PositionThreshold: 0.001
   RotAngleThreshold: 0.01
   ScaleThreshold: 0.01
-  InLocalSpace: 0
-  Interpolate: 1
---- !u!114 &7624495364531928757
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1750335629413419827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80d7c879794dfda4687da0e400131852, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1866187998017639167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1750335629413419827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SyncPositionX: 1
-  SyncPositionY: 1
-  SyncPositionZ: 1
-  SyncRotAngleX: 1
-  SyncRotAngleY: 1
-  SyncRotAngleZ: 1
-  SyncScaleX: 1
-  SyncScaleY: 1
-  SyncScaleZ: 1
-  PositionThreshold: 0.0001
-  RotAngleThreshold: 0.01
-  ScaleThreshold: 0.01
   InLocalSpace: 1
   Interpolate: 1
---- !u!114 &4044428563946325105
+--- !u!114 &7624495364531928757
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -567,7 +487,7 @@ GameObject:
   - component: {fileID: 7653585192276416231}
   - component: {fileID: 3994633869743738295}
   - component: {fileID: 5819649817507175485}
-  - component: {fileID: 1324490520259870624}
+  - component: {fileID: 5066646139675404838}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -604,17 +524,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 3760732946578903537}
   playerRb: {fileID: 7882267546874484214}
+  playerRbTwo: {fileID: 4283676619121314304}
   moveForce: 3
-  jumpForceToAdd: 0.05
-  jumpForceBase: 0.5
+  jumpForceToAdd: 2.5
+  jumpForceBase: 3
   timeBetweenAdd: 0.05
-  jumpForceTimesToAdd: 7
-  groundCheckDistance: 1
+  jumpForceTimesToAdd: 20
+  groundCheckDistance: 0.11
+  groundCheckRadius: 0.33
   groundCheckLayerMask:
     serializedVersion: 2
     m_Bits: 55
-  IsGrounded: 0
+  IsGrounded: 1
   doGroundCheck: 1
+  canChargeWhilePulled: 1
   groundCheckPauseTime: 0.5
 --- !u!114 &5819649817507175485
 MonoBehaviour:
@@ -632,7 +555,7 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &1324490520259870624
+--- !u!114 &5066646139675404838
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -641,18 +564,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 5993999582532261144}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0548af69feb68b40bd0531807657b99, type: 3}
+  m_Script: {fileID: 11500000, guid: 3093c222737893f43a93e970634c29d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ropeJointPrefab: {fileID: 138280216086920977, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
-  numberOfJoints: 10
-  ropeLenght: 10
-  player1: {fileID: 3297717626998920922}
-  player2: {fileID: 1690261798932719180}
-  timeBetweenRopeLoad: 0.04
-  rbOne: {fileID: 7882267546874484214}
-  rbTwo: {fileID: 4283676619121314304}
-  ropeParent: {fileID: 0}
+  allQuestions:
+  - {fileID: 11400000, guid: 6a6413728d6462341a28f21ee88d61d2, type: 2}
+  - {fileID: 11400000, guid: 6c2c735e107e7a54ea3c205450d98f31, type: 2}
+  - {fileID: 11400000, guid: 579662cd5a7dd3943b7d27ca292c6961, type: 2}
+  - {fileID: 11400000, guid: e17a7f2466a3dbf4ebca9f55ca0c2ec1, type: 2}
+  - {fileID: 11400000, guid: db94ed086c1d8f74d83e425f82cea9cc, type: 2}
+  - {fileID: 11400000, guid: 00c988fed4263114c90a98a712cc53b2, type: 2}
+  - {fileID: 11400000, guid: 5e38984fffc01ee498009d84d9818a4a, type: 2}
+  - {fileID: 11400000, guid: 9923be38417434b4889eb4336ef4beaa, type: 2}
+  - {fileID: 11400000, guid: 2c41ea9cc2e964649b844f8860505da8, type: 2}
+  - {fileID: 11400000, guid: 65cccd59beb4f104985b4f5712da14d3, type: 2}
+  questionTimerSeconds: 15
+  questionsPerRun: 3
+  selectedQuestions: []
+  distanceToSpawnQuestion: 1
+  uiGamePlayManager: {fileID: 0}
+  playerTransform: {fileID: 3297717626998920922}
+  SpawnQuestion: 0
 --- !u!1 &7820220020420311753
 GameObject:
   m_ObjectHideFlags: 0
@@ -809,17 +741,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rope Joint 1_6
       objectReference: {fileID: 0}
+    - target: {fileID: 138280216086920978, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_Distance
-      value: 0.005
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 5903154686150868068}
+    - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_AutoConfigureDistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1130345505065095299, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996205531928442300, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421074189019206439, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
@@ -888,17 +836,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rope Joint 1_14
       objectReference: {fileID: 0}
+    - target: {fileID: 138280216086920978, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_Distance
-      value: 0.005
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 5422513512112903937}
+    - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_AutoConfigureDistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1130345505065095299, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996205531928442300, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421074189019206439, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
@@ -967,17 +931,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rope Joint 1_10
       objectReference: {fileID: 0}
+    - target: {fileID: 138280216086920978, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_Distance
-      value: 0.005
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 5755256259937649714}
+    - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_AutoConfigureDistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1130345505065095299, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996205531928442300, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421074189019206439, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
@@ -1046,17 +1026,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rope Joint 1_15
       objectReference: {fileID: 0}
+    - target: {fileID: 138280216086920978, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_Distance
-      value: 0.005
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 1429355924855615115}
+    - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_AutoConfigureDistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1130345505065095299, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996205531928442300, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421074189019206439, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
@@ -1125,17 +1121,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rope Joint 1_4
       objectReference: {fileID: 0}
+    - target: {fileID: 138280216086920978, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_Distance
-      value: 0.005
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 6623533991455776568}
+    - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_AutoConfigureDistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1130345505065095299, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996205531928442300, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421074189019206439, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
@@ -1204,17 +1216,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rope Joint 1_8
       objectReference: {fileID: 0}
+    - target: {fileID: 138280216086920978, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_Distance
-      value: 0.005
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 9045924487057390479}
+    - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_AutoConfigureDistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1130345505065095299, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996205531928442300, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421074189019206439, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
@@ -1283,17 +1311,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rope Joint 1_16
       objectReference: {fileID: 0}
+    - target: {fileID: 138280216086920978, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_Distance
-      value: 0.005
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 1625966377340931134}
+    - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_AutoConfigureDistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1130345505065095299, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996205531928442300, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421074189019206439, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
@@ -1362,17 +1406,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rope Joint 1_12
       objectReference: {fileID: 0}
+    - target: {fileID: 138280216086920978, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_Distance
-      value: 0.005
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 6254866279769150424}
+    - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_AutoConfigureDistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1130345505065095299, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996205531928442300, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421074189019206439, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
@@ -1441,17 +1501,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rope Joint 1
       objectReference: {fileID: 0}
+    - target: {fileID: 138280216086920978, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_Distance
-      value: 1.8954337
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 7882267546874484214}
+    - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_AutoConfigureDistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1130345505065095299, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996205531928442300, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421074189019206439, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
@@ -1520,17 +1596,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rope Joint 1_1
       objectReference: {fileID: 0}
+    - target: {fileID: 138280216086920978, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_Distance
-      value: 0.005
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 4207325893946049739}
+    - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_AutoConfigureDistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1130345505065095299, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996205531928442300, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421074189019206439, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
@@ -1599,17 +1691,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rope Joint 1_13
       objectReference: {fileID: 0}
+    - target: {fileID: 138280216086920978, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_Distance
-      value: 0.005
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 4305060515538320926}
+    - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_AutoConfigureDistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1130345505065095299, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996205531928442300, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421074189019206439, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
@@ -1678,17 +1786,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rope Joint 1_9
       objectReference: {fileID: 0}
+    - target: {fileID: 138280216086920978, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_Distance
-      value: 0.005
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 3817230809957719790}
+    - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_AutoConfigureDistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1130345505065095299, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996205531928442300, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421074189019206439, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
@@ -1757,17 +1881,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rope Joint 1_5
       objectReference: {fileID: 0}
+    - target: {fileID: 138280216086920978, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_Distance
-      value: 0.005
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 3090662612668035493}
+    - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_AutoConfigureDistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1130345505065095299, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996205531928442300, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421074189019206439, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
@@ -1836,17 +1976,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rope Joint 1_2
       objectReference: {fileID: 0}
+    - target: {fileID: 138280216086920978, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_Distance
-      value: 0.005
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 4645272819871074978}
+    - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_AutoConfigureDistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1130345505065095299, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996205531928442300, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421074189019206439, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
@@ -1915,17 +2071,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rope Joint 1_11
       objectReference: {fileID: 0}
+    - target: {fileID: 138280216086920978, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_Distance
-      value: 0.005
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 1370152563491971358}
+    - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_AutoConfigureDistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1130345505065095299, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996205531928442300, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421074189019206439, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
@@ -1994,17 +2166,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rope Joint 1_3
       objectReference: {fileID: 0}
+    - target: {fileID: 138280216086920978, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_Distance
-      value: 0.005
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 6113545194739627573}
+    - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_AutoConfigureDistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1130345505065095299, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996205531928442300, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421074189019206439, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
@@ -2073,17 +2261,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rope Joint 1_17
       objectReference: {fileID: 0}
+    - target: {fileID: 138280216086920978, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_Distance
-      value: 0.005
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 4082669954936386713}
+    - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_AutoConfigureDistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1130345505065095299, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996205531928442300, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421074189019206439, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
@@ -2152,17 +2356,33 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rope Joint 1_7
       objectReference: {fileID: 0}
+    - target: {fileID: 138280216086920978, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Mass
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_Distance
-      value: 0.005
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 782043028271717545}
+    - target: {fileID: 138280216086920983, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_AutoConfigureDistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1130345505065095299, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
+      objectReference: {fileID: 0}
+    - target: {fileID: 1996205531928442300, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8421074189019206439, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd6979b337cb64f4ba41bdf0025cbd92, type: 3}
