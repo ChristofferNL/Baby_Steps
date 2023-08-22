@@ -1,4 +1,5 @@
 using Cinemachine;
+using LobbyRelaySample;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -22,8 +23,37 @@ public class UIGamePlayManager : NetworkBehaviour
     [SerializeField] ChatMessageWidget chatMessageObject;
     [SerializeField] TMP_InputField inputField;
     [SerializeField] ScrollRect chatScrollRect;
+    [SerializeField] UnityEngine.UI.Image leftPlayerImage;
+    [SerializeField] UnityEngine.UI.Image rightPlayerImage;
+    [SerializeField] TextMeshProUGUI leftPlayerName;
+    [SerializeField] TextMeshProUGUI rightPlayerName;
+    [SerializeField] UnityEngine.UI.Slider progressSlider;
 
     int activeQuestionIndex = 0;
+
+    public void SetupPlayersUI()
+    {
+        for (int i = 0; i < GameManager.Instance.LocalLobby.PlayerCount; i++)
+        {
+            var player = GameManager.Instance.LocalLobby.GetLocalPlayer(i);
+            if (player == null)
+                continue;
+            SetupPlayer(player);
+        }
+        progressSlider.maxValue = questionManager.questionsPerRun;
+    }
+
+    void SetupPlayer(LocalPlayer player)
+    {
+        if (player.IsHost.Value)
+        {
+            leftPlayerName.text = player.DisplayName.Value;
+        }
+        else
+        {
+            rightPlayerName.text = player.DisplayName.Value;
+        }
+    }
 
     [ClientRpc]
 	public void NewQuestionShow_ClientRpc(QuestionManager.QuestionData questionData)
@@ -35,6 +65,7 @@ public class UIGamePlayManager : NetworkBehaviour
         answerTexts[2].text = questionData.answerThree;
         answerTexts[3].text = questionData.answerFour;
         activeQuestionIndex++;
+        progressSlider.value++;
     }
 
     [ClientRpc]  
@@ -70,6 +101,7 @@ public class UIGamePlayManager : NetworkBehaviour
     {
         yield return new WaitForEndOfFrame();
         chatScrollRect.verticalNormalizedPosition = -0.2f;
+        chatScrollRect.velocity = Vector2.zero;
     }
 
     public void RegisterAnswer(int choosenAnswer)
