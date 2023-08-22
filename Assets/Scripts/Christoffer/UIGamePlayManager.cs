@@ -28,6 +28,9 @@ public class UIGamePlayManager : NetworkBehaviour
     [SerializeField] TextMeshProUGUI leftPlayerName;
     [SerializeField] TextMeshProUGUI rightPlayerName;
     [SerializeField] UnityEngine.UI.Slider progressSlider;
+    [SerializeField] GameObject HudObject;
+    [SerializeField] InputManager inputManager;
+
     public Sprite notSelectedSprite;
     public Sprite selectedSprite;
 
@@ -43,6 +46,8 @@ public class UIGamePlayManager : NetworkBehaviour
             SetupPlayer(player);
         }
         progressSlider.maxValue = questionManager.questionsPerRun;
+        HudObject.SetActive(true);
+        inputManager.EnableControls();
     }
 
     void SetupPlayer(LocalPlayer player)
@@ -74,7 +79,7 @@ public class UIGamePlayManager : NetworkBehaviour
     public void FinalAnswersShow_ClientRpc(QuestionManager.FinalAnswerData finalAnswers)
     {
         answerScrollRectObject.SetActive(true);
-
+        HudObject.SetActive(false);
         GameObject newAnswer = Instantiate(finalAnswerObject.gameObject, finalAnswersParent.transform, false);
         newAnswer.GetComponent<FinalAnswerWidget>().SetupAnswerWidget(finalAnswers.Question, finalAnswers.answerPlayerOne, finalAnswers.answerPlayerTwo, finalAnswers.isSameAnswer);
     }
@@ -125,7 +130,7 @@ public class UIGamePlayManager : NetworkBehaviour
 
     public void RegisterAnswer(int choosenAnswer)
     {
-        cameraFollowPoint.position = new Vector2(cameraFollowPoint.position.x, playerOneTransform.position.y + 14);
+        cameraFollowPoint.position = new Vector2(cameraFollowPoint.position.x, playerOneTransform.position.y + 13);
         questionManager.RecieveQuestionAnswer_ServerRpc(NetworkManager.Singleton.LocalClientId, activeQuestionIndex - 1, choosenAnswer);
         questionUIObject.SetActive(false);
     }

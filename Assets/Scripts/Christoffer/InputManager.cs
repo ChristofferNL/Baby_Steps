@@ -46,11 +46,6 @@ public class InputManager : NetworkBehaviour
 		actions = inputActions.PlayerActionMap;
 	}
 
-    private void Start()
-    {
-		StartCoroutine(StartGameCountdown());
-    }
-
 	public override void OnNetworkSpawn()
 	{
 		if (NetworkManager.Singleton.LocalClientId == 0)
@@ -80,9 +75,8 @@ public class InputManager : NetworkBehaviour
 		GetInputs();
 	}
 
-	IEnumerator StartGameCountdown()
+	public void EnableControls()
 	{
-		yield return new WaitForSeconds(3f); // TODO: this should be turned to true once both players are connected
 		GameIsRunning = true;
 	}
 
