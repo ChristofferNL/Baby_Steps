@@ -5,6 +5,7 @@ using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using System.IO;
+using UnityEditor.TerrainTools;
 
 /*
 [CustomEditor(typeof(GenerateLevelChunkData))]
@@ -18,7 +19,6 @@ public class GenerateLevelChunkDataEditor : Editor
     
 }
 */
-
 
 public class GenerateLevelChunkData : MonoBehaviour
 {
@@ -40,6 +40,8 @@ public class GenerateLevelChunkData : MonoBehaviour
             GetLevelData();
         }
     }
+    
+
     public void GetLevelData()
     {
         //deletes the file if it already exists
@@ -64,6 +66,7 @@ public class GenerateLevelChunkData : MonoBehaviour
         levelData.height = topOfLevel.localPosition.y;
         levelData.position = new Vector3[numOfPlatforms];
         levelData.scale = new Vector3[numOfPlatforms];
+        levelData.color = new Color[numOfPlatforms];
         levelData.rotation = new Quaternion[numOfPlatforms];
         levelData.isPassThrough = new bool[numOfPlatforms];
 

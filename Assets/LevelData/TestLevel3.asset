@@ -19,6 +19,11 @@ MonoBehaviour:
   - {x: 10.57, y: 1.28, z: 0}
   - {x: 16.66, y: 4.92, z: 0}
   - {x: 7.33, y: 3.21, z: 0}
+  rotation:
+  - {x: 0, y: 0, z: 0, w: 0}
+  - {x: 0, y: 0, z: 0, w: 0}
+  - {x: 0, y: 0, z: 0, w: 0}
+  - {x: 0, y: 0, z: 0, w: 0}
   bottomLeft: {x: -14.75, y: 0.53, z: 0}
   height: 12.8
   scale:
