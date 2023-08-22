@@ -40,14 +40,14 @@ namespace LobbyRelaySample.ngo
             }
         }
 
-        void Update()
-        {
-            if (!IsHost)
-                return;
-            if (!m_hasGameStarted)
-                return;
-            BeginMotion();
-        }
+        //void Update()
+        //{
+        //    if (!IsHost)
+        //        return;
+        //    if (!m_hasGameStarted)
+        //        return;
+        //    BeginMotion();
+        //}
 
         void BeginMotion()
         {
