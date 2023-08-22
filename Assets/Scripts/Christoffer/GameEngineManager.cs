@@ -10,15 +10,27 @@ public class GameEngineManager : NetworkBehaviour
 	[SerializeField] Rigidbody2D testRB;
 	[SerializeField] Rigidbody2D testRBTwo;
 
-	[ServerRpc (RequireOwnership = false)]
+	[Header("Player Animations")]
+	[SerializeField] SpriteRenderer playerOneSpriteRenderer;
+	[SerializeField] Sprite idlePlayerOne;
+	[SerializeField] Sprite jumpPlayerOne;
+	[SerializeField] Sprite airPlayerOne;
+	[SerializeField] SpriteRenderer playerTwoSpriteRenderer;
+    [SerializeField] Sprite idlePlayerTwo;
+    [SerializeField] Sprite jumpPlayerTwo;
+    [SerializeField] Sprite airPlayerTwo;
+
+    [ServerRpc (RequireOwnership = false)]
 	public void HandlePlayerInput_ServerRpc(ulong clientID,
 								float moveInput,
 								float jumpForce,
-								InputManager.JumpDirection jumpDirection)
+								InputManager.JumpDirection jumpDirection,
+								bool isGrounded,
+								bool isChargingJump)
 	{
-		/*MovePlayer(moveInput, jumpForce, jumpDirection, rigidbody);*/ // for testing
 
-		//if (!IsOwner) return;
+		AnimatePlayer(clientID, jumpDirection, isChargingJump, isGrounded);
+
 		if (clientID == 0)
 		{
             MovePlayer(moveInput, jumpForce, jumpDirection, testRB);
@@ -27,8 +39,6 @@ public class GameEngineManager : NetworkBehaviour
 		{
             MovePlayer(moveInput, jumpForce, jumpDirection, testRBTwo);
         }
-
-
 	}
 
 	void MovePlayer(float moveInput, float jumpForce, InputManager.JumpDirection jumpDirection, Rigidbody2D rigidbody)
@@ -55,5 +65,37 @@ public class GameEngineManager : NetworkBehaviour
 					break;
 			}
 		}
+	}
+
+	void AnimatePlayer(ulong clientID, InputManager.JumpDirection jumpDirection, bool isChargingJump, bool isGrounded)
+	{
+		if (clientID == 0)
+		{
+			playerOneSpriteRenderer.flipX = jumpDirection == InputManager.JumpDirection.RIGHT ? false : 
+											jumpDirection == InputManager.JumpDirection.LEFT ? true : 
+											playerOneSpriteRenderer.flipX;
+
+			if (!isChargingJump && isGrounded)
+			{
+				playerOneSpriteRenderer.sprite = idlePlayerOne;
+				return;
+			}
+
+			playerOneSpriteRenderer.sprite = isChargingJump ? jumpPlayerOne : airPlayerOne;
+		}
+		else
+		{
+            playerTwoSpriteRenderer.flipX = jumpDirection == InputManager.JumpDirection.RIGHT ? false :
+											jumpDirection == InputManager.JumpDirection.LEFT ? true :
+											playerTwoSpriteRenderer.flipX;
+
+            if (!isChargingJump && isGrounded)
+            {
+                playerTwoSpriteRenderer.sprite = idlePlayerTwo;
+                return;
+            }
+
+            playerTwoSpriteRenderer.sprite = isChargingJump ? jumpPlayerTwo : airPlayerTwo;
+        }
 	}
 }
