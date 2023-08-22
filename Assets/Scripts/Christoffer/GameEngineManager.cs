@@ -29,7 +29,7 @@ public class GameEngineManager : NetworkBehaviour
 								bool isChargingJump)
 	{
 
-		AnimatePlayer(clientID, jumpDirection, isChargingJump, isGrounded);
+		AnimatePlayer_ClientRpc(clientID, jumpDirection, isChargingJump, isGrounded);
 
 		if (clientID == 0)
 		{
@@ -67,7 +67,8 @@ public class GameEngineManager : NetworkBehaviour
 		}
 	}
 
-	void AnimatePlayer(ulong clientID, InputManager.JumpDirection jumpDirection, bool isChargingJump, bool isGrounded)
+	[ClientRpc]
+	void AnimatePlayer_ClientRpc(ulong clientID, InputManager.JumpDirection jumpDirection, bool isChargingJump, bool isGrounded)
 	{
 		if (clientID == 0)
 		{
