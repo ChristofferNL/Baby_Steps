@@ -28,6 +28,8 @@ public class UIGamePlayManager : NetworkBehaviour
     [SerializeField] TextMeshProUGUI leftPlayerName;
     [SerializeField] TextMeshProUGUI rightPlayerName;
     [SerializeField] UnityEngine.UI.Slider progressSlider;
+    public Sprite notSelectedSprite;
+    public Sprite selectedSprite;
 
     int activeQuestionIndex = 0;
 
@@ -79,28 +81,45 @@ public class UIGamePlayManager : NetworkBehaviour
 
     public void InitiateChatMessage()
     {
-        SendChatMessage_ServerRpc(inputField.text);
+        SendChatMessage_ServerRpc(inputField.text, NetworkManager.Singleton.LocalClientId);
 		inputField.text = "";
 	}
 
 	[ServerRpc(RequireOwnership = false)]
-	void SendChatMessage_ServerRpc(FixedString512Bytes message)
+	void SendChatMessage_ServerRpc(FixedString512Bytes message, ulong senderID)
 	{
-        ChatMessageShow_ClientRpc(message);
+        for (int i = 0; i < GameManager.Instance.LocalLobby.PlayerCount; i++)
+        {
+            var player = GameManager.Instance.LocalLobby.GetLocalPlayer(i);
+            if (player == null)
+                continue;
+            if (player.Index.Value == (int)senderID)
+            {
+                ChatMessageShow_ClientRpc(message, player.DisplayName.Value);
+            }
+        }
 	}
 
 	[ClientRpc]
-    public void ChatMessageShow_ClientRpc(FixedString512Bytes message)
+    public void ChatMessageShow_ClientRpc(FixedString512Bytes message, FixedString512Bytes playerName)
     {
         GameObject newMessage = Instantiate(chatMessageObject.gameObject, finalAnswersParent.transform, false);
-        newMessage.GetComponent<ChatMessageWidget>().SetupChatObject(message.ToString(), "player");
+        newMessage.GetComponent<ChatMessageWidget>().SetupChatObject(message.ToString(), playerName.ToString());
         StartCoroutine(ScrollToBottom());
     }
 
     IEnumerator ScrollToBottom()
     {
-        yield return new WaitForEndOfFrame();
-        chatScrollRect.verticalNormalizedPosition = -0.2f;
+        yield return new WaitForSecondsRealtime(0.1f);
+        float progress = 1 - chatScrollRect.verticalNormalizedPosition;
+        float startPos = chatScrollRect.verticalNormalizedPosition;
+        while (progress < 1f)
+        {
+            progress += Time.unscaledDeltaTime;
+            float percentageDone = progress / 1;
+            chatScrollRect.verticalNormalizedPosition = Mathf.Lerp(startPos, 0, percentageDone);
+            yield return null;
+        }
         chatScrollRect.velocity = Vector2.zero;
     }
 
