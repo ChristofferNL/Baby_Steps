@@ -5,6 +5,8 @@ using TMPro;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class UIGamePlayManager : NetworkBehaviour
 {
@@ -18,6 +20,8 @@ public class UIGamePlayManager : NetworkBehaviour
     [SerializeField] Transform cameraFollowPoint;
     [SerializeField] Transform playerOneTransform;
     [SerializeField] ChatMessageWidget chatMessageObject;
+    [SerializeField] TMP_InputField inputField;
+    [SerializeField] ScrollRect chatScrollRect;
 
     int activeQuestionIndex = 0;
 
@@ -42,11 +46,30 @@ public class UIGamePlayManager : NetworkBehaviour
         newAnswer.GetComponent<FinalAnswerWidget>().SetupAnswerWidget(finalAnswers.Question, finalAnswers.answerPlayerOne, finalAnswers.answerPlayerTwo, finalAnswers.isSameAnswer);
     }
 
-    [ClientRpc]
+    public void InitiateChatMessage()
+    {
+        SendChatMessage_ServerRpc(inputField.text);
+		inputField.text = "";
+	}
+
+	[ServerRpc(RequireOwnership = false)]
+	void SendChatMessage_ServerRpc(FixedString512Bytes message)
+	{
+        ChatMessageShow_ClientRpc(message);
+	}
+
+	[ClientRpc]
     public void ChatMessageShow_ClientRpc(FixedString512Bytes message)
     {
         GameObject newMessage = Instantiate(chatMessageObject.gameObject, finalAnswersParent.transform, false);
         newMessage.GetComponent<ChatMessageWidget>().SetupChatObject(message.ToString(), "player");
+        StartCoroutine(ScrollToBottom());
+    }
+
+    IEnumerator ScrollToBottom()
+    {
+        yield return new WaitForEndOfFrame();
+        chatScrollRect.verticalNormalizedPosition = -0.2f;
     }
 
     public void RegisterAnswer(int choosenAnswer)
