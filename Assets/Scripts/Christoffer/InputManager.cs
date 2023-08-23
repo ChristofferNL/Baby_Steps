@@ -46,11 +46,6 @@ public class InputManager : NetworkBehaviour
 		actions = inputActions.PlayerActionMap;
 	}
 
-    private void Start()
-    {
-		StartCoroutine(StartGameCountdown());
-    }
-
 	public override void OnNetworkSpawn()
 	{
 		if (NetworkManager.Singleton.LocalClientId == 0)
@@ -80,9 +75,8 @@ public class InputManager : NetworkBehaviour
 		GetInputs();
 	}
 
-	IEnumerator StartGameCountdown()
+	public void EnableControls()
 	{
-		yield return new WaitForSeconds(3f); // TODO: this should be turned to true once both players are connected
 		GameIsRunning = true;
 	}
 
@@ -130,6 +124,12 @@ public class InputManager : NetworkBehaviour
 			int counter = 0;
 			while (chargingJump && IsGrounded || chargingJump && canChargeWhilePulled)
 			{
+				manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId,
+													actions.Move.ReadValue<float>() * moveForce,
+													0,
+													jumpDirection,
+													IsGrounded,
+													true);
                 if (counter <= jumpForceTimesToAdd)
 				{
 					counter++;
@@ -141,7 +141,12 @@ public class InputManager : NetworkBehaviour
 
 			if (IsGrounded || canChargeWhilePulled)
 			{
-				manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId, actions.Move.ReadValue<float>() * moveForce, jumpForce, jumpDirection);
+				manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId, 
+													actions.Move.ReadValue<float>() * moveForce, 
+													jumpForce, 
+													jumpDirection,
+													IsGrounded,
+													false);
 				StartCoroutine(PauseGroundCheck(groundCheckPauseTime, canChargeWhilePulled));
 				yield break;
 			}
@@ -149,8 +154,22 @@ public class InputManager : NetworkBehaviour
 
 		if (!chargingJump && canWalk)
 		{
-			manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId, actions.Move.ReadValue<float>() * moveForce, 0, jumpDirection);
+			manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId, 
+												actions.Move.ReadValue<float>() * moveForce, 
+												0, 
+												jumpDirection,
+												IsGrounded,
+												false);
 		}
+		else if (!chargingJump && !canWalk)
+		{
+            manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId,
+                                                0,
+                                                0,
+                                                jumpDirection,
+                                                IsGrounded,
+                                                false);
+        }
 	}
 
 	IEnumerator PauseGroundCheck(float pauseTime, bool chargeWhilePulled)

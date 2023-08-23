@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 778c7a64a3576824dbace2fc6fef0d69, type: 3}
+  m_Name: TestLevel6editor test
+  m_EditorClassIdentifier: 
+  numberOfPlatforms: 6
+  isPassThrough: 000001010000
+  position:
+  - {x: 3.5700006, y: 3.0399995, z: 0}
+  - {x: 13.26, y: 0.67999935, z: 0}
+  - {x: 14.26, y: 4.62, z: 0}
+  - {x: 6.7800007, y: 8.509999, z: 0}
+  - {x: 0.7, y: 12.3, z: 0}
+  - {x: 10.8, y: 12.6, z: 0}
+  rotation:
+  - {x: -0, y: -0, z: -0.20786849, w: 0.9781568}
+  - {x: -0, y: -0, z: 0.11200799, w: 0.99370736}
+  - {x: -0, y: -0, z: -0, w: 1}
+  - {x: -0, y: -0, z: -0, w: 1}
+  - {x: -0, y: -0, z: 0.20843515, w: 0.9780362}
+  - {x: -0, y: -0, z: -0.20786849, w: 0.9781568}
+  bottomLeft: {x: -8.47, y: 9.49, z: 0}
+  color:
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
+  height: 14.85
+  scale:
+  - {x: 7.057644, y: 0.2964464, z: 2.1137}
+  - {x: 5.413989, y: 0.9404908, z: 2.1137}
+  - {x: 5.3835163, y: 0.77547455, z: 2.356564}
+  - {x: 10.538233, y: 0.77547455, z: 2.356564}
+  - {x: 7.057644, y: 0.2964464, z: 2.1137}
+  - {x: 7.057644, y: 0.2964464, z: 2.1137}

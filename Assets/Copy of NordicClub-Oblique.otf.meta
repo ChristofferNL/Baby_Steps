@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: bda378147c6912041a63aec92a82ac12
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Nordic Club
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 93e8d2c2318c90b47aed1e68f69b70fe, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
