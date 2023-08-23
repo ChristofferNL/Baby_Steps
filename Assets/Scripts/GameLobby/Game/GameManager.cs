@@ -83,7 +83,7 @@ namespace LobbyRelaySample
             return m_LocalUser;
         }
 
-        public async void CreateLobby(string name, bool isPrivate, string password = null, int maxPlayers = 4)
+        public async void CreateLobby(string name, bool isPrivate, string password = null, int maxPlayers = 2)
         {
             try
             {
