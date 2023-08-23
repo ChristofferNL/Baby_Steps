@@ -2747,11 +2747,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8359818183979690875, guid: b929c03b1d703684b9a9e05ba1bc29f1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -8.04
+      value: -8.3
       objectReference: {fileID: 0}
     - target: {fileID: 8359818183979690875, guid: b929c03b1d703684b9a9e05ba1bc29f1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 10.15
+      value: 6.4
       objectReference: {fileID: 0}
     - target: {fileID: 8359818183979690875, guid: b929c03b1d703684b9a9e05ba1bc29f1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2878,6 +2878,14 @@ PrefabInstance:
       propertyPath: player2
       value: 
       objectReference: {fileID: 851209195}
+    - target: {fileID: 8726451013185534701, guid: b11da987c6581874f91b6f7fc251839f, type: 3}
+      propertyPath: questionAmount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8726451013185534701, guid: b11da987c6581874f91b6f7fc251839f, type: 3}
+      propertyPath: questionToPool
+      value: 
+      objectReference: {fileID: 8361480012651490758, guid: 0cb0ff752bd191244a4ae740f3d29546, type: 3}
     - target: {fileID: 8726451013185534701, guid: b11da987c6581874f91b6f7fc251839f, type: 3}
       propertyPath: levelChunkHolder
       value: 

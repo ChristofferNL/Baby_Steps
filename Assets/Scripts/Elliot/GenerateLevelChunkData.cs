@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.PlayerLoop;
 using System.IO;
 using UnityEditor.TerrainTools;
+using Mono.Cecil.Cil;
 
 /*
 [CustomEditor(typeof(GenerateLevelChunkData))]
@@ -69,9 +70,15 @@ public class GenerateLevelChunkData : MonoBehaviour
         levelData.color = new Color[numOfPlatforms];
         levelData.rotation = new Quaternion[numOfPlatforms];
         levelData.isPassThrough = new bool[numOfPlatforms];
+        levelData.isQuestion = new bool[numOfPlatforms];
 
         for (int i = 0; i < transform.childCount; i++) 
         {
+            if (transform.GetChild(i).GetComponentInChildren<QuestionPlatform>())
+            {
+                levelData.isQuestion[i - 1] = true;
+            }
+
             if (transform.GetChild(i).CompareTag("PassThroughPlatform"))
             {
                 levelData.isPassThrough[i -1] = true;
@@ -80,7 +87,7 @@ public class GenerateLevelChunkData : MonoBehaviour
                 levelData.isPassThrough[i -1] = false;
             }
 
-            if(transform.GetChild(i).CompareTag("PassThroughPlatform") || transform.GetChild(i).CompareTag("SolidPlatform"))
+            if(transform.GetChild(i).CompareTag("PassThroughPlatform") || transform.GetChild(i).CompareTag("SolidPlatform") || transform.GetChild(i).GetComponentInChildren<QuestionPlatform>())  //if its any type of platform
             {
                 levelData.position[i - 1] = transform.GetChild(i).transform.localPosition;
                 levelData.scale[i - 1] = transform.GetChild(i).transform.localScale;

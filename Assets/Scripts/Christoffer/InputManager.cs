@@ -15,6 +15,7 @@ public class InputManager : NetworkBehaviour
 	JumpDirection jumpDirection;
 
 	[SerializeField] GameEngineManager manager;
+	[SerializeField] AudioManager audioManager;
 	[SerializeField] Rigidbody2D playerRb;
 	[SerializeField] Rigidbody2D playerRbTwo;
 	[SerializeField] float moveForce;
@@ -142,7 +143,8 @@ public class InputManager : NetworkBehaviour
 			if (IsGrounded || canChargeWhilePulled)
 			{
 				manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId, actions.Move.ReadValue<float>() * moveForce, jumpForce, jumpDirection);
-				StartCoroutine(PauseGroundCheck(groundCheckPauseTime, canChargeWhilePulled));
+				audioManager.PlaySound_ClientRpc(0);
+                StartCoroutine(PauseGroundCheck(groundCheckPauseTime, canChargeWhilePulled));
 				yield break;
 			}
 		}
