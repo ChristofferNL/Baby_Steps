@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -54,7 +55,7 @@ namespace LobbyRelaySample.UI
 
         public void OnCreatePressed()
         {
-            Manager.CreateLobby(m_ServerName, m_IsServerPrivate, m_ServerPassword);
+            Manager.CreateLobby($"{GameManager.Instance.m_LocalUser.DisplayName.Value}'s Lobby", m_IsServerPrivate, m_ServerPassword);
         }
 
         /// <summary>
