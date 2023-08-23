@@ -71,7 +71,7 @@ public class QuestionManager : NetworkBehaviour
 
     [SerializeField] List<Question_SO> allQuestions = new();
     [SerializeField] float questionTimerSeconds = 15f;
-    [SerializeField] int questionsPerRun = 0;
+    public int questionsPerRun = 0;
     [SerializeField] List<Question_SO> selectedQuestions = new();
     [SerializeField] int distanceToSpawnQuestion;
     [SerializeField] UIGamePlayManager uiGamePlayManager;
@@ -88,6 +88,7 @@ public class QuestionManager : NetworkBehaviour
     {
         GenerateGameQuestions();
         SetNewTargetHeight();
+        uiGamePlayManager.SetupPlayersUI();
     }
 
     private void FixedUpdate()
