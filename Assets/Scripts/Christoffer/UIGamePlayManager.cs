@@ -32,6 +32,8 @@ public class UIGamePlayManager : NetworkBehaviour
     [SerializeField] UnityEngine.UI.Slider progressSlider;
     [SerializeField] GameObject HudObject;
     [SerializeField] InputManager inputManager;
+    [SerializeField] EmoticonWidget leftPlayerEmoteUIObject;
+    [SerializeField] EmoticonWidget rightPlayerEmoteUIObject;
 
     public Sprite notSelectedSprite;
     public Sprite selectedSprite;
@@ -64,10 +66,12 @@ public class UIGamePlayManager : NetworkBehaviour
         if (player.IsHost.Value)
         {
             leftPlayerName.text = player.DisplayName.Value;
+            rightPlayerEmoteUIObject.gameObject.SetActive(false);
         }
         else
         {
             rightPlayerName.text = player.DisplayName.Value;
+            leftPlayerEmoteUIObject.gameObject.SetActive(false);
         }
     }
 
