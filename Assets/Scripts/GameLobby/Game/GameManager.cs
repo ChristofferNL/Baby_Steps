@@ -10,6 +10,7 @@ using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using Unity.Services.Samples;
 using UnityEngine;
+using Unity.Services.Vivox;
 #if UNITY_EDITOR
 using ParrelSync;
 
@@ -400,6 +401,7 @@ namespace LobbyRelaySample
 
             void OnVivoxJoinComplete(bool didSucceed)
             {
+                VivoxService.Instance.Client.AudioInputDevices.Muted = true;
                 if (!didSucceed)
                 {
                     Debug.LogError("Vivox connection failed! Retrying in 5s...");
