@@ -90,6 +90,10 @@ public class LevelGenerator : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        if (pooledPlatforms.Count != 0) foreach (GameObject obj in pooledPlatforms) { obj.SetActive(false); };
+        if (pooledPassthrough.Count != 0) foreach (GameObject obj in pooledPassthrough) { obj.SetActive(false); };
+        if (pooledQuestions.Count != 0) foreach (GameObject obj in pooledQuestions) { obj.SetActive(false); };
+
         if(!testingMode && !createPoolsOnRuntime) { return; }
         //creating solid pool
         pooledPlatforms = new List<GameObject>();
@@ -130,9 +134,14 @@ public class LevelGenerator : NetworkBehaviour
     {
         playerHeight = ((player1.position + player2.position) / 2).y;
 
-        if(playerHeight > heightNextSpawn && ( !IsHost || !IsServer ))
+        if(IsServer || IsHost)
         {
-            SpawnChunk();
+            Debug.LogError("im the server");
+        }
+
+        if(playerHeight > heightNextSpawn)
+        {
+            if(IsHost || IsServer) { SpawnChunk(); }
         }
     }
 
