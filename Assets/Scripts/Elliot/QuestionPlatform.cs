@@ -7,15 +7,15 @@ public class QuestionPlatform : MonoBehaviour
     [SerializeField] int amountOfPlayersColliding = 0;
     public QuestionManager questionManager;
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.layer == 7) { amountOfPlayersColliding++; }
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.gameObject.layer == 7) { amountOfPlayersColliding++; }
 
-        if(amountOfPlayersColliding >= 2) { questionManager.OpenNextQuestion_ServerRpc(); }
-    }
+		if (amountOfPlayersColliding >= 2) { questionManager.OpenNextQuestion_ServerRpc(); }
+	}
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.layer == 7) { amountOfPlayersColliding--; }
-    }
+	private void OnTriggerExit2D(Collider2D collision)
+	{
+		if (collision.gameObject.layer == 7) { amountOfPlayersColliding--; }
+	}
 }
