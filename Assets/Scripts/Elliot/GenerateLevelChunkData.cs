@@ -26,8 +26,8 @@ public class GenerateLevelChunkData : MonoBehaviour
 {
     [SerializeField] Transform bottomLeft;
     [SerializeField] Transform topOfLevel;
+    [SerializeField] Transform LevelObjectsParent;
     private int currentSaveId;
-    [SerializeField] float debugFloat;
     private void Start()
     {
         GetLevelData();
@@ -48,8 +48,13 @@ public class GenerateLevelChunkData : MonoBehaviour
 
     public void GetLevelData()
     {
+        if(LevelObjectsParent == null)
+        {
+            LevelObjectsParent = new GameObject().transform;
+        }
+
         //deletes the file if it already exists
-        if(File.Exists("Assets/LevelData/" + levelName)) { File.Delete("Assets/LevelData/" + levelName); }
+        if (File.Exists("Assets/LevelData/" + levelName)) { File.Delete("Assets/LevelData/" + levelName); }
 
         Debug.Log("child count:" + transform.childCount) ;
         int numOfPlatforms = 0;
@@ -78,9 +83,9 @@ public class GenerateLevelChunkData : MonoBehaviour
                 numOfPlatforms++;
             }
         }
-        levelData.bottomLeft = bottomLeft.position;
+        levelData.bottomLeft = bottomLeft.position * LevelObjectsParent.localScale.x;
         levelData.numberOfPlatforms = numOfPlatforms;
-        levelData.height = topOfLevel.localPosition.y;
+        levelData.height = topOfLevel.localPosition.y * LevelObjectsParent.localScale.x;
         levelData.position = new Vector3[numOfPlatforms];
         levelData.scale = new Vector3[numOfPlatforms];
         levelData.color = new Color[numOfPlatforms];
@@ -166,23 +171,23 @@ public class GenerateLevelChunkData : MonoBehaviour
                     if (child2.GetComponent<QuestionPlatform>())
                     {
                         levelData.isQuestion[currentSaveId] = true;
-                        levelData.position[currentSaveId] = child2.parent.transform.position - transform.position;
-                        levelData.scale[currentSaveId] = child2.parent.transform.localScale;
+                        levelData.position[currentSaveId] = (child2.parent.transform.position - transform.position) /* * LevelObjectsParent.localScale.x*/;
+                        levelData.scale[currentSaveId] = child2.parent.transform.localScale * LevelObjectsParent.localScale.x;
                         levelData.rotation[currentSaveId] = child2.parent.transform.rotation;
                         currentSaveId++;
                     }else if (child2.CompareTag("PassThroughPlatform"))
                     {
                         levelData.isPassThrough[currentSaveId] = true;
-                        levelData.position[currentSaveId] = child2.position - transform.position;
-                        levelData.scale[currentSaveId] = child2.localScale;
+                        levelData.position[currentSaveId] = (child2.parent.transform.position - transform.position)  /* * LevelObjectsParent.localScale.x*/;
+                        levelData.scale[currentSaveId] = child2.parent.transform.localScale * LevelObjectsParent.localScale.x;
                         levelData.rotation[currentSaveId] = child2.rotation;
                         currentSaveId++;
                     }
                     else if(child2.CompareTag("SolidPlatform"))
                     {
                         levelData.isPassThrough[currentSaveId] = false;
-                        levelData.position[currentSaveId] = child2.position - transform.position;
-                        levelData.scale[currentSaveId] = child2.localScale;
+                        levelData.position[currentSaveId] = (child2.parent.transform.position - transform.position)  /* * LevelObjectsParent.localScale.x*/;
+                        levelData.scale[currentSaveId] = child2.parent.transform.localScale * LevelObjectsParent.localScale.x;
                         levelData.rotation[currentSaveId] = child2.rotation;
                         currentSaveId++;
                     }
@@ -192,16 +197,16 @@ public class GenerateLevelChunkData : MonoBehaviour
                     if(child.CompareTag("PassThroughPlatform") && !child.GetComponentInChildren<QuestionPlatform>())
                     {
                         levelData.isPassThrough[currentSaveId] = true;
-                        levelData.position[currentSaveId] = child.position - transform.position;
-                        levelData.scale[currentSaveId] = child.localScale;
+                        levelData.position[currentSaveId] = (child.position - transform.position)  /* * LevelObjectsParent.localScale.x*/;
+                        levelData.scale[currentSaveId] = child.localScale * LevelObjectsParent.localScale.x;
                         levelData.rotation[currentSaveId] = child.rotation;
                         currentSaveId++;
                     }
                     else if(child.CompareTag("SolidPlatform") && !child.GetComponentInChildren<QuestionPlatform>())
                     {
                         levelData.isPassThrough[currentSaveId] = false;
-                        levelData.position[currentSaveId] = child.position - transform.position;
-                        levelData.scale[currentSaveId] = child.localScale;
+                        levelData.position[currentSaveId] = (child.position - transform.position)  /* * LevelObjectsParent.localScale.x*/;
+                        levelData.scale[currentSaveId] = child.localScale * LevelObjectsParent.localScale.x;
                         levelData.rotation[currentSaveId] = child.rotation;
                         currentSaveId++;
                     }
@@ -212,16 +217,16 @@ public class GenerateLevelChunkData : MonoBehaviour
                 if (transform.GetChild(i).CompareTag("PassThroughPlatform") && !transform.GetChild(i).GetComponentInChildren<QuestionPlatform>())
                 {
                     levelData.isPassThrough[currentSaveId] = true;
-                    levelData.position[currentSaveId] = transform.GetChild(i).transform.localPosition;
-                    levelData.scale[currentSaveId] = transform.GetChild(i).transform.localScale;
+                    levelData.position[currentSaveId] = transform.GetChild(i).transform.localPosition  /* * LevelObjectsParent.localScale.x*/;
+                    levelData.scale[currentSaveId] = transform.GetChild(i).transform.localScale * LevelObjectsParent.localScale.x;
                     levelData.rotation[currentSaveId] = transform.GetChild(i).transform.rotation;
                     currentSaveId++;
                 }
                 else if (transform.GetChild(i).CompareTag("SolidPlatform") && !transform.GetChild(i).GetComponentInChildren<QuestionPlatform>())
                 {
                     levelData.isPassThrough[currentSaveId] = false;
-                    levelData.position[currentSaveId] = transform.GetChild(i).transform.localPosition;
-                    levelData.scale[currentSaveId] = transform.GetChild(i).transform.localScale;
+                    levelData.position[currentSaveId] = transform.GetChild(i).transform.localPosition  /* * LevelObjectsParent.localScale.x*/;
+                    levelData.scale[currentSaveId] = transform.GetChild(i).transform.localScale * LevelObjectsParent.localScale.x;
                     levelData.rotation[currentSaveId] = transform.GetChild(i).transform.rotation;
                     currentSaveId++;
                 }

@@ -9,7 +9,7 @@ using UnityEngine.Pool;
 public class LevelGenerator : NetworkBehaviour
 {
     [SerializeField] LevelChunkDataSO[] chunkDataSOs;
-
+    [SerializeField] bool createPoolsOnRuntime = false;
     [Header("Solid Platforms")]
     public List<GameObject> pooledPlatforms;
     public GameObject platformsToPool;
@@ -51,7 +51,7 @@ public class LevelGenerator : NetworkBehaviour
 
     private void Start()
     {
-        if (testingMode)
+        if (testingMode && createPoolsOnRuntime)
         {
             //creating solid pool
             pooledPlatforms = new List<GameObject>(platformAmount);
@@ -90,7 +90,7 @@ public class LevelGenerator : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if(!IsClient && !testingMode) { return; }
+        if(!testingMode && !createPoolsOnRuntime) { return; }
         //creating solid pool
         pooledPlatforms = new List<GameObject>();
         GameObject tmp;
@@ -139,6 +139,7 @@ public class LevelGenerator : NetworkBehaviour
     void SpawnChunk()
     {
         int levelId = Random.Range(0, chunkDataSOs.Length);
+        Debug.Log("level id " + levelId);
         //Debug.Log("number of platforms:" + chunkDataSOs[levelId].numberOfPlatforms);
 
         if (levelIdOrder.Count < 1)
@@ -241,7 +242,7 @@ public class LevelGenerator : NetworkBehaviour
                     spawnedChunk3.Add(spawnedObject);
                 }
                 spawnedObject.SetActive(true);
-                spawnedObject.GetComponent<QuestionPlatform>().questionManager = questionManager;
+                spawnedObject.GetComponentInChildren<QuestionPlatform>().questionManager = questionManager;
             }
 
             if (chunkDataSOs[levelId].isPassThrough[i] && !chunkDataSOs[levelId].isQuestion[i])
@@ -295,7 +296,7 @@ public class LevelGenerator : NetworkBehaviour
 
         levelSpawnOrder.Add(amountOfSpawnedLevels);
         levelIdOrder.Add(levelId);
-
+        Debug.Log("im here");
         amountOfSpawnedLevels++;
 
         oldStartPos = nextStartPos;

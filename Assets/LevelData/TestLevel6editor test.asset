@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberOfPlatforms: 6
   isPassThrough: 000001010000
+  isQuestion: 000000000000
   position:
   - {x: 3.5700006, y: 3.0399995, z: 0}
   - {x: 13.26, y: 0.67999935, z: 0}
