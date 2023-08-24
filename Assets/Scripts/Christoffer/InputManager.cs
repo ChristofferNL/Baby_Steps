@@ -1,7 +1,10 @@
+using Newtonsoft.Json.Bson;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InputManager : NetworkBehaviour
 {
@@ -30,12 +33,16 @@ public class InputManager : NetworkBehaviour
 	PlayerInputs inputActions;
 	PlayerInputs.PlayerActionMapActions actions;
 
-	private bool GameIsRunning = false;
+	public bool GameIsRunning = false;
 	private bool chargingJump;
 	public bool IsGrounded;
 	public bool doGroundCheck = true;
 	public bool canChargeWhilePulled = false;
 	public bool canWalk = false;
+
+	public Vector3 touchStartPos;
+	public bool isGettingTouch;
+	public int movementTouchId;
 
 	[SerializeField] float groundCheckPauseTime = 0.5f;
 
@@ -69,10 +76,10 @@ public class InputManager : NetworkBehaviour
 
 	private void Update()
 	{
-		if (!GameIsRunning) return;
+        if (!GameIsRunning) return;
 		GroundCheck();
 		GetInputs();
-	}
+    }
 
 	public void EnableControls()
 	{
@@ -92,66 +99,88 @@ public class InputManager : NetworkBehaviour
 		}
 	}
 
-	private void GetInputs()
+    public void StartGettingTouchInput()
+    {	
+        for (int i = 0; i < Touchscreen.current.touches.Count + 1; i++)
+        {
+			//Debug.LogError("touch pos:"+ i + " : " + Touchscreen.current.touches[i].position.ReadValue());
+            //figures out the id of the touch which caused the startmovment function to get called and saves that id to use as a reference when getting input later
+            if (Touchscreen.current.touches[i].position.ReadValue() != Vector2.zero && !isGettingTouch && IsGrounded)
+            {
+                movementTouchId = i;
+                isGettingTouch = true;
+                touchStartPos = Touchscreen.current.touches[movementTouchId].startPosition.ReadValue();
+				StartChargeJump();
+            }
+        }
+    }
+
+	public void StopGettingTouchInput()
 	{
-		switch (actions.Move.ReadValue<float>())
-		{
-			case < 0:
-				jumpDirection = JumpDirection.LEFT;
-				break;
-			case > 0:
-				jumpDirection = JumpDirection.RIGHT;
-				break;
-			default:
-				jumpDirection = JumpDirection.NONE;
-				break;
-		}
+		movementTouchId = 9999;
+		StopChargeJump();
+    }
 
-		if (actions.Jump.IsPressed() && IsGrounded && !chargingJump)
-		{
-			chargingJump = true;
-			StartCoroutine(ChargeJump());
-		}
-		else if (actions.Jump.WasReleasedThisFrame() && IsGrounded || actions.Jump.WasReleasedThisFrame() && canChargeWhilePulled)
-		{
-			chargingJump = false;
-		}
+    private void StartChargeJump()
+    {
 
-		IEnumerator ChargeJump()
+
+        chargingJump = true;
+        StartCoroutine(ChargeJump());
+    }
+
+    private void StopChargeJump()
+    {
+        chargingJump = false;
+    }
+
+    private void GetInputs()
+	{
+        if (!isGettingTouch)
 		{
-			float jumpForce = jumpForceBase;
-			int counter = 0;
-			while (chargingJump && IsGrounded || chargingJump && canChargeWhilePulled)
+			switch (actions.Move.ReadValue<float>())
 			{
-				manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId,
-													actions.Move.ReadValue<float>() * moveForce,
-													0,
-													jumpDirection,
-													IsGrounded,
-													true);
-                if (counter <= jumpForceTimesToAdd)
-				{
-					counter++;
-					jumpForce += jumpForceToAdd;
-                }
-
-                yield return new WaitForSeconds(timeBetweenAdd);
-			}
-
-			if (IsGrounded || canChargeWhilePulled)
-			{
-				manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId, 
-													actions.Move.ReadValue<float>() * moveForce, 
-													jumpForce, 
-													jumpDirection,
-													IsGrounded,
-													false);
-				StartCoroutine(PauseGroundCheck(groundCheckPauseTime, canChargeWhilePulled));
-				yield break;
+				case < 0:
+					jumpDirection = JumpDirection.LEFT;
+					break;
+				case > 0:
+					jumpDirection = JumpDirection.RIGHT;
+					break;
+				default:
+					jumpDirection = JumpDirection.NONE;
+					break;
 			}
 		}
+		else
+		{
+			float xDistance = Touchscreen.current.touches[movementTouchId].position.ReadValue().x - touchStartPos.x;
 
-		if (!chargingJump && canWalk)
+            switch (xDistance)
+            {
+                case <= 0:
+                    jumpDirection = JumpDirection.LEFT;
+                    break;
+                case > 0:
+                    jumpDirection = JumpDirection.RIGHT;
+                    break;
+                default:
+                    jumpDirection = JumpDirection.NONE;
+                    break;
+            }
+        }
+
+
+		//doing stuff for non touch input
+        if (actions.Jump.IsPressed() && IsGrounded && !chargingJump)
+        {
+            StartChargeJump();
+        }
+        else if (actions.Jump.WasReleasedThisFrame() && IsGrounded || actions.Jump.WasReleasedThisFrame() && canChargeWhilePulled)
+        {
+			StopChargeJump();
+        }
+
+        if (!chargingJump && canWalk)
 		{
 			manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId, 
 												actions.Move.ReadValue<float>() * moveForce, 
@@ -159,7 +188,7 @@ public class InputManager : NetworkBehaviour
 												jumpDirection,
 												IsGrounded,
 												false);
-		}
+        }
 		else if (!chargingJump && !canWalk)
 		{
             manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId,
@@ -171,11 +200,46 @@ public class InputManager : NetworkBehaviour
         }
 	}
 
-	IEnumerator PauseGroundCheck(float pauseTime, bool chargeWhilePulled)
+    IEnumerator ChargeJump()
+    {
+        float jumpForce = jumpForceBase;
+        int counter = 0;
+        while (chargingJump && IsGrounded || chargingJump && canChargeWhilePulled)
+        {
+            manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId,
+                                                actions.Move.ReadValue<float>() * moveForce,
+                                                0,
+                                                jumpDirection,
+                                                IsGrounded,
+                                                true);
+            if (counter <= jumpForceTimesToAdd)
+            {
+                counter++;
+                jumpForce += jumpForceToAdd;
+            }
+
+            yield return new WaitForSeconds(timeBetweenAdd);
+        }
+
+        if (IsGrounded || canChargeWhilePulled)
+        {
+            manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId,
+                                                actions.Move.ReadValue<float>() * moveForce,
+                                                jumpForce,
+                                                jumpDirection,
+                                                IsGrounded,
+                                                false);
+            StartCoroutine(PauseGroundCheck(groundCheckPauseTime, canChargeWhilePulled));
+            yield break;
+        }
+    }
+
+    IEnumerator PauseGroundCheck(float pauseTime, bool chargeWhilePulled)
 	{
 		IsGrounded = false;
 		doGroundCheck = false;
 		canChargeWhilePulled = false;
+        isGettingTouch = false;
         yield return new WaitForSeconds(pauseTime);
 		doGroundCheck = true;
         canChargeWhilePulled = chargeWhilePulled;

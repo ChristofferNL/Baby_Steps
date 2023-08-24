@@ -36,15 +36,6 @@ public class GenerateLevelChunkData : MonoBehaviour
     [SerializeField] string levelName = "placeholder name";
     private bool haveDone = false;
 
-    private void Update()
-    {
-        if (Input.GetKey(KeyCode.G) && Input.GetKey(KeyCode.E) && Input.GetKey(KeyCode.N) && !haveDone)
-        {
-            haveDone = true;
-            GetLevelData();
-        }
-    }
-    
 
     public void GetLevelData()
     {
