@@ -13,7 +13,7 @@ public class QuestionPlatform : MonoBehaviour
 	{
 		if (collision.gameObject.layer == 7) { amountOfPlayersColliding++; }
 
-		if (amountOfPlayersColliding >= 2) 
+		if (amountOfPlayersColliding >= 2 && !hasSpawnedQuestion) 
 		{ 
 			questionManager.OpenNextQuestion_ServerRpc(); 
 			hasSpawnedQuestion = true;
