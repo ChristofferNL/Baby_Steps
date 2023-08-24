@@ -19,7 +19,9 @@ public class UIGamePlayManager : NetworkBehaviour
     [SerializeField] FinalAnswerWidget finalAnswerObject;
     [SerializeField] GameObject finalAnswersParent;
     [SerializeField] Transform cameraFollowPoint;
+    [SerializeField] float cameraOffsetY = 10;
     [SerializeField] Transform playerOneTransform;
+    [SerializeField] Transform playerTwoTransform;
     [SerializeField] ChatMessageWidget chatMessageObject;
     [SerializeField] TMP_InputField inputField;
     [SerializeField] ScrollRect chatScrollRect;
@@ -30,13 +32,22 @@ public class UIGamePlayManager : NetworkBehaviour
     [SerializeField] UnityEngine.UI.Slider progressSlider;
     [SerializeField] GameObject HudObject;
     [SerializeField] InputManager inputManager;
+    [SerializeField] EmoticonWidget leftPlayerEmoteUIObject;
+    [SerializeField] EmoticonWidget rightPlayerEmoteUIObject;
 
     public Sprite notSelectedSprite;
     public Sprite selectedSprite;
 
     int activeQuestionIndex = 0;
 
-    public void SetupPlayersUI()
+	private void FixedUpdate()
+	{
+		cameraFollowPoint.position = new Vector2(cameraFollowPoint.position.x, 
+                                                playerOneTransform.position.y < playerTwoTransform.position.y ? playerOneTransform.position.y + cameraOffsetY : 
+                                                playerTwoTransform.position.y + cameraOffsetY);
+	}
+
+	public void SetupPlayersUI()
     {
         for (int i = 0; i < GameManager.Instance.LocalLobby.PlayerCount; i++)
         {
@@ -55,10 +66,18 @@ public class UIGamePlayManager : NetworkBehaviour
         if (player.IsHost.Value)
         {
             leftPlayerName.text = player.DisplayName.Value;
+            if (NetworkManager.Singleton.LocalClientId == 0)
+            {
+				rightPlayerEmoteUIObject.gameObject.SetActive(false);
+			}
         }
         else
         {
             rightPlayerName.text = player.DisplayName.Value;
+			if (NetworkManager.Singleton.LocalClientId != 0)
+			{
+				leftPlayerEmoteUIObject.gameObject.SetActive(false);
+			} 
         }
     }
 
@@ -130,7 +149,6 @@ public class UIGamePlayManager : NetworkBehaviour
 
     public void RegisterAnswer(int choosenAnswer)
     {
-        cameraFollowPoint.position = new Vector2(cameraFollowPoint.position.x, playerOneTransform.position.y + 13);
         questionManager.RecieveQuestionAnswer_ServerRpc(NetworkManager.Singleton.LocalClientId, activeQuestionIndex - 1, choosenAnswer);
         questionUIObject.SetActive(false);
     }

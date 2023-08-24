@@ -16,13 +16,23 @@ public class EmoticonWidget : MonoBehaviour
 			animator.enabled = true;
 			animator.Play(open.name);
 			isOpening = false;
+			StartCoroutine(CloseEmotesAfterSeconds(6));
 		}
 		else
 		{
+			StopAllCoroutines();
 			animator.enabled = true;
 			animator.Play(close.name);
 			isOpening = true;
 		}
 	}
 
+	IEnumerator CloseEmotesAfterSeconds(float seconds)
+	{
+		yield return new WaitForSecondsRealtime(seconds);
+		if (!isOpening )
+		{
+			StartToggleOpen();
+		}
+	}
 }
