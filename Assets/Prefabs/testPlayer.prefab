@@ -423,77 +423,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!1 &950047484856117452
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8166791914618705140}
-  - component: {fileID: 7355851355931740791}
-  m_Layer: 8
-  m_Name: LevelSpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8166791914618705140
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 950047484856117452}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7749301411205047995}
-  m_Father: {fileID: 9192576569155977826}
-  m_RootOrder: 24
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7355851355931740791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 950047484856117452}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 224015d153253434dba0128f35250c3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chunkDataSOs: []
-  pooledPlatforms: []
-  platformsToPool: {fileID: 8361480012651490758, guid: e0ba92025e682b3469b70d83086b3ab2, type: 3}
-  platformAmount: 20
-  pooledPassthrough: []
-  passThroughToPool: {fileID: 8361480012651490758, guid: e338820f50ebd4d4f93ead90218b8471, type: 3}
-  passThroughAmount: 20
-  pooledQuestions: []
-  questionToPool: {fileID: 8361480012651490758, guid: 0cb0ff752bd191244a4ae740f3d29546, type: 3}
-  questionAmount: 6
-  heightNextSpawn: 0
-  levelIdOrder: 
-  levelSpawnOrder: 
-  spawnedChunk1: []
-  spawnedChunk2: []
-  spawnedChunk3: []
-  amountOfSpawnedLevels: 0
-  nextStartPos: {x: 0, y: 0, z: 0}
-  oldStartPos: {x: 0, y: 0, z: 0}
-  testingMode: 0
-  currentLevelId: 0
-  playerHeight: 0
-  player1: {fileID: 3297717626998920922}
-  player2: {fileID: 1690261798932719180}
-  originalAnchorPos: {fileID: 7749301411205047995}
-  questionManager: {fileID: 5066646139675404838}
 --- !u!1 &1178474350582760420
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,37 +494,6 @@ MonoBehaviour:
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!1 &1382818317922470697
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7749301411205047995}
-  m_Layer: 8
-  m_Name: OriginAnchor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7749301411205047995
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1382818317922470697}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.589, y: 0.148, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8166791914618705140}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1750335629413419827
 GameObject:
   m_ObjectHideFlags: 0
@@ -1836,7 +1734,6 @@ Transform:
   - {fileID: 8279865137942634947}
   - {fileID: 5773427755986454973}
   - {fileID: 5854786171222801886}
-  - {fileID: 8166791914618705140}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
