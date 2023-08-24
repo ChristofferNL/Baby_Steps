@@ -1026,7 +1026,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 15
+  orthographic size: 22
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1050,7 +1050,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 457234252}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.06999993, y: 13.9800005, z: -10}
+  m_LocalPosition: {x: 829.54126, y: 282.4108, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2246,7 +2246,7 @@ PrefabInstance:
     - target: {fileID: 6265861362966661484, guid: f80fc24bab3dcda459a2669321e2e5a4, type: 3}
       propertyPath: m_IngameRunnerPrefab
       value: 
-      objectReference: {fileID: 238192747445020667, guid: 73173c97c128d614aa2a1167a2eaea68, type: 3}
+      objectReference: {fileID: 4270275890933026972, guid: 4936f4a83f8901848bc55c2d8a067a14, type: 3}
     - target: {fileID: 6265861362966661484, guid: f80fc24bab3dcda459a2669321e2e5a4, type: 3}
       propertyPath: m_disableWhileInGame.Array.size
       value: 4
