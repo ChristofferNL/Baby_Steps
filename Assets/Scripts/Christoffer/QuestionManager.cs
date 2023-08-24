@@ -125,7 +125,7 @@ public class QuestionManager : NetworkBehaviour
         SetTimeScale_ClientRpc(0);
     }
 
-    [ServerRpc(RequireOwnership = true)]
+    [ServerRpc(RequireOwnership = false)]
     public void RecieveQuestionAnswer_ServerRpc(ulong playerID, int questionIndex, int answerIndex)
     {
         questionAnswer.Value = new QuestionAnswerData
