@@ -66,12 +66,18 @@ public class UIGamePlayManager : NetworkBehaviour
         if (player.IsHost.Value)
         {
             leftPlayerName.text = player.DisplayName.Value;
-            rightPlayerEmoteUIObject.gameObject.SetActive(false);
+            if (NetworkManager.Singleton.LocalClientId == 0)
+            {
+				rightPlayerEmoteUIObject.gameObject.SetActive(false);
+			}
         }
         else
         {
             rightPlayerName.text = player.DisplayName.Value;
-            leftPlayerEmoteUIObject.gameObject.SetActive(false);
+			if (NetworkManager.Singleton.LocalClientId != 0)
+			{
+				leftPlayerEmoteUIObject.gameObject.SetActive(false);
+			} 
         }
     }
 
