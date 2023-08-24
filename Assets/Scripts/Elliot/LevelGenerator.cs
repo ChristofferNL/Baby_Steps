@@ -130,7 +130,7 @@ public class LevelGenerator : NetworkBehaviour
     {
         playerHeight = ((player1.position + player2.position) / 2).y;
 
-        if(playerHeight > heightNextSpawn)
+        if(playerHeight > heightNextSpawn && ( !IsHost || !IsServer ))
         {
             SpawnChunk();
         }
