@@ -14,7 +14,7 @@ namespace LobbyRelaySample
         public void ToJoinMenu()
         {
             ellipseAnimator.enabled = true;
-            ellipseAnimator.Play("EllipseMove");
+            ellipseAnimator.Play("EllipseDisappear");
             StartCoroutine(WaitBeforeStateChange());
         }
 

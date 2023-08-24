@@ -18,7 +18,7 @@ namespace LobbyRelaySample.UI
         public void ToMenu()
         {
             Manager.UIChangeMenuState(GameState.Menu);
-            ellipseAnimator.Play("EllipseMoveBack");
+            ellipseAnimator.Play("EllipseAppear");
             startMenuButtons.SetActive(true);
         }
     }

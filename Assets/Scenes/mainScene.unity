@@ -1665,6 +1665,7 @@ GameObject:
   - component: {fileID: 1297142561}
   - component: {fileID: 1297142563}
   - component: {fileID: 1297142562}
+  - component: {fileID: 1297142564}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1730,6 +1731,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1297142560}
   m_CullTransparentMesh: 1
+--- !u!95 &1297142564
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1297142560}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 16b49e79eeb7b1c49afadd3a3debc0e6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!114 &1439850645 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7716713811812636910, guid: f80fc24bab3dcda459a2669321e2e5a4, type: 3}
@@ -3484,7 +3505,7 @@ PrefabInstance:
     - target: {fileID: 3279333177639236615, guid: 9aae991127b410c45a001ecd7f75311d, type: 3}
       propertyPath: ellipseAnimator
       value: 
-      objectReference: {fileID: 2107992588}
+      objectReference: {fileID: 1297142564}
     - target: {fileID: 3470215534644360489, guid: 9aae991127b410c45a001ecd7f75311d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -4217,6 +4238,14 @@ PrefabInstance:
       propertyPath: m_Padding.m_Right
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5725306317222120185, guid: 9aae991127b410c45a001ecd7f75311d, type: 3}
+      propertyPath: ellipseAnimator
+      value: 
+      objectReference: {fileID: 1297142564}
+    - target: {fileID: 5725306317222120185, guid: 9aae991127b410c45a001ecd7f75311d, type: 3}
+      propertyPath: startMenuButtons
+      value: 
+      objectReference: {fileID: 443459220}
     - target: {fileID: 5778849136970622810, guid: 9aae991127b410c45a001ecd7f75311d, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -5304,19 +5333,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8850319214714556940, guid: 9aae991127b410c45a001ecd7f75311d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 40
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 8850319214714556940, guid: 9aae991127b410c45a001ecd7f75311d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 40
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 8850319214714556940, guid: 9aae991127b410c45a001ecd7f75311d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 211.98
+      value: -22
       objectReference: {fileID: 0}
     - target: {fileID: 8850319214714556940, guid: 9aae991127b410c45a001ecd7f75311d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 113.4
+      value: -16
       objectReference: {fileID: 0}
     - target: {fileID: 8917469347129038554, guid: 9aae991127b410c45a001ecd7f75311d, type: 3}
       propertyPath: m_IgnoreLayout
