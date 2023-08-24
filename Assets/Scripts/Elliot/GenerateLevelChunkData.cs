@@ -1,13 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEditor.PackageManager.UI;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using System.IO;
-using UnityEditor.TerrainTools;
-using Mono.Cecil.Cil;
-using UnityEditor.Rendering;
+
 
 /*
 [CustomEditor(typeof(GenerateLevelChunkData))]
@@ -226,8 +219,8 @@ public class GenerateLevelChunkData : MonoBehaviour
 
         levelData.numberOfPlatforms = numOfPlatforms;
 
-        AssetDatabase.CreateAsset(levelData, path);
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
+        //AssetDatabase.CreateAsset(levelData, path);
+        //AssetDatabase.SaveAssets();
+        //AssetDatabase.Refresh();
     }
 }

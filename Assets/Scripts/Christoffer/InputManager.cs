@@ -101,7 +101,7 @@ public class InputManager : NetworkBehaviour
 
     public void StartGettingTouchInput()
     {	
-        for (int i = 0; i < Touchscreen.current.touches.Count + 1; i++)
+        for (int i = 0; i < Touchscreen.current.touches.Count; i++)
         {
 			//Debug.LogError("touch pos:"+ i + " : " + Touchscreen.current.touches[i].position.ReadValue());
             //figures out the id of the touch which caused the startmovment function to get called and saves that id to use as a reference when getting input later
@@ -117,7 +117,8 @@ public class InputManager : NetworkBehaviour
 
 	public void StopGettingTouchInput()
 	{
-		movementTouchId = 9999;
+		isGettingTouch = false;
+		//movementTouchId = 9999;
 		StopChargeJump();
     }
 
@@ -138,18 +139,46 @@ public class InputManager : NetworkBehaviour
 	{
         if (!isGettingTouch)
 		{
-			switch (actions.Move.ReadValue<float>())
-			{
-				case < 0:
-					jumpDirection = JumpDirection.LEFT;
-					break;
-				case > 0:
-					jumpDirection = JumpDirection.RIGHT;
-					break;
-				default:
-					jumpDirection = JumpDirection.NONE;
-					break;
-			}
+			//switch (actions.Move.ReadValue<float>())
+			//{
+			//	case < 0:
+			//		jumpDirection = JumpDirection.LEFT;
+			//		break;
+			//	case > 0:
+			//		jumpDirection = JumpDirection.RIGHT;
+			//		break;
+			//	default:
+			//		jumpDirection = JumpDirection.NONE;
+			//		break;
+			//}
+
+			//if (actions.Jump.IsPressed() && IsGrounded && !chargingJump)
+			//{
+			//	StartChargeJump();
+			//}
+			//else if (actions.Jump.WasReleasedThisFrame() && IsGrounded || actions.Jump.WasReleasedThisFrame() && canChargeWhilePulled)
+			//{
+			//	StopChargeJump();
+			//}
+
+			//if (!chargingJump && canWalk)
+			//{
+			//	manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId,
+			//										actions.Move.ReadValue<float>() * moveForce,
+			//										0,
+			//										jumpDirection,
+			//										IsGrounded,
+			//										false);
+			//}
+			//else if (!chargingJump && !canWalk)
+			//{
+			//	manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId,
+			//										0,
+			//										0,
+			//										jumpDirection,
+			//										IsGrounded,
+			//										false);
+			//}
 		}
 		else
 		{
@@ -157,7 +186,7 @@ public class InputManager : NetworkBehaviour
 
             switch (xDistance)
             {
-                case <= 0:
+                case < 0:
                     jumpDirection = JumpDirection.LEFT;
                     break;
                 case > 0:
@@ -170,34 +199,7 @@ public class InputManager : NetworkBehaviour
         }
 
 
-		//doing stuff for non touch input
-        if (actions.Jump.IsPressed() && IsGrounded && !chargingJump)
-        {
-            StartChargeJump();
-        }
-        else if (actions.Jump.WasReleasedThisFrame() && IsGrounded || actions.Jump.WasReleasedThisFrame() && canChargeWhilePulled)
-        {
-			StopChargeJump();
-        }
-
-        if (!chargingJump && canWalk)
-		{
-			manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId, 
-												actions.Move.ReadValue<float>() * moveForce, 
-												0, 
-												jumpDirection,
-												IsGrounded,
-												false);
-        }
-		else if (!chargingJump && !canWalk)
-		{
-            manager.HandlePlayerInput_ServerRpc(NetworkManager.Singleton.LocalClientId,
-                                                0,
-                                                0,
-                                                jumpDirection,
-                                                IsGrounded,
-                                                false);
-        }
+		
 	}
 
     IEnumerator ChargeJump()
