@@ -747,7 +747,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 457234252}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.06999993, y: 13.9800005, z: -10}
+  m_LocalPosition: {x: -0.17999993, y: 14.51, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1537,6 +1537,10 @@ PrefabInstance:
       propertyPath: m_ClickVfxPrefab
       value: 
       objectReference: {fileID: 399802367030799648, guid: fe74ce0c2cc95bb42a422541a5ab5e94, type: 3}
+    - target: {fileID: 6265861362966661484, guid: f80fc24bab3dcda459a2669321e2e5a4, type: 3}
+      propertyPath: m_IngameRunnerPrefab
+      value: 
+      objectReference: {fileID: 8416821070577129024, guid: 082dfa74539d1874c8a934e97e1455be, type: 3}
     - target: {fileID: 6265861362966661484, guid: f80fc24bab3dcda459a2669321e2e5a4, type: 3}
       propertyPath: m_disableWhileInGame.Array.size
       value: 4
