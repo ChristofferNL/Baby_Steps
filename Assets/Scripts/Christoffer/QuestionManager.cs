@@ -104,7 +104,7 @@ public class QuestionManager : NetworkBehaviour
         nextQuestionHeightTarget = (int)playerTransform.position.y + distanceToSpawnQuestion;
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [ServerRpc(RequireOwnership = true)]
     public void OpenNextQuestion_ServerRpc()
     {
         if (questionsAnswered >= questionsPerRun) return;
