@@ -97,23 +97,37 @@ public class InputManager : NetworkBehaviour
 		{
 			IsGrounded = false;
 		}
-	}
-
-    public void StartGettingTouchInput()
-    {	
-        for (int i = 0; i < Touchscreen.current.touches.Count; i++)
-        {
-			//Debug.LogError("touch pos:"+ i + " : " + Touchscreen.current.touches[i].position.ReadValue());
-            //figures out the id of the touch which caused the startmovment function to get called and saves that id to use as a reference when getting input later
-            if (Touchscreen.current.touches[i].position.ReadValue() != Vector2.zero && !isGettingTouch && IsGrounded)
-            {
-                movementTouchId = i;
-                isGettingTouch = true;
-                touchStartPos = Touchscreen.current.touches[movementTouchId].startPosition.ReadValue();
-				StartChargeJump();
-            }
-        }
     }
+
+
+#if UNITY_ANDRIOD
+	public void StartGettingTouchInput()
+    {
+		if (Touchscreen.current == null)
+		{
+            for (int i = 0; i < Touchscreen.current.touches.Count; i++)
+            {
+                //Debug.LogError("touch pos:"+ i + " : " + Touchscreen.current.touches[i].position.ReadValue());
+                //figures out the id of the touch which caused the startmovment function to get called and saves that id to use as a reference when getting input later
+                if (Touchscreen.current.touches[i].position.ReadValue() != Vector2.zero && !isGettingTouch && IsGrounded)
+                {
+                    movementTouchId = i;
+                    isGettingTouch = true;
+                    touchStartPos = Touchscreen.current.touches[movementTouchId].startPosition.ReadValue();
+                    StartChargeJump();
+                }
+            }
+		}
+	}
+#else
+	public void StartGettingTouchInput()
+	{
+        isGettingTouch = true;
+        StartChargeJump();
+        touchStartPos = Camera.main.WorldToScreenPoint(Input.mousePosition);
+    }
+#endif
+
 
 	public void StopGettingTouchInput()
 	{
@@ -182,7 +196,23 @@ public class InputManager : NetworkBehaviour
 		}
 		else
 		{
-			float xDistance = Touchscreen.current.touches[movementTouchId].position.ReadValue().x - touchStartPos.x;
+            float xDistance = 0;
+#if UNITY_ANDROID
+			xDistance = Touchscreen.current.touches[movementTouchId].position.ReadValue().x - touchStartPos.x;
+#else
+            xDistance = Camera.main.WorldToScreenPoint(Input.mousePosition).x - touchStartPos.x;
+#endif
+
+            //if (Touchscreen.current.touches.Count > 0 || Touchscreen.current == null)
+            //{
+                
+            //}
+            //else
+            //{
+
+                
+            //}
+
 
             switch (xDistance)
             {
