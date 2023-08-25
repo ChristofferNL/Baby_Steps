@@ -15,6 +15,7 @@ MonoBehaviour:
   numberOfPlatforms: 6
   isPassThrough: 000000000001
   isQuestion: 000000000100
+  isBouncy: 000000000000
   position:
   - {x: -0.9007473, y: 2.4109688, z: 0}
   - {x: -0.97154236, y: 10.235077, z: 0}

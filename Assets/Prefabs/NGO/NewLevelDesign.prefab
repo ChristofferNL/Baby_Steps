@@ -12953,7 +12953,7 @@ GameObject:
   - component: {fileID: 1503582315492708627}
   m_Layer: 0
   m_Name: Square_9
-  m_TagString: SolidPlatform
+  m_TagString: Bouncy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29638,6 +29638,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7355851355931740791, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
       propertyPath: chunkDataSOs.Array.data[6]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7355851355931740791, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
+      propertyPath: chunkDataSOs.Array.data[7]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7608967292600135224, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
