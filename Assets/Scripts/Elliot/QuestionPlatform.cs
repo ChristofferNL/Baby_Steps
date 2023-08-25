@@ -22,6 +22,6 @@ public class QuestionPlatform : MonoBehaviour
 
 	private void OnTriggerExit2D(Collider2D collision)
 	{
-		if (collision.gameObject.layer == 7) { amountOfPlayersColliding--; }
+		if (collision.gameObject.layer == 7 || collision.gameObject.layer == 6) { amountOfPlayersColliding--; }
 	}
 }
