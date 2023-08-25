@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using Unity.Netcode;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,8 +26,9 @@ public class InputManager : NetworkBehaviour
 	[SerializeField] float timeBetweenAdd;
 	[SerializeField] float jumpForceTimesToAdd;
 	[SerializeField] float groundCheckDistance;
-	[SerializeField] float groundCheckRadius = 0.6f;
-	[SerializeField] LayerMask groundCheckLayerMask;
+	[SerializeField] float groundCheckRadius = 0.4f;
+	[SerializeField] LayerMask pOneGroundCheckLayerMask;
+	[SerializeField] LayerMask pTwoGroundCheckLayerMask;
 
 	Rigidbody2D assignedPlayerRb;
 
@@ -89,16 +91,30 @@ public class InputManager : NetworkBehaviour
 	private void GroundCheck()
 	{
 		if (!doGroundCheck) return;		
-		if (Physics2D.CircleCast(assignedPlayerRb.transform.position, groundCheckRadius, Vector3.down, 0.8f, groundCheckLayerMask))
+		if (NetworkManager.Singleton.LocalClientId == 0)
 		{
-			IsGrounded = true;
-		}
+            if (Physics2D.CircleCast(assignedPlayerRb.transform.position, groundCheckRadius, Vector3.down, 0.8f, pOneGroundCheckLayerMask))
+            {
+                IsGrounded = true;
+            }
+            else
+            {
+                IsGrounded = false;
+            }
+        }
 		else
 		{
-			IsGrounded = false;
-		}
-    }
+            if (Physics2D.CircleCast(assignedPlayerRb.transform.position, groundCheckRadius, Vector3.down, 0.8f, pTwoGroundCheckLayerMask))
+            {
+                IsGrounded = true;
+            }
+            else
+            {
+                IsGrounded = false;
+            }
+        }
 
+    }
 
 #if UNITY_ANDRIOD
 	public void StartGettingTouchInput()
@@ -125,8 +141,8 @@ public class InputManager : NetworkBehaviour
 	{
         if (!GameIsRunning) return;
         isGettingTouch = true;
-        StartChargeJump();
         touchStartPos = Camera.main.WorldToScreenPoint(Input.mousePosition);
+		if (IsGrounded) StartChargeJump();
     }
 #endif
 

@@ -11,7 +11,7 @@ public class QuestionPlatform : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collision.gameObject.layer == 7) { amountOfPlayersColliding++; }
+		if (collision.gameObject.layer == 7 || collision.gameObject.layer == 6) { amountOfPlayersColliding++; }
 
 		if (amountOfPlayersColliding >= 2 && !hasSpawnedQuestion) 
 		{ 
