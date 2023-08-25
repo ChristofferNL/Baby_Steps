@@ -12,17 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 778c7a64a3576824dbace2fc6fef0d69, type: 3}
   m_Name: Level 2
   m_EditorClassIdentifier: 
-  numberOfPlatforms: 5
-  isPassThrough: 0000010101
-  isQuestion: 0001000000
-  isBouncy: 0000000000
+  numberOfPlatforms: 6
+  isPassThrough: 000000010101
+  isQuestion: 000100000000
+  isBouncy: 000000000000
   position:
   - {x: 0.027000006, y: 11.539103, z: 0}
-  - {x: 6.332041, y: 19.251001, z: 0}
+  - {x: 7.7697906, y: 17.739, z: 0}
+  - {x: 2.6190002, y: 23.436003, z: 0}
   - {x: -7.65585, y: 4.4280033, z: 0}
   - {x: -7.65585, y: 25.218, z: 0}
   - {x: 7.7125497, y: 4.4280033, z: 0}
   rotation:
+  - {x: -0, y: -0, z: -0, w: 1}
   - {x: -0, y: -0, z: -0, w: 1}
   - {x: -0, y: -0, z: -0, w: 1}
   - {x: -0, y: -0, z: -0, w: 1}
@@ -35,10 +37,12 @@ MonoBehaviour:
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
   - {r: 0, g: 0, b: 0, a: 0}
+  - {r: 0, g: 0, b: 0, a: 0}
   height: 30.537
   scale:
   - {x: 11.669356, y: 1.35, z: 0.27}
-  - {x: 11.799003, y: 1.35, z: 0.27}
+  - {x: 8.920046, y: 1.35, z: 0.27}
+  - {x: 7.162943, y: 1.35, z: 0.27}
   - {x: 9.03645, y: 1.35, z: 0.27}
   - {x: 9.03645, y: 1.35, z: 0.27}
   - {x: 9.034029, y: 1.35, z: 0.27}
