@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.IO;
-
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 /*
 [CustomEditor(typeof(GenerateLevelChunkData))]
@@ -217,10 +219,12 @@ public class GenerateLevelChunkData : MonoBehaviour
             }
         }
 
+        #if UNITY_EDITOR
         levelData.numberOfPlatforms = numOfPlatforms;
 
-        //AssetDatabase.CreateAsset(levelData, path);
-        //AssetDatabase.SaveAssets();
-        //AssetDatabase.Refresh();
+        AssetDatabase.CreateAsset(levelData, path);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+#endif
     }
 }
