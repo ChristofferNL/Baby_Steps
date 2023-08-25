@@ -35,6 +35,7 @@ public class UIGamePlayManager : NetworkBehaviour
     [SerializeField] EmoticonWidget leftPlayerEmoteUIObject;
     [SerializeField] EmoticonWidget rightPlayerEmoteUIObject;
     [SerializeField] GameObject loadingScreenObject;
+    [SerializeField] float loadingScreenWaitSeconds = 4;
 
     public Sprite notSelectedSprite;
     public Sprite selectedSprite;
@@ -57,6 +58,12 @@ public class UIGamePlayManager : NetworkBehaviour
                 continue;
             SetupPlayer(player);
         }
+        StartCoroutine(LoadingWait());
+    }
+
+    IEnumerator LoadingWait()
+    {
+        yield return new WaitForSecondsRealtime(loadingScreenWaitSeconds);
         progressSlider.maxValue = questionManager.questionsPerRun;
         HudObject.SetActive(true);
         inputManager.EnableControls();
