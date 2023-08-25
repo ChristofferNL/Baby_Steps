@@ -34,6 +34,7 @@ public class UIGamePlayManager : NetworkBehaviour
     [SerializeField] InputManager inputManager;
     [SerializeField] EmoticonWidget leftPlayerEmoteUIObject;
     [SerializeField] EmoticonWidget rightPlayerEmoteUIObject;
+    [SerializeField] GameObject loadingScreenObject;
 
     public Sprite notSelectedSprite;
     public Sprite selectedSprite;
@@ -59,6 +60,7 @@ public class UIGamePlayManager : NetworkBehaviour
         progressSlider.maxValue = questionManager.questionsPerRun;
         HudObject.SetActive(true);
         inputManager.EnableControls();
+        loadingScreenObject.SetActive(false);
     }
 
     void SetupPlayer(LocalPlayer player)
