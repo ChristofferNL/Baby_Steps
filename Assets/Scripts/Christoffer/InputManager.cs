@@ -217,7 +217,7 @@ public class InputManager : NetworkBehaviour
 		{
             float xDistance = 0;
 #if UNITY_ANDROID
-			xDistance = Touchscreen.current.touches[movementTouchId].position.ReadValue().x - touchStartPos.x;
+			xDistance = Camera.main.WorldToScreenPoint(Touchscreen.current.touches[movementTouchId].position.ReadValue()).x - touchStartPos.x;
 #else
             xDistance = Camera.main.WorldToScreenPoint(Input.mousePosition).x - touchStartPos.x;
 #endif
