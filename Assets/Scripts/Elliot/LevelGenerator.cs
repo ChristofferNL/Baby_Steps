@@ -140,7 +140,6 @@ public class LevelGenerator : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        DebugClientRpc();
         playerHeight = ((player1.position + player2.position) / 2).y;
 
         if(playerHeight > heightNextSpawn && canSpawn)
@@ -155,17 +154,8 @@ public class LevelGenerator : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void DebugClientRpc()
-    {
-        Debug.LogError("WHY IS THIS WORKING");
-    }
-
-    [ClientRpc]
     void SpawnChunkClientRpc(int levelId, ClientRpcParams clientRpcParams = default)
     {
-
-        //int levelId = Random.Range(0, chunkDataSOs.Length);
-        Debug.LogError("starting spawn");
         if (levelIdOrder.Count < 1)
         {
             nextStartPos = originalAnchorPos.position;
