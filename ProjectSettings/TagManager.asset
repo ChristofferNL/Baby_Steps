@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PassThroughPlatform
   - SolidPlatform
+  - Bouncy
   layers:
   - Default
   - TransparentFX
