@@ -39,7 +39,7 @@ public class EmotesManager : NetworkBehaviour
 			leftPlayerEmoteImage.gameObject.SetActive(true);
 			leftPlayerEmoteImage.sprite = leftPlayerEmotes[emoteNumber];
 			leftPlayerEmoteImage.GetComponent<Animator>().Play("EmoteSpawn");
-			DespawnEmoteObject(leftPlayerEmoteImage.gameObject);
+			StartCoroutine(DespawnEmoteObject(leftPlayerEmoteImage.gameObject));
 		}
 		else
 		{
@@ -47,7 +47,7 @@ public class EmotesManager : NetworkBehaviour
             rightPlayerEmoteImage.gameObject.SetActive(true);
 			rightPlayerEmoteImage.sprite = rightPlayerEmotes[emoteNumber];
 			rightPlayerEmoteImage.GetComponent<Animator>().Play("EmoteSpawn");
-            DespawnEmoteObject(rightPlayerEmoteImage.gameObject);
+            StartCoroutine(DespawnEmoteObject(rightPlayerEmoteImage.gameObject));
         }
 	}
 
