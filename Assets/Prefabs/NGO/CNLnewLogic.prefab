@@ -2947,6 +2947,10 @@ PrefabInstance:
       value: 951099334
       objectReference: {fileID: 0}
     - target: {fileID: 5066646139675404838, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
+      propertyPath: questionsPerRun
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066646139675404838, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
       propertyPath: uiGamePlayManager
       value: 
       objectReference: {fileID: 1971450371286753273}
