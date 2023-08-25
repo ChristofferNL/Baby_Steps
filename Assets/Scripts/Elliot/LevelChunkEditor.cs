@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(GenerateLevelChunkData))]
-public class LevelChunkEditor : Editor
+//[CustomEditor(typeof(GenerateLevelChunkData))]
+public class LevelChunkEditor : MonoBehaviour
 {
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
+    //public override void OnInspectorGUI()
+    //{
+    //    base.OnInspectorGUI();
 
-        GenerateLevelChunkData script = (GenerateLevelChunkData)target;
+    //    GenerateLevelChunkData script = (GenerateLevelChunkData)target;
 
-        if (GUILayout.Button("Generate Level Data"))
-        {
-            script.GetLevelData(); // Call the function from GenerateLevelChunkData script
-        }
-    }
+    //    if (GUILayout.Button("Generate Level Data"))
+    //    {
+    //        script.GetLevelData(); // Call the function from GenerateLevelChunkData script
+    //    }
+    //}
 }

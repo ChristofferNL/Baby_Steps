@@ -2267,7 +2267,7 @@ PrefabInstance:
     - target: {fileID: 6265861362966661484, guid: f80fc24bab3dcda459a2669321e2e5a4, type: 3}
       propertyPath: m_IngameRunnerPrefab
       value: 
-      objectReference: {fileID: 1048965458820451936, guid: d119eb280cbfd094fa858ef439a0f3e1, type: 3}
+      objectReference: {fileID: 238192747445020667, guid: 73173c97c128d614aa2a1167a2eaea68, type: 3}
     - target: {fileID: 6265861362966661484, guid: f80fc24bab3dcda459a2669321e2e5a4, type: 3}
       propertyPath: m_disableWhileInGame.Array.size
       value: 4
