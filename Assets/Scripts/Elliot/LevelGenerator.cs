@@ -41,6 +41,7 @@ public class LevelGenerator : NetworkBehaviour
 
     public bool testingMode = false;
     private int questionOverrideId;
+    private bool canSpawn = false;
 
     public int currentLevelId;
     public float playerHeight;
@@ -90,6 +91,7 @@ public class LevelGenerator : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        StartCoroutine(WaitToStartSpawning(4));
         if (pooledPlatforms.Count != 0) foreach (GameObject obj in pooledPlatforms) { obj.SetActive(false); };
         if (pooledPassthrough.Count != 0) foreach (GameObject obj in pooledPassthrough) { obj.SetActive(false); };
         if (pooledQuestions.Count != 0) foreach (GameObject obj in pooledQuestions) { obj.SetActive(false); };
@@ -129,28 +131,41 @@ public class LevelGenerator : NetworkBehaviour
         }
     }
 
+    IEnumerator WaitToStartSpawning(float waitTime)
+    {
+        yield return new WaitForSecondsRealtime(waitTime);
+        canSpawn = true;
+    }
+
 
     private void FixedUpdate()
     {
+        DebugClientRpc();
         playerHeight = ((player1.position + player2.position) / 2).y;
 
-        if(IsServer || IsHost)
+        if(playerHeight > heightNextSpawn && canSpawn)
         {
-            Debug.LogError("im the server");
-        }
-
-        if(playerHeight > heightNextSpawn)
-        {
-            if(IsHost || IsServer) { SpawnChunk(); }
+            if(IsHost || IsServer) 
+            {
+                //Random.Range(0, chunkDataSOs.Length)
+                SpawnChunkClientRpc(Random.Range(0, chunkDataSOs.Length));
+                
+            }
         }
     }
 
-    void SpawnChunk()
+    [ClientRpc]
+    public void DebugClientRpc()
     {
-        int levelId = Random.Range(0, chunkDataSOs.Length);
-        Debug.Log("level id " + levelId);
-        //Debug.Log("number of platforms:" + chunkDataSOs[levelId].numberOfPlatforms);
+        Debug.LogError("WHY IS THIS WORKING");
+    }
 
+    [ClientRpc]
+    void SpawnChunkClientRpc(int levelId, ClientRpcParams clientRpcParams = default)
+    {
+
+        //int levelId = Random.Range(0, chunkDataSOs.Length);
+        Debug.LogError("starting spawn");
         if (levelIdOrder.Count < 1)
         {
             nextStartPos = originalAnchorPos.position;
