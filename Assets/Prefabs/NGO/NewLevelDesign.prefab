@@ -13321,7 +13321,7 @@ GameObject:
   - component: {fileID: 1503582315492708627}
   m_Layer: 0
   m_Name: Square_9
-  m_TagString: SolidPlatform
+  m_TagString: Bouncy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
