@@ -103,6 +103,7 @@ public class InputManager : NetworkBehaviour
 #if UNITY_ANDRIOD
 	public void StartGettingTouchInput()
     {
+		if (!GameIsRunning) return;
 		if (Touchscreen.current == null)
 		{
             for (int i = 0; i < Touchscreen.current.touches.Count; i++)
@@ -120,8 +121,9 @@ public class InputManager : NetworkBehaviour
 		}
 	}
 #else
-	public void StartGettingTouchInput()
+    public void StartGettingTouchInput()
 	{
+        if (!GameIsRunning) return;
         isGettingTouch = true;
         StartChargeJump();
         touchStartPos = Camera.main.WorldToScreenPoint(Input.mousePosition);
@@ -131,7 +133,8 @@ public class InputManager : NetworkBehaviour
 
 	public void StopGettingTouchInput()
 	{
-		isGettingTouch = false;
+        if (!GameIsRunning) return;
+        isGettingTouch = false;
 		//movementTouchId = 9999;
 		StopChargeJump();
     }
