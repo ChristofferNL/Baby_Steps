@@ -2,35 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EmotesManager : NetworkBehaviour
 {
 	public enum EmoteVariants
 	{
-		LAUGH,
-		CRYING_LAUGH,
-		ANGRY
+		CLAP,
+		THINKING,
+		LAUGHING,
+		SLEEPY
 	}
 
-	[SerializeField] List<GameObject> leftPlayerEmoteObjects = new();
-	[SerializeField] List<GameObject> rightPlayerEmoteObjects = new();
+	[SerializeField] List<Sprite> leftPlayerEmotes = new();
+	[SerializeField] List<Sprite> rightPlayerEmotes = new();
+	[SerializeField] Image leftPlayerEmoteImage;
+	[SerializeField] Image rightPlayerEmoteImage;
 
-	public void SendLaughEmote()
+	public void SendEmote(int emoteNumber)
 	{
-		SendEmote_ServerRpc(NetworkManager.Singleton.LocalClientId, (int)EmoteVariants.LAUGH);
+		SendEmote_ServerRpc(NetworkManager.Singleton.LocalClientId, emoteNumber);
 	}
 
-	public void SendCryingLaughEmote()
-	{
-		SendEmote_ServerRpc(NetworkManager.Singleton.LocalClientId, (int)EmoteVariants.CRYING_LAUGH);
-	}
-
-	public void SendAngryEmote()
-	{
-		SendEmote_ServerRpc(NetworkManager.Singleton.LocalClientId, (int)EmoteVariants.ANGRY);
-	}
-
-	[ServerRpc(RequireOwnership = false)]
+    [ServerRpc(RequireOwnership = false)]
 	void SendEmote_ServerRpc(ulong senderID, int emoteNumber)
 	{
 		ShowEmote_ClientRpc(senderID, emoteNumber);
@@ -41,11 +35,25 @@ public class EmotesManager : NetworkBehaviour
 	{
 		if (senderID == 0)
 		{
-			leftPlayerEmoteObjects[emoteNumber].SetActive(true);
+			rightPlayerEmoteImage.gameObject.SetActive(false);
+			leftPlayerEmoteImage.gameObject.SetActive(true);
+			leftPlayerEmoteImage.sprite = leftPlayerEmotes[emoteNumber];
+			leftPlayerEmoteImage.GetComponent<Animator>().Play("EmoteSpawn");
+			StartCoroutine(DespawnEmoteObject(leftPlayerEmoteImage.gameObject));
 		}
 		else
 		{
-			rightPlayerEmoteObjects[emoteNumber].SetActive(true);
-		}
+            leftPlayerEmoteImage.gameObject.SetActive(false);
+            rightPlayerEmoteImage.gameObject.SetActive(true);
+			rightPlayerEmoteImage.sprite = rightPlayerEmotes[emoteNumber];
+			rightPlayerEmoteImage.GetComponent<Animator>().Play("EmoteSpawn");
+            StartCoroutine(DespawnEmoteObject(rightPlayerEmoteImage.gameObject));
+        }
+	}
+
+	IEnumerator DespawnEmoteObject(GameObject theObject)
+	{
+		yield return new WaitForSecondsRealtime(1);
+		theObject.SetActive(false);
 	}
 }

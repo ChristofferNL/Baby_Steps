@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.IO;
-
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 /*
 [CustomEditor(typeof(GenerateLevelChunkData))]
@@ -52,17 +54,24 @@ public class GenerateLevelChunkData : MonoBehaviour
             {
                 foreach (Transform child2 in child)
                 {
-                    if (child2.CompareTag("PassThroughPlatform") || child2.CompareTag("SolidPlatform") && !child.GetComponent<QuestionPlatform>() || child2.GetComponent<QuestionPlatform>())
+                    if (child2.CompareTag("PassThroughPlatform") 
+                        || child2.CompareTag("SolidPlatform") && !child.GetComponent<QuestionPlatform>() 
+                        || child2.CompareTag("Bouncy") && !child.GetComponent<QuestionPlatform>()
+                        || child2.GetComponent<QuestionPlatform>())
                     {
                         numOfPlatforms++;
                     }
                 }
-                if (child.CompareTag("PassThroughPlatform") && !child.GetComponentInChildren<QuestionPlatform>() || child.CompareTag("SolidPlatform") && !child.GetComponentInChildren<QuestionPlatform>())
+                if (child.CompareTag("PassThroughPlatform") && !child.GetComponentInChildren<QuestionPlatform>() 
+                    || child.CompareTag("SolidPlatform") && !child.GetComponentInChildren<QuestionPlatform>()
+                    || child.CompareTag("Bouncy") && !child.GetComponentInChildren<QuestionPlatform>())
                 {
                     numOfPlatforms++;
                 }
             }
-            if (transform.GetChild(i).CompareTag("PassThroughPlatform") && !transform.GetChild(i).GetComponentInChildren<QuestionPlatform>() || transform.GetChild(i).CompareTag("SolidPlatform") && !transform.GetChild(i).GetComponentInChildren<QuestionPlatform>())
+            if (transform.GetChild(i).CompareTag("PassThroughPlatform") && !transform.GetChild(i).GetComponentInChildren<QuestionPlatform>() 
+                || transform.GetChild(i).CompareTag("SolidPlatform") && !transform.GetChild(i).GetComponentInChildren<QuestionPlatform>()
+                || transform.GetChild(i).CompareTag("Bouncy") && !transform.GetChild(i).GetComponentInChildren<QuestionPlatform>())
             {
                 numOfPlatforms++;
             }
@@ -76,76 +85,10 @@ public class GenerateLevelChunkData : MonoBehaviour
         levelData.rotation = new Quaternion[numOfPlatforms];
         levelData.isPassThrough = new bool[numOfPlatforms];
         levelData.isQuestion = new bool[numOfPlatforms];
+        levelData.isBouncy = new bool[numOfPlatforms];
 
         currentSaveId = 0;
-        /*
-        for (int i = 0; i < transform.childCount; i++) 
-        {
-            /*  ended up searching for question platforms twice, thought this only did it one level deep at first but it also searches grandchildren and their children and so on
-            if (transform.GetChild(i).GetComponentInChildren<QuestionPlatform>())
-            {
-                levelData.isQuestion[currentSaveId] = true;
-            }
-            
-
-            if (transform.GetChild(i).childCount > 0)
-            {
-                if(transform.GetChild(i).GetChild(0).GetComponent<QuestionPlatform>())
-                levelData.isQuestion[currentSaveId] = true;
-            }
-
-            if (transform.GetChild(i).CompareTag("PassThroughPlatform"))
-            {
-                levelData.isPassThrough[currentSaveId] = true;
-            }else if (transform.GetChild(i).CompareTag("SolidPlatform"))
-            {
-                levelData.isPassThrough[currentSaveId] = false;
-            }
-            
-            if((transform.GetChild(i).CompareTag("PassThroughPlatform")) 
-                || (transform.GetChild(i).CompareTag("SolidPlatform")))
-                Debug.LogError("youre here");
-                levelData.position[currentSaveId] = transform.GetChild(i).transform.localPosition;
-                levelData.scale[currentSaveId] = transform.GetChild(i).transform.localScale;
-                levelData.rotation[currentSaveId] = transform.GetChild(i).transform.rotation;
-                currentSaveId++;
-            }
-
-            //GETS CHILDREN OF CHILDREN
-            if (transform.GetChild(i).childCount > 0)
-            {
-                Transform childParent = transform.GetChild(i);
-                
-                for (int a = 0; a < childParent.childCount; a++)
-                {
-                    Debug.LogError("childcount: " + childParent.childCount);
-                    if (childParent.GetChild(a).GetChild(0).GetComponent<QuestionPlatform>() != null)
-                    {
-                        
-                        levelData.isQuestion[currentSaveId] = true;
-                    }
-
-                    if (childParent.GetChild(a).CompareTag("PassThroughPlatform"))
-                    {
-                        levelData.isPassThrough[currentSaveId] = true;
-                    }
-                    else if (childParent.GetChild(a).CompareTag("SolidPlatform"))
-                    {
-                        levelData.isPassThrough[currentSaveId] = false;
-                    }
-
-                    if (childParent.GetChild(a).CompareTag("PassThroughPlatform") || transform.GetChild(i).CompareTag("SolidPlatform") || transform.GetChild(i).GetComponentInChildren<QuestionPlatform>())  //if its any type of platform
-                    {
-                        levelData.position[currentSaveId] = transform.GetChild(i).transform.localPosition + childParent.GetChild(a).transform.localPosition;
-                        levelData.scale[currentSaveId] = transform.GetChild(i).transform.localScale + childParent.GetChild(a).transform.localPosition;
-                        levelData.rotation[currentSaveId] = transform.GetChild(i).transform.rotation * childParent.GetChild(a).transform.rotation;
-                        currentSaveId++;
-                    }
-                }
-            }
-            
-        }
-    */
+       
         for (int i = 0; i < transform.childCount; i++)
         {
             foreach (Transform child in transform.GetChild(i))
@@ -175,8 +118,18 @@ public class GenerateLevelChunkData : MonoBehaviour
                         levelData.rotation[currentSaveId] = child2.rotation;
                         currentSaveId++;
                     }
+                    else if (child2.CompareTag("Bouncy"))
+                    {
+                        levelData.isBouncy[currentSaveId] = true;
+                        levelData.position[currentSaveId] = (child2.parent.transform.position - transform.position)  /* * LevelObjectsParent.localScale.x*/;
+                        levelData.scale[currentSaveId] = child2.parent.transform.localScale * LevelObjectsParent.localScale.x;
+                        levelData.rotation[currentSaveId] = child2.rotation;
+                        currentSaveId++;
+                    }
                 }
-                if (child.CompareTag("PassThroughPlatform") && !child.GetComponentInChildren<QuestionPlatform>() || child.CompareTag("SolidPlatform") && !child.GetComponentInChildren<QuestionPlatform>())
+                if (child.CompareTag("PassThroughPlatform") && !child.GetComponentInChildren<QuestionPlatform>() 
+                    || child.CompareTag("SolidPlatform") && !child.GetComponentInChildren<QuestionPlatform>()
+                    || child.CompareTag("Bouncy") && !child.GetComponentInChildren<QuestionPlatform>())
                 {
                     if(child.CompareTag("PassThroughPlatform") && !child.GetComponentInChildren<QuestionPlatform>())
                     {
@@ -194,9 +147,19 @@ public class GenerateLevelChunkData : MonoBehaviour
                         levelData.rotation[currentSaveId] = child.rotation;
                         currentSaveId++;
                     }
+                    else if (child.CompareTag("Bouncy") && !child.GetComponentInChildren<QuestionPlatform>())
+                    {
+                        levelData.isBouncy[currentSaveId] = true;
+                        levelData.position[currentSaveId] = (child.position - transform.position)  /* * LevelObjectsParent.localScale.x*/;
+                        levelData.scale[currentSaveId] = child.localScale * LevelObjectsParent.localScale.x;
+                        levelData.rotation[currentSaveId] = child.rotation;
+                        currentSaveId++;
+                    }
                 }
             }
-            if (transform.GetChild(i).CompareTag("PassThroughPlatform") && !transform.GetChild(i).GetComponentInChildren<QuestionPlatform>() || transform.GetChild(i).CompareTag("SolidPlatform") && !transform.GetChild(i).GetComponentInChildren<QuestionPlatform>())
+            if (transform.GetChild(i).CompareTag("PassThroughPlatform") && !transform.GetChild(i).GetComponentInChildren<QuestionPlatform>() 
+                || transform.GetChild(i).CompareTag("SolidPlatform") && !transform.GetChild(i).GetComponentInChildren<QuestionPlatform>()
+                || transform.GetChild(i).CompareTag("Bouncy") && !transform.GetChild(i).GetComponentInChildren<QuestionPlatform>())
             {
                 if (transform.GetChild(i).CompareTag("PassThroughPlatform") && !transform.GetChild(i).GetComponentInChildren<QuestionPlatform>())
                 {
@@ -214,13 +177,23 @@ public class GenerateLevelChunkData : MonoBehaviour
                     levelData.rotation[currentSaveId] = transform.GetChild(i).transform.rotation;
                     currentSaveId++;
                 }
+                else if (transform.GetChild(i).CompareTag("Bouncy") && !transform.GetChild(i).GetComponentInChildren<QuestionPlatform>())
+                {
+                    levelData.isBouncy[currentSaveId] = true;
+                    levelData.position[currentSaveId] = transform.GetChild(i).transform.localPosition  /* * LevelObjectsParent.localScale.x*/;
+                    levelData.scale[currentSaveId] = transform.GetChild(i).transform.localScale * LevelObjectsParent.localScale.x;
+                    levelData.rotation[currentSaveId] = transform.GetChild(i).transform.rotation;
+                    currentSaveId++;
+                }
             }
         }
 
+        #if UNITY_EDITOR
         levelData.numberOfPlatforms = numOfPlatforms;
 
-        //AssetDatabase.CreateAsset(levelData, path);
-        //AssetDatabase.SaveAssets();
-        //AssetDatabase.Refresh();
+        AssetDatabase.CreateAsset(levelData, path);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+#endif
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using Unity.Netcode;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,8 +26,9 @@ public class InputManager : NetworkBehaviour
 	[SerializeField] float timeBetweenAdd;
 	[SerializeField] float jumpForceTimesToAdd;
 	[SerializeField] float groundCheckDistance;
-	[SerializeField] float groundCheckRadius = 0.6f;
-	[SerializeField] LayerMask groundCheckLayerMask;
+	[SerializeField] float groundCheckRadius = 0.4f;
+	[SerializeField] LayerMask pOneGroundCheckLayerMask;
+	[SerializeField] LayerMask pTwoGroundCheckLayerMask;
 
 	Rigidbody2D assignedPlayerRb;
 
@@ -89,35 +91,66 @@ public class InputManager : NetworkBehaviour
 	private void GroundCheck()
 	{
 		if (!doGroundCheck) return;		
-		if (Physics2D.CircleCast(assignedPlayerRb.transform.position, groundCheckRadius, Vector3.down, 0.8f, groundCheckLayerMask))
+		if (NetworkManager.Singleton.LocalClientId == 0)
 		{
-			IsGrounded = true;
-		}
-		else
-		{
-			IsGrounded = false;
-		}
-	}
-
-    public void StartGettingTouchInput()
-    {	
-        for (int i = 0; i < Touchscreen.current.touches.Count; i++)
-        {
-			//Debug.LogError("touch pos:"+ i + " : " + Touchscreen.current.touches[i].position.ReadValue());
-            //figures out the id of the touch which caused the startmovment function to get called and saves that id to use as a reference when getting input later
-            if (Touchscreen.current.touches[i].position.ReadValue() != Vector2.zero && !isGettingTouch && IsGrounded)
+            if (Physics2D.CircleCast(assignedPlayerRb.transform.position, groundCheckRadius, Vector3.down, 0.8f, pOneGroundCheckLayerMask))
             {
-                movementTouchId = i;
-                isGettingTouch = true;
-                touchStartPos = Touchscreen.current.touches[movementTouchId].startPosition.ReadValue();
-				StartChargeJump();
+                IsGrounded = true;
+            }
+            else
+            {
+                IsGrounded = false;
             }
         }
+		else
+		{
+            if (Physics2D.CircleCast(assignedPlayerRb.transform.position, groundCheckRadius, Vector3.down, 0.8f, pTwoGroundCheckLayerMask))
+            {
+                IsGrounded = true;
+            }
+            else
+            {
+                IsGrounded = false;
+            }
+        }
+
     }
+
+#if UNITY_ANDRIOD
+	public void StartGettingTouchInput()
+    {
+		if (!GameIsRunning) return;
+		if (Touchscreen.current == null)
+		{
+            for (int i = 0; i < Touchscreen.current.touches.Count; i++)
+            {
+                //Debug.LogError("touch pos:"+ i + " : " + Touchscreen.current.touches[i].position.ReadValue());
+                //figures out the id of the touch which caused the startmovment function to get called and saves that id to use as a reference when getting input later
+                if (Touchscreen.current.touches[i].position.ReadValue() != Vector2.zero && !isGettingTouch && IsGrounded)
+                {
+                    movementTouchId = i;
+                    isGettingTouch = true;
+                    touchStartPos = Touchscreen.current.touches[movementTouchId].startPosition.ReadValue();
+                    StartChargeJump();
+                }
+            }
+		}
+	}
+#else
+    public void StartGettingTouchInput()
+	{
+        if (!GameIsRunning) return;
+        isGettingTouch = true;
+        touchStartPos = Camera.main.WorldToScreenPoint(Input.mousePosition);
+		if (IsGrounded) StartChargeJump();
+    }
+#endif
+
 
 	public void StopGettingTouchInput()
 	{
-		isGettingTouch = false;
+        if (!GameIsRunning) return;
+        isGettingTouch = false;
 		//movementTouchId = 9999;
 		StopChargeJump();
     }
@@ -182,7 +215,23 @@ public class InputManager : NetworkBehaviour
 		}
 		else
 		{
-			float xDistance = Touchscreen.current.touches[movementTouchId].position.ReadValue().x - touchStartPos.x;
+            float xDistance = 0;
+#if UNITY_ANDROID
+			xDistance = Touchscreen.current.touches[movementTouchId].position.ReadValue().x - touchStartPos.x;
+#else
+            xDistance = Camera.main.WorldToScreenPoint(Input.mousePosition).x - touchStartPos.x;
+#endif
+
+            //if (Touchscreen.current.touches.Count > 0 || Touchscreen.current == null)
+            //{
+                
+            //}
+            //else
+            //{
+
+                
+            //}
+
 
             switch (xDistance)
             {
