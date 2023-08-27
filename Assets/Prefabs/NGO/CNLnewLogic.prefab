@@ -2950,6 +2950,10 @@ PrefabInstance:
       propertyPath: uiGamePlayManager
       value: 
       objectReference: {fileID: 1971450371286753273}
+    - target: {fileID: 5363481052939938962, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b86c49aebc5f9f54ebe88b81a4def3a0, type: 2}
     - target: {fileID: 5635090706813887795, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334

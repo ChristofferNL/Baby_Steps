@@ -25,15 +25,23 @@ Material:
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 2
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _End_Texture:
+        m_Texture: {fileID: 2800000, guid: f2a83fdcb3e09c24d93e869eeb6daa3b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 466f5105e12d1574fbba49f002821ceb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTexture:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -42,7 +50,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Start_Texture:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 577b135301e120c45a7c5e037837d081, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -59,9 +67,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _DebugFloat: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Y_UV_Scale: 0.865
+    - _StartAdjust: 0.084
+    - _StartAdjust2: 0.85
+    - _StartAdjust2_1: -0.61
+    - _Y_UV_Scale: 0
     m_Colors:
-    - _Base_Color: {r: 0.6367924, g: 1, b: 1, a: 0}
+    - _Base_Color: {r: 0, g: 0.98076916, b: 1, a: 0}
   m_BuildTextureStacks: []
