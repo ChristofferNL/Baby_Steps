@@ -3892,6 +3892,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7355851355931740791, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
+      propertyPath: questionAmount
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7355851355931740791, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
       propertyPath: pooledFlags.Array.data[0]
       value: 
       objectReference: {fileID: 7816621605459034953}
