@@ -61,6 +61,11 @@ public class UIGamePlayManager : NetworkBehaviour
         StartCoroutine(LoadingWait());
     }
 
+    public void ExitCurrentGame()
+    {
+        GameManager.Instance.ClientQuitGame();
+    }
+
     IEnumerator LoadingWait()
     {
         yield return new WaitForSecondsRealtime(loadingScreenWaitSeconds);
