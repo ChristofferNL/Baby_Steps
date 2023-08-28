@@ -8,7 +8,6 @@ public class LevelChunkDataSO : ScriptableObject
     public int numberOfPlatforms;
     public bool[] isPassThrough;
     public bool[] isQuestion;
-    public bool[] isBouncy;
     public Vector3[] position;
     public Quaternion[] rotation;
     public Vector3 bottomLeft;
