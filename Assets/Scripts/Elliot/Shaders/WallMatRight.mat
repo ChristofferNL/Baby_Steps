@@ -56,6 +56,10 @@ Material:
     m_Ints: []
     m_Floats:
     - _Background_Multiplier: 0.764
+    - _Gradient_Intensity: 2.46
+    - _Gradient_Offset: -0.45
+    - _Gradient_Power: 0.775
+    - _Is_Right_Side: 1
     - _Line_Intensity: 0.57
     - _Mask_Fuzzieness: 1.26
     - _Mask_Range: 0.554
@@ -65,8 +69,9 @@ Material:
     - _UV_X_offset: -4.9
     - _Y_Offset: 16.7
     m_Colors:
+    - _Base_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color1: {r: 0.754717, g: 0.6870773, b: 0.6870773, a: 0}
-    - _Color2: {r: 0.3349057, g: 0.8871111, b: 1, a: 0}
+    - _Color2: {r: 1, g: 1, b: 1, a: 0}
     - _Line_Color: {r: 0.3820755, g: 0.8127892, b: 1, a: 0}
     - _Uv_Tiling: {r: 0.32, g: 0.07, b: 0, a: 0}
   m_BuildTextureStacks: []
