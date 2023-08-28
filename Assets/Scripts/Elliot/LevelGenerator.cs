@@ -25,6 +25,16 @@ public class LevelGenerator : NetworkBehaviour
     public GameObject questionToPool;
     public int questionAmount;
 
+    [Header("Bouncy Platforms")]
+    public List<GameObject> pooledBouncy;
+    public GameObject bouncyToPool;
+    public int bouncyAmount;
+
+    [Header("Question Flags")]
+    public List<GameObject> pooledFlags;
+    public GameObject flagsToPool;
+    public int flagsAmount;
+
     [SerializeField] float heightNextSpawn;
 
     private List<GameObject> spawnedObjects;
@@ -34,6 +44,7 @@ public class LevelGenerator : NetworkBehaviour
     public List<GameObject> spawnedChunk1 = new List<GameObject>();
     public List<GameObject> spawnedChunk2 = new List<GameObject>();
     public List<GameObject> spawnedChunk3 = new List<GameObject>();
+    public List<GameObject> spawnedChunk4 = new List<GameObject>();
     public int amountOfSpawnedLevels;
 
     public Vector3 nextStartPos;
@@ -41,6 +52,7 @@ public class LevelGenerator : NetworkBehaviour
 
     public bool testingMode = false;
     private int questionOverrideId;
+    private bool canSpawn = false;
 
     public int currentLevelId;
     public float playerHeight;
@@ -48,6 +60,7 @@ public class LevelGenerator : NetworkBehaviour
     [SerializeField] Transform player2;
     [SerializeField] Transform originalAnchorPos;
     [SerializeField] QuestionManager questionManager;
+    [SerializeField] GameObject questionFlag;
 
     private void Start()
     {
@@ -80,9 +93,31 @@ public class LevelGenerator : NetworkBehaviour
             GameObject tmp3;
             for (int i = 0; i < questionAmount; i++)
             {
-                tmp2 = Instantiate(questionToPool);
-                tmp2.SetActive(false);
-                pooledQuestions.Add(tmp2);
+                tmp3 = Instantiate(questionToPool);
+                tmp3.SetActive(false);
+                pooledQuestions.Add(tmp3);
+                //tmp2.GetComponent<NetworkObject>().Spawn();
+            }
+
+            //creating bouncy
+            pooledBouncy = new List<GameObject>(bouncyAmount);
+            GameObject tmp4;
+            for (int i = 0; i < bouncyAmount; i++)
+            {
+                tmp4 = Instantiate(bouncyToPool);
+                tmp4.SetActive(false);
+                pooledBouncy.Add(tmp4);
+                //tmp2.GetComponent<NetworkObject>().Spawn();
+            }
+
+            //creating bouncy
+            pooledBouncy = new List<GameObject>(flagsAmount);
+            GameObject tmp5;
+            for (int i = 0; i < flagsAmount; i++)
+            {
+                tmp5 = Instantiate(flagsToPool);
+                tmp5.SetActive(false);
+                pooledFlags.Add(tmp5);
                 //tmp2.GetComponent<NetworkObject>().Spawn();
             }
         }
@@ -90,6 +125,12 @@ public class LevelGenerator : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        StartCoroutine(WaitToStartSpawning(4));
+        if (pooledPlatforms.Count != 0) foreach (GameObject obj in pooledPlatforms) { obj.SetActive(false); };
+        if (pooledPassthrough.Count != 0) foreach (GameObject obj in pooledPassthrough) { obj.SetActive(false); };
+        if (pooledQuestions.Count != 0) foreach (GameObject obj in pooledQuestions) { obj.SetActive(false); };
+        if (pooledBouncy.Count != 0) foreach (GameObject obj in pooledQuestions) { obj.SetActive(false); };
+
         if(!testingMode && !createPoolsOnRuntime) { return; }
         //creating solid pool
         pooledPlatforms = new List<GameObject>();
@@ -123,6 +164,34 @@ public class LevelGenerator : NetworkBehaviour
             pooledQuestions.Add(tmp3);
             tmp3.GetComponent<NetworkObject>().Spawn();
         }
+
+        //creating bouncy
+        pooledBouncy = new List<GameObject>(bouncyAmount);
+        GameObject tmp4;
+        for (int i = 0; i < bouncyAmount; i++)
+        {
+            tmp4 = Instantiate(bouncyToPool);
+            tmp4.SetActive(false);
+            pooledBouncy.Add(tmp4);
+            tmp4.GetComponent<NetworkObject>().Spawn();
+        }
+
+        //creating bouncy
+        pooledBouncy = new List<GameObject>(flagsAmount);
+        GameObject tmp5;
+        for (int i = 0; i < flagsAmount; i++)
+        {
+            tmp5 = Instantiate(flagsToPool);
+            tmp5.SetActive(false);
+            pooledFlags.Add(tmp5);
+            tmp5.GetComponent<NetworkObject>().Spawn();
+        }
+    }
+
+    IEnumerator WaitToStartSpawning(float waitTime)
+    {
+        yield return new WaitForSecondsRealtime(waitTime);
+        canSpawn = true;
     }
 
 
@@ -130,18 +199,20 @@ public class LevelGenerator : NetworkBehaviour
     {
         playerHeight = ((player1.position + player2.position) / 2).y;
 
-        if(playerHeight > heightNextSpawn)
+        if(playerHeight > heightNextSpawn && canSpawn)
         {
-            SpawnChunk();
+            if(IsHost || IsServer) 
+            {
+                //Random.Range(0, chunkDataSOs.Length)
+                SpawnChunkClientRpc(Random.Range(0, chunkDataSOs.Length));
+                
+            }
         }
     }
 
-    void SpawnChunk()
+    [ClientRpc]
+    void SpawnChunkClientRpc(int levelId, ClientRpcParams clientRpcParams = default)
     {
-        int levelId = Random.Range(0, chunkDataSOs.Length);
-        Debug.Log("level id " + levelId);
-        //Debug.Log("number of platforms:" + chunkDataSOs[levelId].numberOfPlatforms);
-
         if (levelIdOrder.Count < 1)
         {
             nextStartPos = originalAnchorPos.position;
@@ -220,10 +291,10 @@ public class LevelGenerator : NetworkBehaviour
         {
             GameObject spawnedObject;
 
-            if(chunkDataSOs[levelId].isQuestion[i]) 
+            if (chunkDataSOs[levelId].isBouncy[i])
             {
-                //spawns a question platform
-                spawnedObject = GetPooledQuestion();
+                //spawns a bouncy platform
+                spawnedObject = GetPooledBouncy();
                 if (spawnedObject == null) return;
                 spawnedObject.transform.localPosition = nextStartPos + chunkDataSOs[levelId].position[i];
                 spawnedObject.transform.localScale = chunkDataSOs[levelId].scale[i];
@@ -242,10 +313,42 @@ public class LevelGenerator : NetworkBehaviour
                     spawnedChunk3.Add(spawnedObject);
                 }
                 spawnedObject.SetActive(true);
+            }
+
+            if (chunkDataSOs[levelId].isQuestion[i]) 
+            {
+                //spawns a question platform
+                spawnedObject = GetPooledQuestion();
+                if (spawnedObject == null) return;
+                spawnedObject.transform.localPosition = nextStartPos + chunkDataSOs[levelId].position[i];
+                spawnedObject.transform.localScale = chunkDataSOs[levelId].scale[i];
+                spawnedObject.transform.rotation = chunkDataSOs[levelId].rotation[i];
+
+                GameObject spawnedFlag;
+                spawnedFlag = GetPooledFlag();
+                spawnedFlag.transform.localPosition = spawnedObject.transform.localPosition + Vector3.up * spawnedObject.transform.localScale.y * 2f;
+
+                if (chunkToSaveTo == 1)
+                {
+                    spawnedChunk1.Add(spawnedObject);
+                    spawnedChunk1.Add(spawnedFlag); 
+                }
+                else if (chunkToSaveTo == 2)
+                {
+                    spawnedChunk2.Add(spawnedObject);
+                    spawnedChunk2.Add(spawnedFlag);
+                }
+                else if (chunkToSaveTo == 3)
+                {
+                    spawnedChunk3.Add(spawnedObject);
+                    spawnedChunk3.Add(spawnedFlag);
+                }
+                spawnedObject.SetActive(true);
+                spawnedFlag.SetActive(true);
                 spawnedObject.GetComponentInChildren<QuestionPlatform>().questionManager = questionManager;
             }
 
-            if (chunkDataSOs[levelId].isPassThrough[i] && !chunkDataSOs[levelId].isQuestion[i])
+            if (chunkDataSOs[levelId].isPassThrough[i] && !chunkDataSOs[levelId].isQuestion[i] && !chunkDataSOs[levelId].isBouncy[i])
             {
                 //spawns a pass through platform
                 spawnedObject = GetPooledPassTrough();
@@ -268,7 +371,7 @@ public class LevelGenerator : NetworkBehaviour
                 }
                 spawnedObject.SetActive(true);
             }
-            else if(!chunkDataSOs[levelId].isQuestion[i])
+            else if(!chunkDataSOs[levelId].isQuestion[i] && !chunkDataSOs[levelId].isBouncy[i])
             {
                 //spawns a solid platform
                 spawnedObject = GetPooledSolid();
@@ -296,7 +399,6 @@ public class LevelGenerator : NetworkBehaviour
 
         levelSpawnOrder.Add(amountOfSpawnedLevels);
         levelIdOrder.Add(levelId);
-        Debug.Log("im here");
         amountOfSpawnedLevels++;
 
         oldStartPos = nextStartPos;
@@ -338,6 +440,32 @@ public class LevelGenerator : NetworkBehaviour
             if (!pooledQuestions[i].activeInHierarchy)
             {
                 return pooledQuestions[i];
+            }
+        }
+        return null;
+    }
+
+    //gets a pooled Bouncy Platform 
+    public GameObject GetPooledBouncy()
+    {
+        for (int i = 0; i < bouncyAmount; i++)
+        {
+            if (!pooledBouncy[i].activeInHierarchy)
+            {
+                return pooledBouncy[i];
+            }
+        }
+        return null;
+    }
+
+    //gets a pooled flags 
+    public GameObject GetPooledFlag()
+    {
+        for (int i = 0; i < flagsAmount; i++)
+        {
+            if (!pooledFlags[i].activeInHierarchy)
+            {
+                return pooledFlags[i];
             }
         }
         return null;
