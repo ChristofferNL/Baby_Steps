@@ -17,7 +17,9 @@ public class InputManager : NetworkBehaviour
 	}
 	JumpDirection jumpDirection;
 
-	[SerializeField] GameEngineManager manager;
+    const float JUMP_STRAIGHT_UP_BUFFER = 2000f;
+
+    [SerializeField] GameEngineManager manager;
 	[SerializeField] Rigidbody2D playerRb;
 	[SerializeField] Rigidbody2D playerRbTwo;
 	[SerializeField] float moveForce;
@@ -42,7 +44,7 @@ public class InputManager : NetworkBehaviour
 	public bool canChargeWhilePulled = false;
 	public bool canWalk = false;
 
-	public Vector3 touchStartPos;
+	public Vector3 touchStartPos = Vector3.zero;
 	public bool isGettingTouch;
 	public int movementTouchId;
 
@@ -140,9 +142,12 @@ public class InputManager : NetworkBehaviour
     public void StartGettingTouchInput()
 	{
         if (!GameIsRunning) return;
-        isGettingTouch = true;
-        touchStartPos = Camera.main.WorldToScreenPoint(Input.mousePosition);
-		if (IsGrounded) StartChargeJump();
+		if (!isGettingTouch)
+		{
+            isGettingTouch = true;
+            touchStartPos = Camera.main.WorldToScreenPoint(Input.mousePosition);
+            if (IsGrounded) StartChargeJump();
+        }
     }
 #endif
 
@@ -235,10 +240,10 @@ public class InputManager : NetworkBehaviour
 
             switch (xDistance)
             {
-                case < 0:
+                case < -JUMP_STRAIGHT_UP_BUFFER:
                     jumpDirection = JumpDirection.LEFT;
                     break;
-                case > 0:
+                case > JUMP_STRAIGHT_UP_BUFFER:
                     jumpDirection = JumpDirection.RIGHT;
                     break;
                 default:
