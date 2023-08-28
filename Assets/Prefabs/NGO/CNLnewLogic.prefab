@@ -3899,6 +3899,38 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2784033315714014709}
     - target: {fileID: 7355851355931740791, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
+      propertyPath: chunkDataSOs.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: e3b393fe2af549543aa098974ac74537, type: 2}
+    - target: {fileID: 7355851355931740791, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
+      propertyPath: chunkDataSOs.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: a7fe9cae1336de94990c77df3e5a7bc6, type: 2}
+    - target: {fileID: 7355851355931740791, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
+      propertyPath: chunkDataSOs.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 89d0626f3e847d444b718b6b5e149094, type: 2}
+    - target: {fileID: 7355851355931740791, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
+      propertyPath: chunkDataSOs.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 9fab2b0101383d34baf7a11b65217bb7, type: 2}
+    - target: {fileID: 7355851355931740791, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
+      propertyPath: chunkDataSOs.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 63ce7d25108f54c4dbeb6742fd11d33b, type: 2}
+    - target: {fileID: 7355851355931740791, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
+      propertyPath: chunkDataSOs.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2e896aac8fef32649a0fc6cb07af06ff, type: 2}
+    - target: {fileID: 7355851355931740791, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
+      propertyPath: chunkDataSOs.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 7b7eb1b881a518d4a9b64e4abac915b0, type: 2}
+    - target: {fileID: 7355851355931740791, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
+      propertyPath: chunkDataSOs.Array.data[7]
+      value: 
+      objectReference: {fileID: 11400000, guid: 8ddb60553f0b6564cb72bbc60fab2df5, type: 2}
+    - target: {fileID: 7355851355931740791, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
       propertyPath: pooledBouncy.Array.data[0]
       value: 
       objectReference: {fileID: 684568833204031470}
