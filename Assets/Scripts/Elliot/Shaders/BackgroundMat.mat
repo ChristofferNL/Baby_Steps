@@ -80,6 +80,9 @@ Material:
     - _Step_Edge: 0.012
     - _UV_Map_Size: 0.59
     - _UV_X_offset: 1.44
+    - _Wobble_Intensity: 0.333
+    - _Wobble_Scale: 2.87
+    - _Wobble_Speed: 0.185
     - _Y_UV_Scale: 0.4
     m_Colors:
     - _Base_Color: {r: 0.6933962, g: 0.7346203, b: 1, a: 0}
