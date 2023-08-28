@@ -7,7 +7,7 @@ public class QuestionPlatform : MonoBehaviour
     [SerializeField] int amountOfPlayersColliding = 0;
     public QuestionManager questionManager;
 
-	bool hasSpawnedQuestion;
+	public bool hasSpawnedQuestion;
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
