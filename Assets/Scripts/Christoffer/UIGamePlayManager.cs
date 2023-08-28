@@ -34,7 +34,6 @@ public class UIGamePlayManager : NetworkBehaviour
     [SerializeField] InputManager inputManager;
     [SerializeField] EmoticonWidget leftPlayerEmoteUIObject;
     [SerializeField] EmoticonWidget rightPlayerEmoteUIObject;
-    [SerializeField] GameObject loadingScreenObject;
 
     public Sprite notSelectedSprite;
     public Sprite selectedSprite;
@@ -60,7 +59,6 @@ public class UIGamePlayManager : NetworkBehaviour
         progressSlider.maxValue = questionManager.questionsPerRun;
         HudObject.SetActive(true);
         inputManager.EnableControls();
-        loadingScreenObject.SetActive(false);
     }
 
     public void EndCurrentGame()
@@ -126,16 +124,17 @@ public class UIGamePlayManager : NetworkBehaviour
                 continue;
             if (player.Index.Value == (int)senderID)
             {
-                ChatMessageShow_ClientRpc(message, player.DisplayName.Value);
+                bool isPlayerOne = player.Index.Value == 0;
+                ChatMessageShow_ClientRpc(message, player.DisplayName.Value, isPlayerOne);
             }
         }
 	}
 
 	[ClientRpc]
-    public void ChatMessageShow_ClientRpc(FixedString512Bytes message, FixedString512Bytes playerName)
+    public void ChatMessageShow_ClientRpc(FixedString512Bytes message, FixedString512Bytes playerName, bool isPlayerOne)
     {
         GameObject newMessage = Instantiate(chatMessageObject.gameObject, finalAnswersParent.transform, false);
-        newMessage.GetComponent<ChatMessageWidget>().SetupChatObject(message.ToString(), playerName.ToString());
+        newMessage.GetComponent<ChatMessageWidget>().SetupChatObject(message.ToString(), playerName.ToString(), isPlayerOne);
         StartCoroutine(ScrollToBottom());
     }
 
