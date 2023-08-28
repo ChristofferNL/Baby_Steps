@@ -63,6 +63,11 @@ public class UIGamePlayManager : NetworkBehaviour
         loadingScreenObject.SetActive(false);
     }
 
+    public void EndCurrentGame()
+    {
+        GameManager.Instance.ClientQuitGame();
+    }
+
     void SetupPlayer(LocalPlayer player)
     {
         if (player.IsHost.Value)
