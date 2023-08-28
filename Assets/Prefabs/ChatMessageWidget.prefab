@@ -268,3 +268,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chatMessageText: {fileID: 8917797706214103158}
+  playerOneColor: {r: 1, g: 0.38431376, b: 0.19215688, a: 1}
+  playerTwoColor: {r: 1, g: 0.5529412, b: 0.6784314, a: 1}
+  backgroundChatBox: {fileID: 7656932675989452066}
