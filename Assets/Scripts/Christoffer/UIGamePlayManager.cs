@@ -128,16 +128,17 @@ public class UIGamePlayManager : NetworkBehaviour
                 continue;
             if (player.Index.Value == (int)senderID)
             {
-                ChatMessageShow_ClientRpc(message, player.DisplayName.Value);
+                bool isPlayerOne = player.Index.Value == 0;
+                ChatMessageShow_ClientRpc(message, player.DisplayName.Value, isPlayerOne);
             }
         }
 	}
 
 	[ClientRpc]
-    public void ChatMessageShow_ClientRpc(FixedString512Bytes message, FixedString512Bytes playerName)
+    public void ChatMessageShow_ClientRpc(FixedString512Bytes message, FixedString512Bytes playerName, bool isPlayerOne)
     {
         GameObject newMessage = Instantiate(chatMessageObject.gameObject, finalAnswersParent.transform, false);
-        newMessage.GetComponent<ChatMessageWidget>().SetupChatObject(message.ToString(), playerName.ToString());
+        newMessage.GetComponent<ChatMessageWidget>().SetupChatObject(message.ToString(), playerName.ToString(), isPlayerOne);
         StartCoroutine(ScrollToBottom());
     }
 
