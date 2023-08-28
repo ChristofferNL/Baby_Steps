@@ -256,6 +256,10 @@ public class LevelGenerator : NetworkBehaviour
             {
                 for (int i = 0; i < spawnedChunk1.Count; i++)
                 {
+                    if (spawnedChunk1[i].GetComponentInChildren<QuestionPlatform>())
+                    {
+                        spawnedChunk1[i].GetComponentInChildren<QuestionPlatform>().hasSpawnedQuestion = false;
+                    }
                     spawnedChunk1[i].SetActive(false);
                 }
                 spawnedChunk1.Clear();
@@ -265,6 +269,10 @@ public class LevelGenerator : NetworkBehaviour
             {
                 for (int i = 0; i < spawnedChunk2.Count; i++)
                 {
+                    if (spawnedChunk1[i].GetComponentInChildren<QuestionPlatform>())
+                    {
+                        spawnedChunk1[i].GetComponentInChildren<QuestionPlatform>().hasSpawnedQuestion = false;
+                    }
                     spawnedChunk2[i].SetActive(false);
                 }
                 spawnedChunk2.Clear();
@@ -274,6 +282,10 @@ public class LevelGenerator : NetworkBehaviour
             {
                 for (int i = 0; i < spawnedChunk3.Count; i++)
                 {
+                    if (spawnedChunk1[i].GetComponentInChildren<QuestionPlatform>())
+                    {
+                        spawnedChunk1[i].GetComponentInChildren<QuestionPlatform>().hasSpawnedQuestion = false;
+                    }
                     spawnedChunk3[i].SetActive(false);
                 }
                 spawnedChunk3.Clear();
