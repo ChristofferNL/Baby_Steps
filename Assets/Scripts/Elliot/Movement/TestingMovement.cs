@@ -5,6 +5,7 @@ using UnityEngine;
 public class TestingMovement : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 2;
+    [SerializeField] Rigidbody2D rigidbody2D;
     private Vector2 moveVector;
 
     // Update is called once per frame
@@ -16,6 +17,6 @@ public class TestingMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.W)) { moveVector += Vector2.up; }
         if (Input.GetKey(KeyCode.S)) { moveVector += Vector2.down; }
         moveVector.Normalize();
-        transform.Translate(moveVector * moveSpeed * Time.deltaTime);
+        rigidbody2D.AddForce(moveVector * moveSpeed);
     }
 }
