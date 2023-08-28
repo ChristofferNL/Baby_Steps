@@ -77,31 +77,16 @@ public class QuestionManager : NetworkBehaviour
     [SerializeField] UIGamePlayManager uiGamePlayManager;
     [SerializeField] Transform playerTransform;
 
-    public bool SpawnQuestion;
+    public bool SpawnQuestion = true;
 
     int questionsAnswered;
-    int nextQuestionHeightTarget;
 
     [SerializeField] List<(ulong, int, int)> savedAnswers = new();
 
     public override void OnNetworkSpawn()
     {
         GenerateGameQuestions();
-        SetNewTargetHeight();
         uiGamePlayManager.SetupPlayersUI();
-    }
-
-    private void FixedUpdate()
-    {
-        if (playerTransform.position.y >= nextQuestionHeightTarget)
-        {
-            SpawnQuestion = true;
-        }
-    }
-
-    void SetNewTargetHeight()
-    {
-        nextQuestionHeightTarget = (int)playerTransform.position.y + distanceToSpawnQuestion;
     }
 
     [ServerRpc(RequireOwnership = true)]
@@ -120,7 +105,6 @@ public class QuestionManager : NetworkBehaviour
 
         uiGamePlayManager.NewQuestionShow_ClientRpc(activeQuestion.Value);
         questionsAnswered++;
-        SetNewTargetHeight();
         SpawnQuestion = false;
         SetTimeScale_ClientRpc(0);
     }
