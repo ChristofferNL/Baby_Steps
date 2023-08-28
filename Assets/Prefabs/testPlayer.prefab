@@ -534,12 +534,36 @@ MonoBehaviour:
   - {fileID: 0}
   questionToPool: {fileID: 8361480012651490758, guid: 0cb0ff752bd191244a4ae740f3d29546, type: 3}
   questionAmount: 6
+  pooledBouncy:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  bouncyToPool: {fileID: 7191669928888558979, guid: ece71acde30fdae4f9ba04bb629a26d2, type: 3}
+  bouncyAmount: 10
+  pooledFlags:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  flagsToPool: {fileID: 2647531613376287702, guid: 26df2c0fd047e8a489014b284e8d970a, type: 3}
+  flagsAmount: 7
   heightNextSpawn: 0
   levelIdOrder: 
   levelSpawnOrder: 
   spawnedChunk1: []
   spawnedChunk2: []
   spawnedChunk3: []
+  spawnedChunk4: []
   amountOfSpawnedLevels: 0
   nextStartPos: {x: 0, y: 0, z: 0}
   oldStartPos: {x: 0, y: 0, z: 0}
@@ -550,6 +574,7 @@ MonoBehaviour:
   player2: {fileID: 1690261798932719180}
   originalAnchorPos: {fileID: 7749301411205047995}
   questionManager: {fileID: 5066646139675404838}
+  questionFlag: {fileID: 0}
 --- !u!1 &1178474350582760420
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,7 +670,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1382818317922470697}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.148, z: 0}
+  m_LocalPosition: {x: 0, y: 5.69, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -667,7 +692,7 @@ GameObject:
   - component: {fileID: 704135452938341588}
   - component: {fileID: 6008990072893084675}
   - component: {fileID: 7624495364531928757}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Player 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1186,7 +1211,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: b86c49aebc5f9f54ebe88b81a4def3a0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1524,9 +1549,12 @@ MonoBehaviour:
   jumpForceTimesToAdd: 20
   groundCheckDistance: 0.11
   groundCheckRadius: 0.45
-  groundCheckLayerMask:
+  pOneGroundCheckLayerMask:
     serializedVersion: 2
-    m_Bits: 183
+    m_Bits: 129
+  pTwoGroundCheckLayerMask:
+    serializedVersion: 2
+    m_Bits: 65
   GameIsRunning: 0
   IsGrounded: 1
   doGroundCheck: 1
@@ -1768,7 +1796,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3824226005071520423}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
