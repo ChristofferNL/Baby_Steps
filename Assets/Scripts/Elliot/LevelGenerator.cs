@@ -30,6 +30,11 @@ public class LevelGenerator : NetworkBehaviour
     public GameObject bouncyToPool;
     public int bouncyAmount;
 
+    [Header("Question Flags")]
+    public List<GameObject> pooledFlags;
+    public GameObject flagsToPool;
+    public int flagsAmount;
+
     [SerializeField] float heightNextSpawn;
 
     private List<GameObject> spawnedObjects;
@@ -39,6 +44,7 @@ public class LevelGenerator : NetworkBehaviour
     public List<GameObject> spawnedChunk1 = new List<GameObject>();
     public List<GameObject> spawnedChunk2 = new List<GameObject>();
     public List<GameObject> spawnedChunk3 = new List<GameObject>();
+    public List<GameObject> spawnedChunk4 = new List<GameObject>();
     public int amountOfSpawnedLevels;
 
     public Vector3 nextStartPos;
@@ -54,6 +60,7 @@ public class LevelGenerator : NetworkBehaviour
     [SerializeField] Transform player2;
     [SerializeField] Transform originalAnchorPos;
     [SerializeField] QuestionManager questionManager;
+    [SerializeField] GameObject questionFlag;
 
     private void Start()
     {
@@ -100,6 +107,17 @@ public class LevelGenerator : NetworkBehaviour
                 tmp4 = Instantiate(bouncyToPool);
                 tmp4.SetActive(false);
                 pooledBouncy.Add(tmp4);
+                //tmp2.GetComponent<NetworkObject>().Spawn();
+            }
+
+            //creating bouncy
+            pooledBouncy = new List<GameObject>(flagsAmount);
+            GameObject tmp5;
+            for (int i = 0; i < flagsAmount; i++)
+            {
+                tmp5 = Instantiate(flagsToPool);
+                tmp5.SetActive(false);
+                pooledFlags.Add(tmp5);
                 //tmp2.GetComponent<NetworkObject>().Spawn();
             }
         }
@@ -156,6 +174,17 @@ public class LevelGenerator : NetworkBehaviour
             tmp4.SetActive(false);
             pooledBouncy.Add(tmp4);
             tmp4.GetComponent<NetworkObject>().Spawn();
+        }
+
+        //creating bouncy
+        pooledBouncy = new List<GameObject>(flagsAmount);
+        GameObject tmp5;
+        for (int i = 0; i < flagsAmount; i++)
+        {
+            tmp5 = Instantiate(flagsToPool);
+            tmp5.SetActive(false);
+            pooledFlags.Add(tmp5);
+            tmp5.GetComponent<NetworkObject>().Spawn();
         }
     }
 
@@ -295,19 +324,27 @@ public class LevelGenerator : NetworkBehaviour
                 spawnedObject.transform.localScale = chunkDataSOs[levelId].scale[i];
                 spawnedObject.transform.rotation = chunkDataSOs[levelId].rotation[i];
 
+                GameObject spawnedFlag;
+                spawnedFlag = GetPooledFlag();
+                spawnedFlag.transform.localPosition = spawnedObject.transform.localPosition + Vector3.up * spawnedObject.transform.localScale.y * 2f;
+
                 if (chunkToSaveTo == 1)
                 {
                     spawnedChunk1.Add(spawnedObject);
+                    spawnedChunk1.Add(spawnedFlag); 
                 }
                 else if (chunkToSaveTo == 2)
                 {
                     spawnedChunk2.Add(spawnedObject);
+                    spawnedChunk2.Add(spawnedFlag);
                 }
                 else if (chunkToSaveTo == 3)
                 {
                     spawnedChunk3.Add(spawnedObject);
+                    spawnedChunk3.Add(spawnedFlag);
                 }
                 spawnedObject.SetActive(true);
+                spawnedFlag.SetActive(true);
                 spawnedObject.GetComponentInChildren<QuestionPlatform>().questionManager = questionManager;
             }
 
@@ -416,6 +453,19 @@ public class LevelGenerator : NetworkBehaviour
             if (!pooledBouncy[i].activeInHierarchy)
             {
                 return pooledBouncy[i];
+            }
+        }
+        return null;
+    }
+
+    //gets a pooled flags 
+    public GameObject GetPooledFlag()
+    {
+        for (int i = 0; i < flagsAmount; i++)
+        {
+            if (!pooledFlags[i].activeInHierarchy)
+            {
+                return pooledFlags[i];
             }
         }
         return null;
