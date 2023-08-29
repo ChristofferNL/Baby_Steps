@@ -213,6 +213,7 @@ public class LevelGenerator : NetworkBehaviour
     [ClientRpc]
     void SpawnChunkClientRpc(int levelId, ClientRpcParams clientRpcParams = default)
     {
+        Debug.LogError("Level ID is: " + levelId);
         if (levelIdOrder.Count < 1)
         {
             nextStartPos = originalAnchorPos.position;
@@ -251,45 +252,48 @@ public class LevelGenerator : NetworkBehaviour
             if(lowestHeight > heightChunk3) { lowestHeight = heightChunk3; }
 
             //Debug.Log("lowest height: " + lowestHeight);
+            if(lowestHeight ==  heightChunk1) { Debug.LogError("lowest height is 1"); }
+            if(lowestHeight ==  heightChunk2) { Debug.LogError("lowest height is 2"); }
+            if(lowestHeight ==  heightChunk3) { Debug.LogError("lowest height is 3"); }
 
             if(lowestHeight ==  heightChunk1) 
             {
                 for (int i = 0; i < spawnedChunk1.Count; i++)
                 {
-                    if (spawnedChunk1[i].GetComponentInChildren<QuestionPlatform>())
+                    if (spawnedChunk1[i].transform.childCount > 0)
                     {
                         spawnedChunk1[i].GetComponentInChildren<QuestionPlatform>().hasSpawnedQuestion = false;
                     }
                     spawnedChunk1[i].SetActive(false);
                 }
                 spawnedChunk1.Clear();
-                spawnedChunk1 = new List<GameObject>();
+                //spawnedChunk1 = new List<GameObject>(0);
             }
             else if(lowestHeight == heightChunk2)
             {
                 for (int i = 0; i < spawnedChunk2.Count; i++)
                 {
-                    if (spawnedChunk1[i].GetComponentInChildren<QuestionPlatform>())
+                    if (spawnedChunk2[i].transform.childCount > 0)
                     {
-                        spawnedChunk1[i].GetComponentInChildren<QuestionPlatform>().hasSpawnedQuestion = false;
+                        spawnedChunk2[i].GetComponentInChildren<QuestionPlatform>().hasSpawnedQuestion = false;
                     }
                     spawnedChunk2[i].SetActive(false);
                 }
                 spawnedChunk2.Clear();
-                spawnedChunk2 = new List<GameObject>();
+                //spawnedChunk2 = new List<GameObject>(0);
             }
             else if (lowestHeight == heightChunk3)
             {
                 for (int i = 0; i < spawnedChunk3.Count; i++)
                 {
-                    if (spawnedChunk1[i].GetComponentInChildren<QuestionPlatform>())
+                    if (spawnedChunk3[i].transform.childCount > 0)
                     {
-                        spawnedChunk1[i].GetComponentInChildren<QuestionPlatform>().hasSpawnedQuestion = false;
+                        spawnedChunk3[i].GetComponentInChildren<QuestionPlatform>().hasSpawnedQuestion = false;
                     }
                     spawnedChunk3[i].SetActive(false);
                 }
                 spawnedChunk3.Clear();
-                spawnedChunk3 = new List<GameObject>();
+                //spawnedChunk3 = new List<GameObject>(0);
             }    
         }
 
