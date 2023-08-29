@@ -37,6 +37,14 @@ public class UIGamePlayManager : NetworkBehaviour
     [SerializeField] GameObject loadingScreenObject;
     [SerializeField] float loadingScreenWaitSeconds = 4;
 
+
+    [Header("Settings Things")]
+    [SerializeField] GameObject settingsMenu;
+    [SerializeField] GameObject audioPopup;
+    [SerializeField] GameObject howToPlayPopup;
+    [SerializeField] GameObject quitPopup;
+    [SerializeField] List<GraphicRaycaster> settingsButtonsRaycasters = new();
+
     public Sprite notSelectedSprite;
     public Sprite selectedSprite;
 
@@ -48,6 +56,54 @@ public class UIGamePlayManager : NetworkBehaviour
                                                 playerOneTransform.position.y < playerTwoTransform.position.y ? playerOneTransform.position.y + cameraOffsetY : 
                                                 playerTwoTransform.position.y + cameraOffsetY);
 	}
+
+    public void OpenSettings()
+    {
+        settingsMenu.SetActive(true);
+    }
+
+    public void CloseSettings()
+    {
+        settingsMenu.SetActive(false);
+    }
+
+    public void ClosePopups()
+    {
+        audioPopup.SetActive(false);
+        howToPlayPopup.SetActive(false);
+        quitPopup.SetActive(false);
+        foreach (var raycaster in settingsButtonsRaycasters)
+        {
+            raycaster.enabled = true;
+        }
+    }
+
+    public void OpenAudioPopup()
+    {
+        audioPopup.SetActive(true);
+        foreach (var raycaster in settingsButtonsRaycasters)
+        {
+            raycaster.enabled = false;
+        }
+    }
+
+    public void OpenHowToPlayPopup()
+    {
+        howToPlayPopup.SetActive(true);
+        foreach (var raycaster in settingsButtonsRaycasters)
+        {
+            raycaster.enabled = false;
+        }
+    }
+
+    public void OpenQuitGamePopup()
+    {
+        quitPopup.SetActive(true);
+        foreach (var raycaster in settingsButtonsRaycasters)
+        {
+            raycaster.enabled = false;
+        }
+    }
 
 	public void SetupPlayersUI()
     {
