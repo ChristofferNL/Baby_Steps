@@ -4278,6 +4278,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 2192047437379110124}
+--- !u!114 &4415887358005651387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4709742600570384410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50795e13b4b2ca945a2a4a287acea420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedForSound: 2
 --- !u!1 &6058716929825503391 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1750335629413419827, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
@@ -4325,6 +4338,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 2192047437379110124}
+--- !u!114 &1177121525547285956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7847699290273992468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50795e13b4b2ca945a2a4a287acea420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedForSound: 2
 --- !u!114 &8876973502445436443 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3994633869743738295, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
