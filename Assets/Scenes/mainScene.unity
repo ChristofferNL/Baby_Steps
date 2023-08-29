@@ -860,7 +860,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &379793356
 RectTransform:
   m_ObjectHideFlags: 0
@@ -901,6 +901,7 @@ MonoBehaviour:
   imageOne: {fileID: 21300000, guid: 5785beae2e650844c81a5e0e4149b07d, type: 3}
   imageTwo: {fileID: 21300000, guid: 2b0a1db27a5ba4d428acb342ecc3dbf3, type: 3}
   imageThree: {fileID: 21300000, guid: 744f11e41fc06e547abe9271e3f752f8, type: 3}
+  imageFour: {fileID: 0}
   goRightButton: {fileID: 123752200}
   goLeftButton: {fileID: 1444839220}
 --- !u!114 &379793358

@@ -9,7 +9,8 @@ public class HowToPlay : MonoBehaviour
     {
         FIRST,
         SECOND,
-        THIRD
+        THIRD,
+        FOURTH
     }
 
     ImageState imageState;
@@ -18,6 +19,7 @@ public class HowToPlay : MonoBehaviour
     [SerializeField] Sprite imageOne;
     [SerializeField] Sprite imageTwo;
     [SerializeField] Sprite imageThree;
+    [SerializeField] Sprite imageFour;
     [SerializeField] Button goRightButton;
     [SerializeField] Button goLeftButton;
 
@@ -55,10 +57,15 @@ public class HowToPlay : MonoBehaviour
 				break;
 
             case ImageState.THIRD:
-				goRightButton.gameObject.SetActive(false);
+				goRightButton.gameObject.SetActive(true);
 				goLeftButton.gameObject.SetActive(true);
                 activeImageObject.sprite = imageThree;
 				break;
+            case ImageState.FOURTH:
+                goRightButton.gameObject.SetActive(false);
+                goLeftButton.gameObject.SetActive(true);
+                activeImageObject.sprite = imageFour;
+                break;
         }
     }
 
