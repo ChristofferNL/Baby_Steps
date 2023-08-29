@@ -95,7 +95,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 8361480012651490758}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 143c157481185f2419bea11dc017b27a, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -185,3 +185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   amountOfPlayersColliding: 0
   questionManager: {fileID: 0}
+  hasSpawnedQuestion: 0
+  waitTimeBetweenExpand: 0.02
+  scaleSpeed: 0.3
+  expandXGoal: 100
