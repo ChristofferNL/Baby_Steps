@@ -477,7 +477,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 86, y: 38}
+  m_AnchoredPosition: {x: 181, y: 81.5}
   m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!1 &203192673
@@ -724,7 +724,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5785beae2e650844c81a5e0e4149b07d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c3c14321fedbddd4da05de27475edb7e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -779,7 +779,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &379793356
 RectTransform:
   m_ObjectHideFlags: 0
@@ -817,9 +817,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeImageObject: {fileID: 369356473}
-  imageOne: {fileID: 21300000, guid: 5785beae2e650844c81a5e0e4149b07d, type: 3}
-  imageTwo: {fileID: 21300000, guid: 2b0a1db27a5ba4d428acb342ecc3dbf3, type: 3}
-  imageThree: {fileID: 21300000, guid: 744f11e41fc06e547abe9271e3f752f8, type: 3}
+  imageOne: {fileID: 21300000, guid: c3c14321fedbddd4da05de27475edb7e, type: 3}
+  imageTwo: {fileID: 21300000, guid: 8d00e7a3385c403469ae5f013487b6ad, type: 3}
+  imageThree: {fileID: 21300000, guid: fea5746ac39cecf47a5a54d54b0bd920, type: 3}
   goRightButton: {fileID: 123752200}
   goLeftButton: {fileID: 1444839220}
 --- !u!114 &379793358
@@ -1793,7 +1793,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9aa4348290784b2468144a97eb15d8d7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2e21269d02956a745b075c8533fcf5c1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1970,7 +1970,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -89, y: 35}
+  m_AnchoredPosition: {x: -179.9, y: 81.4}
   m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1444839220
@@ -2985,7 +2985,7 @@ PrefabInstance:
     - target: {fileID: 506804302220713766, guid: 9aae991127b410c45a001ecd7f75311d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 9aa4348290784b2468144a97eb15d8d7, type: 3}
+      objectReference: {fileID: 21300000, guid: 2e21269d02956a745b075c8533fcf5c1, type: 3}
     - target: {fileID: 506804302220713766, guid: 9aae991127b410c45a001ecd7f75311d, type: 3}
       propertyPath: m_Color.b
       value: 1
