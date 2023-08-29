@@ -18,7 +18,7 @@ TagManager:
   - PlayerTwo
   - Rope
   - JumpThrough
-  - 
+  - BlurMask
   - 
   - 
   - 
@@ -52,4 +52,7 @@ TagManager:
     locked: 0
   - name: game_effects
     uniqueID: 2257983969
+    locked: 0
+  - name: CameraSortingLayer
+    uniqueID: 1681951903
     locked: 0
