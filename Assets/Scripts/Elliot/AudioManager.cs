@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class AudioManager : NetworkBehaviour
+public class AudioManager : MonoBehaviour
 {
-    public AudioSource audioSource;
+    public static AudioManager instance;
+    [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip[] audioClips;
 
     [ClientRpc]
-    public void PlaySound_ClientRpc(int soundId)
+    public void PlaySound(int soundId)
     {
         audioSource.PlayOneShot(audioClips[soundId]);
     }
+
+    private void Awake()
+    {
+        if (instance == null) { instance = this; }
+    }    
 }
