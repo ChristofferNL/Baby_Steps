@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip[] audioClips;
 
+    [ClientRpc]
     public void PlaySound(int soundId)
     {
         audioSource.PlayOneShot(audioClips[soundId]);

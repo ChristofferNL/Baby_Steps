@@ -49,7 +49,6 @@ public class InputManager : NetworkBehaviour
 	public int movementTouchId;
 
 	[SerializeField] float groundCheckPauseTime = 0.5f;
-	[SerializeField] int jumpSoundId = 2;
 
 	private void Awake()
 	{
@@ -286,7 +285,6 @@ public class InputManager : NetworkBehaviour
                                                 jumpDirection,
                                                 IsGrounded,
                                                 false);
-
 			PlayJumpSoundClientRpc();
             StartCoroutine(PauseGroundCheck(groundCheckPauseTime, canChargeWhilePulled));
             yield break;
@@ -308,6 +306,6 @@ public class InputManager : NetworkBehaviour
 	[ClientRpc]
 	void PlayJumpSoundClientRpc()
 	{
-		AudioManager.instance.PlaySound(jumpSoundId);
+		AudioManager.instance.PlaySound(0);
 	}
 }
