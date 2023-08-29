@@ -3751,6 +3751,10 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 951099334
       objectReference: {fileID: 0}
+    - target: {fileID: 2082676698153206660, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f544803f3146b68409dfae1b0bc0d68e, type: 3}
     - target: {fileID: 2109738923676257935, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
@@ -3799,6 +3803,30 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 951099334
       objectReference: {fileID: 0}
+    - target: {fileID: 3760732946578903537, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
+      propertyPath: airPlayerOne
+      value: 
+      objectReference: {fileID: 21300000, guid: f4164ebed2f44164e88301a896d15703, type: 3}
+    - target: {fileID: 3760732946578903537, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
+      propertyPath: airPlayerTwo
+      value: 
+      objectReference: {fileID: 21300000, guid: 7e59a8f9c8b51b14084741fb00955656, type: 3}
+    - target: {fileID: 3760732946578903537, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
+      propertyPath: idlePlayerOne
+      value: 
+      objectReference: {fileID: 21300000, guid: f544803f3146b68409dfae1b0bc0d68e, type: 3}
+    - target: {fileID: 3760732946578903537, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
+      propertyPath: idlePlayerTwo
+      value: 
+      objectReference: {fileID: 21300000, guid: 3872bc6a8abbc5541a592f934cf2b166, type: 3}
+    - target: {fileID: 3760732946578903537, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
+      propertyPath: jumpPlayerOne
+      value: 
+      objectReference: {fileID: 21300000, guid: a7312ae02d95fec418741edb66f06b26, type: 3}
+    - target: {fileID: 3760732946578903537, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
+      propertyPath: jumpPlayerTwo
+      value: 
+      objectReference: {fileID: 21300000, guid: e402b4a9c99f5ff41aca2efdaf7c3c45, type: 3}
     - target: {fileID: 3889469168691892623, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
@@ -3835,6 +3863,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: e78bb641b94446b4b879612ed842bd71, type: 2}
+    - target: {fileID: 5571667402248684456, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3872bc6a8abbc5541a592f934cf2b166, type: 3}
     - target: {fileID: 5635090706813887795, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 951099334
