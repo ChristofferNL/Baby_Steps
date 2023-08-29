@@ -213,7 +213,6 @@ public class LevelGenerator : NetworkBehaviour
     [ClientRpc]
     void SpawnChunkClientRpc(int levelId, ClientRpcParams clientRpcParams = default)
     {
-        Debug.LogError("Level ID is: " + levelId);
         if (levelIdOrder.Count < 1)
         {
             nextStartPos = originalAnchorPos.position;
@@ -250,11 +249,6 @@ public class LevelGenerator : NetworkBehaviour
             float lowestHeight = heightChunk1;
             if(lowestHeight > heightChunk2) { lowestHeight = heightChunk2; }
             if(lowestHeight > heightChunk3) { lowestHeight = heightChunk3; }
-
-            //Debug.Log("lowest height: " + lowestHeight);
-            if(lowestHeight ==  heightChunk1) { Debug.LogError("lowest height is 1"); }
-            if(lowestHeight ==  heightChunk2) { Debug.LogError("lowest height is 2"); }
-            if(lowestHeight ==  heightChunk3) { Debug.LogError("lowest height is 3"); }
 
             if(lowestHeight ==  heightChunk1) 
             {
