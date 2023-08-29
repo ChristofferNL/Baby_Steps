@@ -600,7 +600,7 @@ MonoBehaviour:
   m_Follow: {fileID: 2036128399410690577}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 22
+    OrthographicSize: 26
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
