@@ -45,6 +45,12 @@ public class UIGamePlayManager : NetworkBehaviour
     [SerializeField] GameObject quitPopup;
     [SerializeField] List<GraphicRaycaster> settingsButtonsRaycasters = new();
 
+    [Header("SmoothPopupVariables")]
+    [SerializeField] float popupSpeed = 8;
+    [SerializeField] float popupStartSize = 0.3f;
+    [SerializeField] AnimationCurve popupCurve;
+    [SerializeField] bool SizeChangeIsRunning = false;
+
     public Sprite notSelectedSprite;
     public Sprite selectedSprite;
 
@@ -59,7 +65,24 @@ public class UIGamePlayManager : NetworkBehaviour
 
     public void OpenSettings()
     {
+        if(!SizeChangeIsRunning) StartCoroutine(OpenSettingsSmoothly());
+    }
+
+    IEnumerator OpenSettingsSmoothly()
+    {
+        SizeChangeIsRunning = true;
+        Vector3 endScale = settingsMenu.transform.localScale * 2;   // the evaluate curve ends at 0.5 to allow overshoot before (for the bouncy feeling)
+        settingsMenu.transform.localScale = settingsMenu.transform.localScale * popupStartSize;
+        Vector3 startScale = settingsMenu.transform.localScale;
         settingsMenu.SetActive(true);
+        for (float i = 0; i <= 1;)
+        {
+            settingsMenu.transform.localScale = Vector3.Lerp(startScale, endScale, popupCurve.Evaluate(i));
+            i += Time.unscaledDeltaTime * popupSpeed;
+            yield return 0;
+        }
+        settingsMenu.transform.localScale = endScale / 2;
+        SizeChangeIsRunning = false;
     }
 
     public void CloseSettings()
@@ -163,7 +186,27 @@ public class UIGamePlayManager : NetworkBehaviour
         answerTexts[3].text = questionData.answerFour;
         activeQuestionIndex++;
         progressSlider.value++;
+        if (!SizeChangeIsRunning) StartCoroutine(ShowQuestionSmooth());
+
     }
+
+    private IEnumerator ShowQuestionSmooth()
+    {
+        SizeChangeIsRunning = true;
+        Vector3 endScale = questionUIObject.transform.localScale * 2;   // the evaluate curve ends at 0.5 to allow overshoot before (for the bouncy feeling)
+        questionUIObject.transform.localScale = questionUIObject.transform.localScale * popupStartSize;
+        Vector3 startScale = questionUIObject.transform.localScale;
+        questionUIObject.SetActive(true);
+        for (float i = 0; i <= 1;)
+        {
+            questionUIObject.transform.localScale = Vector3.Lerp(startScale, endScale, popupCurve.Evaluate(i));
+            i += Time.unscaledDeltaTime * popupSpeed;
+            yield return 0;
+        }
+        questionUIObject.transform.localScale = endScale / 2;
+        SizeChangeIsRunning = false;
+    }
+
 
     [ClientRpc]  
     public void FinalAnswersShow_ClientRpc(QuestionManager.FinalAnswerData finalAnswers)

@@ -10,9 +10,6 @@
             "m_Id": "919e7c8ee58145c68dc8ee0db5b1e210"
         },
         {
-            "m_Id": "91d9e117658c462fbaa27eedfa570d37"
-        },
-        {
             "m_Id": "2a6090c8b4944537b003e4233ef1081a"
         },
         {
@@ -5005,33 +5002,6 @@
 }
 
 {
-    "m_SGVersion": 1,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector2ShaderProperty",
-    "m_ObjectId": "91d9e117658c462fbaa27eedfa570d37",
-    "m_Guid": {
-        "m_GuidSerialized": "b144d5b6-ea2a-4d64-8875-924c45ba3c5e"
-    },
-    "m_Name": "Vector2",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Vector2",
-    "m_DefaultReferenceName": "_Vector2",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    }
-}
-
-{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector2Node",
     "m_ObjectId": "95b2321af7454cdbb8ea21b6529cbbf5",
@@ -5414,10 +5384,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 1119.0,
-            "y": 355.0000305175781,
+            "x": 1154.0,
+            "y": 430.0,
             "width": 208.0,
-            "height": 301.9999694824219
+            "height": 301.99993896484377
         }
     },
     "m_Slots": [
@@ -5673,9 +5643,6 @@
         },
         {
             "m_Id": "9de5fad136e14ef69777644d34a25693"
-        },
-        {
-            "m_Id": "91d9e117658c462fbaa27eedfa570d37"
         },
         {
             "m_Id": "2a6090c8b4944537b003e4233ef1081a"

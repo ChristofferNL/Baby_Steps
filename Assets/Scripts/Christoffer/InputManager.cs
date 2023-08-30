@@ -91,11 +91,6 @@ public class InputManager : NetworkBehaviour
 		GameIsRunning = true;
 	}
 
-    private void OnDrawGizmos()
-    {
-		Gizmos.DrawSphere(assignedPlayerRb.transform.position + Vector3.down * groundCheckDistance, groundCheckRadius);
-    }
-
     private void GroundCheck()
 	{
 		if (!doGroundCheck) return;		
