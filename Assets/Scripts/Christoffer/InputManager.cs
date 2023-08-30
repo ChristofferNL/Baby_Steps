@@ -17,7 +17,7 @@ public class InputManager : NetworkBehaviour
 	}
 	JumpDirection jumpDirection;
 
-    const float JUMP_STRAIGHT_UP_BUFFER = 2000f;
+    const float JUMP_STRAIGHT_UP_BUFFER = 1750f;
 
     [SerializeField] GameEngineManager manager;
 	[SerializeField] Rigidbody2D playerRb;
@@ -91,12 +91,17 @@ public class InputManager : NetworkBehaviour
 		GameIsRunning = true;
 	}
 
-	private void GroundCheck()
+    private void OnDrawGizmos()
+    {
+		Gizmos.DrawSphere(assignedPlayerRb.transform.position + Vector3.down * groundCheckDistance, groundCheckRadius);
+    }
+
+    private void GroundCheck()
 	{
 		if (!doGroundCheck) return;		
 		if (NetworkManager.Singleton.LocalClientId == 0)
 		{
-            if (Physics2D.CircleCast(assignedPlayerRb.transform.position, groundCheckRadius, Vector3.down, 0.8f, pOneGroundCheckLayerMask))
+            if (Physics2D.CircleCast(assignedPlayerRb.transform.position, groundCheckRadius, Vector3.down, groundCheckDistance, pOneGroundCheckLayerMask))
             {
                 IsGrounded = true;
             }
@@ -107,7 +112,7 @@ public class InputManager : NetworkBehaviour
         }
 		else
 		{
-            if (Physics2D.CircleCast(assignedPlayerRb.transform.position, groundCheckRadius, Vector3.down, 0.8f, pTwoGroundCheckLayerMask))
+            if (Physics2D.CircleCast(assignedPlayerRb.transform.position, groundCheckRadius, Vector3.down, groundCheckDistance, pTwoGroundCheckLayerMask))
             {
                 IsGrounded = true;
             }
@@ -147,7 +152,13 @@ public class InputManager : NetworkBehaviour
 		{
 			isGettingTouch = true;
 			touchStartPos = Camera.main.WorldToScreenPoint(Input.mousePosition);
-			if (IsGrounded) StartChargeJump();
+			if (IsGrounded)
+			{
+				StartChargeJump();
+			}else
+            {
+				StartCoroutine(KeepTryingToCharge());
+			}
 		}
 	}
 	//#endif
@@ -163,8 +174,6 @@ public class InputManager : NetworkBehaviour
 
     private void StartChargeJump()
     {
-
-
         chargingJump = true;
         StartCoroutine(ChargeJump());
     }
@@ -172,6 +181,23 @@ public class InputManager : NetworkBehaviour
     private void StopChargeJump()
     {
         chargingJump = false;
+    }
+
+	//function that gets called when you try to start jumping while still in the air
+	//makes you start charging jump as soon as you land
+	private IEnumerator KeepTryingToCharge()
+    {
+		bool hasLanded = false;
+        while (isGettingTouch && !hasLanded)
+        {
+			yield return new WaitForSecondsRealtime(0.02f);
+            if (IsGrounded)
+            {
+				chargingJump = true;
+				StartCoroutine(ChargeJump());
+				hasLanded = true;
+			}
+        }
     }
 
     private void GetInputs()
