@@ -219,8 +219,11 @@ public class UIGamePlayManager : NetworkBehaviour
 
     public void InitiateChatMessage()
     {
-        SendChatMessage_ServerRpc(inputField.text, NetworkManager.Singleton.LocalClientId);
-		inputField.text = "";
+        if(inputField.text.Length > 0)
+        {
+			SendChatMessage_ServerRpc(inputField.text, NetworkManager.Singleton.LocalClientId);
+			inputField.text = "";
+		}
 	}
 
 	[ServerRpc(RequireOwnership = false)]
