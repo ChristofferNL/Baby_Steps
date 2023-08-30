@@ -55,7 +55,7 @@ namespace LobbyRelaySample.UI
 
         public void OnCreatePressed()
         {
-            Manager.CreateLobby($"{GameManager.Instance.m_LocalUser.DisplayName.Value}'s Lobby", m_IsServerPrivate, m_ServerPassword);
+            Manager.CreateLobby($"{GameManager.Instance.m_LocalUser.DisplayName.Value}_{Random.Range(1, 1000)}'s Lobby", m_IsServerPrivate, m_ServerPassword);
         }
 
         /// <summary>
