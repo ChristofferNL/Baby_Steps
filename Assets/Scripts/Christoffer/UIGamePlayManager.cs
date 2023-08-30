@@ -119,6 +119,7 @@ public class UIGamePlayManager : NetworkBehaviour
 
     public void ExitCurrentGame()
     {
+        questionManager.SetTimeScale_ServerRpc(1);
         GameManager.Instance.ClientQuitGame();
     }
 
