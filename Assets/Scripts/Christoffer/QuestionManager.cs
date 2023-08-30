@@ -136,6 +136,12 @@ public class QuestionManager : NetworkBehaviour
         }
     }
 
+    [ServerRpc]
+    public void SetTimeScale_ServerRpc(float newTimeScale)
+    {
+        SetTimeScale_ClientRpc(newTimeScale);
+    }
+
     [ClientRpc]
     void SetTimeScale_ClientRpc(float newTimeScale)
     {

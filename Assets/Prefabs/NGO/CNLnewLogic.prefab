@@ -600,7 +600,7 @@ MonoBehaviour:
   m_Follow: {fileID: 2036128399410690577}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 22
+    OrthographicSize: 26
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -2288,6 +2288,10 @@ PrefabInstance:
     - target: {fileID: 7738909179488366552, guid: 40931fe4b06be574294e1afce242b36c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -1891.7002
+      objectReference: {fileID: 0}
+    - target: {fileID: 7748334204555748404, guid: 40931fe4b06be574294e1afce242b36c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7789367815028998469, guid: 40931fe4b06be574294e1afce242b36c, type: 3}
       propertyPath: m_AnchorMax.y
