@@ -4,6 +4,7 @@ using System.Diagnostics.Tracing;
 using Unity.Netcode;
 using Unity.Netcode.Components;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.Pool;
 
 public class LevelGenerator : NetworkBehaviour
@@ -190,6 +191,10 @@ public class LevelGenerator : NetworkBehaviour
 
     IEnumerator WaitToStartSpawning(float waitTime)
     {
+        while(NetworkManager.Singleton.ConnectedClients.Count < 2)
+        {
+            yield return 0;
+        }
         yield return new WaitForSecondsRealtime(waitTime);
         canSpawn = true;
     }
