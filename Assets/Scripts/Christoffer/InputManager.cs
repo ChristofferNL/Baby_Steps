@@ -17,7 +17,7 @@ public class InputManager : NetworkBehaviour
 	}
 	JumpDirection jumpDirection;
 
-    const float JUMP_STRAIGHT_UP_BUFFER = 2000f;
+    const float JUMP_STRAIGHT_UP_BUFFER = 1750f;
 
     [SerializeField] GameEngineManager manager;
 	[SerializeField] Rigidbody2D playerRb;
@@ -91,12 +91,12 @@ public class InputManager : NetworkBehaviour
 		GameIsRunning = true;
 	}
 
-	private void GroundCheck()
+    private void GroundCheck()
 	{
 		if (!doGroundCheck) return;		
 		if (NetworkManager.Singleton.LocalClientId == 0)
 		{
-            if (Physics2D.CircleCast(assignedPlayerRb.transform.position, groundCheckRadius, Vector3.down, 0.8f, pOneGroundCheckLayerMask))
+            if (Physics2D.CircleCast(assignedPlayerRb.transform.position, groundCheckRadius, Vector3.down, groundCheckDistance, pOneGroundCheckLayerMask))
             {
                 IsGrounded = true;
             }
@@ -107,7 +107,7 @@ public class InputManager : NetworkBehaviour
         }
 		else
 		{
-            if (Physics2D.CircleCast(assignedPlayerRb.transform.position, groundCheckRadius, Vector3.down, 0.8f, pTwoGroundCheckLayerMask))
+            if (Physics2D.CircleCast(assignedPlayerRb.transform.position, groundCheckRadius, Vector3.down, groundCheckDistance, pTwoGroundCheckLayerMask))
             {
                 IsGrounded = true;
             }
@@ -119,38 +119,44 @@ public class InputManager : NetworkBehaviour
 
     }
 
-#if UNITY_ANDRIOD
+	//#if UNITY_ANDRIOD
+	//public void StartGettingTouchInput()
+	//   {
+	//	if (!GameIsRunning) return;
+	//	if (Touchscreen.current == null)
+	//	{
+	//           for (int i = 0; i < Touchscreen.current.touches.Count; i++)
+	//           {
+	//               //Debug.LogError("touch pos:"+ i + " : " + Touchscreen.current.touches[i].position.ReadValue());
+	//               //figures out the id of the touch which caused the startmovment function to get called and saves that id to use as a reference when getting input later
+	//               if (Touchscreen.current.touches[i].position.ReadValue() != Vector2.zero && !isGettingTouch && IsGrounded)
+	//               {
+	//                   movementTouchId = i;
+	//                   isGettingTouch = true;
+	//                   touchStartPos = Touchscreen.current.touches[movementTouchId].startPosition.ReadValue();
+	//                   StartChargeJump();
+	//               }
+	//           }
+	//	}
+	//}
+	//#else
 	public void StartGettingTouchInput()
-    {
-		if (!GameIsRunning) return;
-		if (Touchscreen.current == null)
-		{
-            for (int i = 0; i < Touchscreen.current.touches.Count; i++)
-            {
-                //Debug.LogError("touch pos:"+ i + " : " + Touchscreen.current.touches[i].position.ReadValue());
-                //figures out the id of the touch which caused the startmovment function to get called and saves that id to use as a reference when getting input later
-                if (Touchscreen.current.touches[i].position.ReadValue() != Vector2.zero && !isGettingTouch && IsGrounded)
-                {
-                    movementTouchId = i;
-                    isGettingTouch = true;
-                    touchStartPos = Touchscreen.current.touches[movementTouchId].startPosition.ReadValue();
-                    StartChargeJump();
-                }
-            }
-		}
-	}
-#else
-    public void StartGettingTouchInput()
 	{
-        if (!GameIsRunning) return;
+		if (!GameIsRunning) return;
 		if (!isGettingTouch)
 		{
-            isGettingTouch = true;
-            touchStartPos = Camera.main.WorldToScreenPoint(Input.mousePosition);
-            if (IsGrounded) StartChargeJump();
-        }
-    }
-#endif
+			isGettingTouch = true;
+			touchStartPos = Camera.main.WorldToScreenPoint(Input.mousePosition);
+			if (IsGrounded)
+			{
+				StartChargeJump();
+			}else
+            {
+				StartCoroutine(KeepTryingToCharge());
+			}
+		}
+	}
+	//#endif
 
 
 	public void StopGettingTouchInput()
@@ -163,8 +169,6 @@ public class InputManager : NetworkBehaviour
 
     private void StartChargeJump()
     {
-
-
         chargingJump = true;
         StartCoroutine(ChargeJump());
     }
@@ -172,6 +176,23 @@ public class InputManager : NetworkBehaviour
     private void StopChargeJump()
     {
         chargingJump = false;
+    }
+
+	//function that gets called when you try to start jumping while still in the air
+	//makes you start charging jump as soon as you land
+	private IEnumerator KeepTryingToCharge()
+    {
+		bool hasLanded = false;
+        while (isGettingTouch && !hasLanded)
+        {
+			yield return new WaitForSecondsRealtime(0.02f);
+            if (IsGrounded)
+            {
+				chargingJump = true;
+				StartCoroutine(ChargeJump());
+				hasLanded = true;
+			}
+        }
     }
 
     private void GetInputs()
@@ -222,24 +243,24 @@ public class InputManager : NetworkBehaviour
 		else
 		{
             float xDistance = 0;
-#if UNITY_ANDROID
-			xDistance = Touchscreen.current.touches[movementTouchId].position.ReadValue().x - touchStartPos.x;
-#else
-            xDistance = Camera.main.WorldToScreenPoint(Input.mousePosition).x - touchStartPos.x;
-#endif
+			//#if UNITY_ANDROID
+			//xDistance = Touchscreen.current.touches[movementTouchId].position.ReadValue().x - touchStartPos.x;
+			//#else
+			xDistance = Camera.main.WorldToScreenPoint(Input.mousePosition).x - touchStartPos.x;
+			//#endif
 
-            //if (Touchscreen.current.touches.Count > 0 || Touchscreen.current == null)
-            //{
-                
-            //}
-            //else
-            //{
+			//if (Touchscreen.current.touches.Count > 0 || Touchscreen.current == null)
+			//{
 
-                
-            //}
+			//}
+			//else
+			//{
 
 
-            switch (xDistance)
+			//}
+
+
+			switch (xDistance)
             {
                 case < -JUMP_STRAIGHT_UP_BUFFER:
                     jumpDirection = JumpDirection.LEFT;

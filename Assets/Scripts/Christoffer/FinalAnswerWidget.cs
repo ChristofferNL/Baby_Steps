@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 
-public class FinalAnswerWidget : MonoBehaviour
+public class FinalAnswerWidget : NetworkBehaviour
 {
     [SerializeField] TextMeshProUGUI questionText;
     [SerializeField] TextMeshProUGUI yourAnswerText;
@@ -16,8 +17,17 @@ public class FinalAnswerWidget : MonoBehaviour
     public void SetupAnswerWidget(string question, string yourAnswer, string theirAnswer, bool sameAnswer)
     {
         questionText.text = question;
-        yourAnswerText.text = yourAnswer;
-        theirAnswerText.text = theirAnswer;
+        if (NetworkManager.Singleton.LocalClientId == 0)
+        {
+			yourAnswerText.text = yourAnswer;
+			theirAnswerText.text = theirAnswer;
+        }
+        else
+        {
+			yourAnswerText.text = theirAnswer;
+			theirAnswerText.text = yourAnswer;
+		}
+
         sameAnswerText.text = theirAnswer;
 
         if (sameAnswer)

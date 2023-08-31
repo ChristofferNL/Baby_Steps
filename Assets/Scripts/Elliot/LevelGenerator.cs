@@ -336,7 +336,8 @@ public class LevelGenerator : NetworkBehaviour
 
                 GameObject spawnedFlag;
                 spawnedFlag = GetPooledFlag();
-                spawnedFlag.transform.localPosition = spawnedObject.transform.localPosition + Vector3.up * spawnedObject.transform.localScale.y * 2f;
+                spawnedFlag.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                spawnedFlag.transform.localPosition = spawnedObject.transform.localPosition + Vector3.up * spawnedObject.transform.localScale.y * 1.75f;
 
                 if (chunkToSaveTo == 1)
                 {
@@ -355,7 +356,12 @@ public class LevelGenerator : NetworkBehaviour
                 }
                 spawnedObject.SetActive(true);
                 spawnedFlag.SetActive(true);
-                spawnedObject.GetComponentInChildren<QuestionPlatform>().questionManager = questionManager;
+                
+
+                QuestionPlatform questionPlatformScript = spawnedObject.GetComponentInChildren<QuestionPlatform>();
+                questionPlatformScript.questionManager = questionManager;
+                questionPlatformScript.flagTransform = spawnedFlag.transform;
+                questionPlatformScript.flagPivotPoint = spawnedFlag.transform.position + Vector3.down * spawnedFlag.transform.localScale.magnitude * 1.04f + Vector3.right * 0.9f;
             }
 
             if (chunkDataSOs[levelId].isPassThrough[i] && !chunkDataSOs[levelId].isQuestion[i] && !chunkDataSOs[levelId].isBouncy[i])
