@@ -14,10 +14,12 @@ public class GameEngineManager : NetworkBehaviour
 	[SerializeField] SpriteRenderer playerOneSpriteRenderer;
 	[SerializeField] Sprite idlePlayerOne;
 	[SerializeField] Sprite jumpPlayerOne;
+	[SerializeField] Sprite jumpStraightUpPlayerOne;
 	[SerializeField] Sprite airPlayerOne;
 	[SerializeField] SpriteRenderer playerTwoSpriteRenderer;
     [SerializeField] Sprite idlePlayerTwo;
     [SerializeField] Sprite jumpPlayerTwo;
+    [SerializeField] Sprite jumpStraightUpPlayerTwo;
     [SerializeField] Sprite airPlayerTwo;
 
     [ServerRpc (RequireOwnership = false)]
@@ -81,7 +83,11 @@ public class GameEngineManager : NetworkBehaviour
 				playerOneSpriteRenderer.sprite = idlePlayerOne;
 				return;
 			}
-
+			if (isChargingJump && jumpDirection == InputManager.JumpDirection.NONE)
+			{
+				playerOneSpriteRenderer.sprite = jumpStraightUpPlayerOne;
+				return;
+			}
 			playerOneSpriteRenderer.sprite = isChargingJump ? jumpPlayerOne : airPlayerOne;
 		}
 		else
@@ -95,8 +101,12 @@ public class GameEngineManager : NetworkBehaviour
                 playerTwoSpriteRenderer.sprite = idlePlayerTwo;
                 return;
             }
-
-            playerTwoSpriteRenderer.sprite = isChargingJump ? jumpPlayerTwo : airPlayerTwo;
+			if (isChargingJump && jumpDirection == InputManager.JumpDirection.NONE)
+			{
+				playerTwoSpriteRenderer.sprite = jumpStraightUpPlayerTwo;
+				return;
+			}
+			playerTwoSpriteRenderer.sprite = isChargingJump ? jumpPlayerTwo : airPlayerTwo;
         }
 	}
 }

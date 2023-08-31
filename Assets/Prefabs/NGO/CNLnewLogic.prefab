@@ -2107,7 +2107,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3758450578623647692, guid: 40931fe4b06be574294e1afce242b36c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3799611455901123068, guid: 40931fe4b06be574294e1afce242b36c, type: 3}
       propertyPath: m_SizeDelta.y
@@ -4647,6 +4647,14 @@ PrefabInstance:
       propertyPath: jumpPlayerTwo
       value: 
       objectReference: {fileID: 21300000, guid: e402b4a9c99f5ff41aca2efdaf7c3c45, type: 3}
+    - target: {fileID: 3760732946578903537, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
+      propertyPath: jumpStraightUpPlayerOne
+      value: 
+      objectReference: {fileID: 21300000, guid: 24c2a29b512b7b74a85b4cce38d0f1ef, type: 3}
+    - target: {fileID: 3760732946578903537, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
+      propertyPath: jumpStraightUpPlayerTwo
+      value: 
+      objectReference: {fileID: 21300000, guid: d7a2e435f180f5f4f91b68eed4c7ebfb, type: 3}
     - target: {fileID: 3824226005071520423, guid: 4eaeb7dabbe3b3c47af336f059b8dea7, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
