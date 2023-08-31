@@ -18,4 +18,9 @@ public class AudioManager : MonoBehaviour
     {
         if (instance == null) { instance = this; }
     }    
+
+    public void ChangeVolume(float newVolume)
+    {
+        audioSource.volume = newVolume;
+    }
 }
