@@ -7,6 +7,7 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
     [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioSource musicAudioSource;
     [SerializeField] AudioClip[] audioClips;
 
     public void PlaySound(int soundId)
@@ -22,5 +23,6 @@ public class AudioManager : MonoBehaviour
     public void ChangeVolume(float newVolume)
     {
         audioSource.volume = newVolume;
+        musicAudioSource.volume = newVolume / 12;
     }
 }
