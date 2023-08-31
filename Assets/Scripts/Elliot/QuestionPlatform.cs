@@ -41,9 +41,8 @@ public class QuestionPlatform : MonoBehaviour
 	{
 		while (transform.parent.localScale.x < expandXGoal)
 		{
-			yield return new WaitForSecondsRealtime(waitTimeBetweenExpand);
-			ExpandPlatform();
-
+            transform.parent.localScale = new Vector3(transform.parent.localScale.x + scaleSpeed, transform.parent.localScale.y, transform.parent.localScale.z);
+            yield return new WaitForSecondsRealtime(waitTimeBetweenExpand);
         }
 	}
 

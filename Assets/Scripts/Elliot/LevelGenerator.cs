@@ -1,3 +1,4 @@
+using LobbyRelaySample;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
@@ -191,8 +192,9 @@ public class LevelGenerator : NetworkBehaviour
 
     IEnumerator WaitToStartSpawning(float waitTime)
     {
-        while(NetworkManager.Singleton.ConnectedClients.Count < 2)
+        while(NetworkManager.Singleton.ConnectedClients.Count < GameManager.Instance.LocalLobby.PlayerCount)
         {
+            Debug.LogError("CHECKING");
             yield return 0;
         }
         yield return new WaitForSecondsRealtime(waitTime);
@@ -209,8 +211,7 @@ public class LevelGenerator : NetworkBehaviour
             if(IsHost || IsServer) 
             {
                 //Random.Range(0, chunkDataSOs.Length)
-                SpawnChunkClientRpc(Random.Range(0, chunkDataSOs.Length));
-                
+                SpawnChunkClientRpc(Random.Range(0, chunkDataSOs.Length));  
             }
         }
     }
