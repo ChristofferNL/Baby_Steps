@@ -42,7 +42,8 @@ namespace LobbyRelaySample.UI
             SetDisplayName(m_LocalPlayer.DisplayName.Value);
             SubscribeToPlayerUpdates();
 
-            m_VivoxUserHandler.SetId(UserId);
+            if(m_VivoxUserHandler != null) m_VivoxUserHandler.SetId(UserId);
+
         }
 
         void SubscribeToPlayerUpdates()

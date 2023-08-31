@@ -294,7 +294,7 @@ namespace LobbyRelaySample
 
             await InitializeServices();
             AuthenticatePlayer();
-            StartVivoxLogin();
+            //StartVivoxLogin();
         }
 
         async Task InitializeServices()
@@ -367,7 +367,7 @@ namespace LobbyRelaySample
             await LobbyManager.BindLocalLobbyToRemote(m_LocalLobby.LobbyID.Value, m_LocalLobby);
             m_LocalLobby.LocalLobbyState.onChanged += OnLobbyStateChanged;
             SetLobbyView();
-            StartVivoxJoin();
+            //StartVivoxJoin();
         }
 
         public void LeaveLobby()
@@ -383,7 +383,7 @@ namespace LobbyRelaySample
 
         void StartVivoxLogin()
         {
-            m_VivoxSetup.Initialize(m_vivoxUserHandlers, OnVivoxLoginComplete);
+            if(m_vivoxUserHandlers.Count > 0) m_VivoxSetup.Initialize(m_vivoxUserHandlers, OnVivoxLoginComplete);
 
             void OnVivoxLoginComplete(bool didSucceed)
             {
