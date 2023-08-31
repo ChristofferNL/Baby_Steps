@@ -327,7 +327,7 @@ public class InputManager : NetworkBehaviour
                                                 IsGrounded,
                                                 false);
 
-			PlayJumpSoundClientRpc();
+            PlayJumpSoundServerRpc();
             StartCoroutine(PauseGroundCheck(groundCheckPauseTime, canChargeWhilePulled));
             yield break;
         }
@@ -342,6 +342,13 @@ public class InputManager : NetworkBehaviour
         yield return new WaitForSeconds(pauseTime);
 		doGroundCheck = true;
         canChargeWhilePulled = chargeWhilePulled;
+
+    }
+
+	[ServerRpc(RequireOwnership = false)] 
+	void PlayJumpSoundServerRpc()
+	{
+		PlayJumpSoundClientRpc();
 
     }
 

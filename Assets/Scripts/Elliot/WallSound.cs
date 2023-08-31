@@ -15,9 +15,16 @@ public class WallSound : MonoBehaviour
             float playerSpeed = collision.gameObject.GetComponent<Rigidbody2D>().velocity.magnitude;
             if (playerSpeed > speedForSound)
             {
-                PlayWallSoundClientRpc();
+                Debug.LogError("trying to play sound");
+                PlayWallServerRpc();
             }
         }
+    }
+
+    [ServerRpc(RequireOwnership = true)]
+    void PlayWallServerRpc()
+    {
+        PlayWallSoundClientRpc();
     }
 
     [ClientRpc]

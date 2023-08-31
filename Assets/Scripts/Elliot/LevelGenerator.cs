@@ -194,7 +194,6 @@ public class LevelGenerator : NetworkBehaviour
     {
         while(NetworkManager.Singleton.ConnectedClients.Count < GameManager.Instance.LocalLobby.PlayerCount)
         {
-            Debug.LogError("CHECKING");
             yield return 0;
         }
         yield return new WaitForSecondsRealtime(waitTime);
