@@ -17,9 +17,11 @@ public class InputManager : NetworkBehaviour
 	}
 	JumpDirection jumpDirection;
 
-    const float JUMP_STRAIGHT_UP_BUFFER = 1750f;
+    const float JUMP_STRAIGHT_UP_BUFFER = 2f;
 
     [SerializeField] GameEngineManager manager;
+    [SerializeField] GameObject player1Arrow;
+    [SerializeField] GameObject player2Arrow;
 	[SerializeField] Rigidbody2D playerRb;
 	[SerializeField] Rigidbody2D playerRbTwo;
 	[SerializeField] float moveForce;
@@ -33,6 +35,7 @@ public class InputManager : NetworkBehaviour
 	[SerializeField] LayerMask pTwoGroundCheckLayerMask;
 
 	Rigidbody2D assignedPlayerRb;
+	GameObject assignedPlayerArrow;
 
 	PlayerInputs inputActions;
 	PlayerInputs.PlayerActionMapActions actions;
@@ -62,11 +65,14 @@ public class InputManager : NetworkBehaviour
 		if (NetworkManager.Singleton.LocalClientId == 0)
 		{
 			assignedPlayerRb = playerRb;
-		}
+			assignedPlayerArrow = player1Arrow;
+
+        }
 		else
 		{
 			assignedPlayerRb = playerRbTwo;
-		}
+            assignedPlayerArrow = player2Arrow;
+        }
 	}
 
 	private void OnEnable()
@@ -175,6 +181,7 @@ public class InputManager : NetworkBehaviour
 
     private void StopChargeJump()
     {
+        assignedPlayerArrow.SetActive(false);
         chargingJump = false;
     }
 
@@ -258,28 +265,40 @@ public class InputManager : NetworkBehaviour
 
 
 			//}
-
-
+			xDistance /= Screen.width;
 			switch (xDistance)
             {
                 case < -JUMP_STRAIGHT_UP_BUFFER:
+
+					assignedPlayerArrow.transform.position = assignedPlayerRb.transform.position + new Vector3(-1.35f,1,0);
+					assignedPlayerArrow.transform.LookAt(assignedPlayerRb.transform.position, Vector3.forward);
+					assignedPlayerArrow.transform.rotation *= Quaternion.Euler(-90, 0, 0);
+
                     jumpDirection = JumpDirection.LEFT;
                     break;
                 case > JUMP_STRAIGHT_UP_BUFFER:
+
+                    assignedPlayerArrow.transform.position = assignedPlayerRb.transform.position + new Vector3(1.35f, 1, 0);
+                    assignedPlayerArrow.transform.LookAt(assignedPlayerRb.transform.position, Vector3.forward);
+                    assignedPlayerArrow.transform.rotation *= Quaternion.Euler(-90, 0, 0);
+
                     jumpDirection = JumpDirection.RIGHT;
                     break;
                 default:
+
+                    assignedPlayerArrow.transform.position = assignedPlayerRb.transform.position + new Vector3(0, 1.75f, 0);
+                    assignedPlayerArrow.transform.LookAt(assignedPlayerRb.transform.position, Vector3.forward);
+                    assignedPlayerArrow.transform.rotation *= Quaternion.Euler(-90, 0, 0);
+
                     jumpDirection = JumpDirection.NONE;
                     break;
             }
-        }
-
-
-		
+        }	
 	}
 
     IEnumerator ChargeJump()
     {
+        assignedPlayerArrow.SetActive(true);
         float jumpForce = jumpForceBase;
         int counter = 0;
         while (chargingJump && IsGrounded || chargingJump && canChargeWhilePulled)

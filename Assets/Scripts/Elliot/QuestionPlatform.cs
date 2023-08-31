@@ -1,5 +1,7 @@
+using Newtonsoft.Json.Bson;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class QuestionPlatform : MonoBehaviour
@@ -15,6 +17,7 @@ public class QuestionPlatform : MonoBehaviour
 	[SerializeField] float scaleSpeed= 0.3f;
 	[SerializeField] float expandXGoal= 100;
 	[SerializeField] float flagFoldSpeed = 40;
+
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
@@ -39,8 +42,9 @@ public class QuestionPlatform : MonoBehaviour
 		while (transform.parent.localScale.x < expandXGoal)
 		{
 			yield return new WaitForSecondsRealtime(waitTimeBetweenExpand);
-			transform.parent.localScale = new Vector3(transform.parent.localScale.x + scaleSpeed, transform.parent.localScale.y, transform.parent.localScale.z);
-		}
+			ExpandPlatform();
+
+        }
 	}
 
 	IEnumerator FoldDownFlag()
@@ -52,7 +56,7 @@ public class QuestionPlatform : MonoBehaviour
 			flagTransform.RotateAround(flagPivotPoint, Vector3.forward, flagFoldSpeed * Time.unscaledDeltaTime);
 			yield return 0;
         }
-		flagTransform.gameObject.SetActive(false);
+		flagTransform.GetComponent<SpriteRenderer>().enabled = false;
 		flagMat.SetVector("_PivotPoint", new Vector3(0,-1000,0));
 	}
 }
